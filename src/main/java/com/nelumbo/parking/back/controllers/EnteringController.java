@@ -14,16 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.entities.Entering;
 import com.nelumbo.parking.back.services.IEnteringService;
 
+
+//agregar la url global /api
 @RestController
 @RequestMapping("/api/enterings")
 @CrossOrigin(origins = { "*" })
 public class EnteringController {
 
+	
+	
+	
 	@Autowired
 	private IEnteringService enteringService;
 
 	
-	//Revisado
+	//Ajustar nombres acceso endpoints
+	//Utilizar anotaciones para tipo de dato que se recibe y se retorna
+	//Utilizar anotaciones para validar objetos 
+	//Cambiar el response entity por retornos fijos
 	@GetMapping("getone/{id}")
 	public ResponseEntity<?> getEntering(@PathVariable Long id) {
 

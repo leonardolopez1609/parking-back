@@ -33,7 +33,7 @@ public class UserController {
 		return new ResponseEntity<User>(userService.findById(id).get(), HttpStatus.OK);
 	}
 
-	//Revisado
+	//Agregar al DTO del vehiculo la fecha de ingreso
 	@GetMapping("getparkings/{id}")
 	public ResponseEntity<?> getParkings(@PathVariable Long id) {
 

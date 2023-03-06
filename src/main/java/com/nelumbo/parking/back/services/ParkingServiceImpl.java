@@ -97,7 +97,7 @@ public class ParkingServiceImpl implements IParkingService {
 		
 	}
 
-	
+	//eliminar las validaciones por campos
 	public Parking create(ParkingDTO parking) {
 		if (parking.getName()==(null)||parking.getName().equals("")) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El nombre del parqueadero es requerido!");
@@ -160,6 +160,8 @@ public class ParkingServiceImpl implements IParkingService {
 		return parking.stream().map(parkingVehicleDTOMapper).collect(Collectors.toList());
 	}
 
+	
+	//usar el vehiculosEnt DTO para vehiculos
 	@Override
 	public List<Vehicle> vehiclesByParkingInd(Long idparking) {
 		List<Entering> enterings = enteringService.findAllByParking_idparkingInd(idparking);

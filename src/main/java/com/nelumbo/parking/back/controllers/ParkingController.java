@@ -29,6 +29,9 @@ import com.nelumbo.parking.back.services.IParkingService;
 @CrossOrigin(origins = { "*" })
 public class ParkingController {
 
+	
+	//AGREGAR EL GET DE TODOS LOS PARQUEADEROS.
+	
 	@Autowired
 	private IParkingService parkingService;
 
@@ -82,7 +85,7 @@ public class ParkingController {
 		return new ResponseEntity<List<VehicleRankDTO>>(parkingService.rankVehicles(id), HttpStatus.OK);
 	}
 	
-	//Revisado
+	//No retornar String
 	@GetMapping("getaverage/min/{dateMin}/max/{dateMax}/in/{id}")
 	public ResponseEntity<?> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
 		
@@ -96,7 +99,7 @@ public class ParkingController {
 				parkingService.getDays(dateMin2, dateMax2))+" entradas por día", HttpStatus.OK);
 	}
 	
-	//Revisado
+	//No retornar String
 	@GetMapping("getaverageall/min/{dateMin}/max/{dateMax}")
 	public ResponseEntity<?> getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
 		
@@ -109,7 +112,7 @@ public class ParkingController {
 				parkingService.getDays(dateMin2, dateMax2))+" entradas por día", HttpStatus.OK);
 	}
 
-	//Revisado
+	//Obtener segundos en ves de horas Y No retorna
 	@GetMapping("getaveragehours/{id}")
 	public ResponseEntity<?> getAverageHours(@PathVariable Long id) {
 
@@ -117,7 +120,7 @@ public class ParkingController {
 	}
 	
 	
-	//Revisado
+	//validaciones
 	@PostMapping
 	public ResponseEntity<?> createParking(@RequestBody ParkingDTO parking) {
 		Map<String, Object> response = new HashMap<>();

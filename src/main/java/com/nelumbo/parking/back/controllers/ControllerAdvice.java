@@ -12,6 +12,9 @@ import com.nelumbo.parking.back.exceptions.RequestException;
 @RestControllerAdvice
 public class ControllerAdvice {
 //AGREGAR CAPTURA DE ERROR EN VALIDACIONES
+	
+	
+	
 	@ExceptionHandler(value = RequestException.class)
 	public ResponseEntity<ErrorData> requestExceptionHandler(RequestException ex) {
 		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
