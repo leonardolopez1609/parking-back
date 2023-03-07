@@ -140,9 +140,8 @@ public class ParkingServiceImpl implements IParkingService {
     
 	@Override
 	public Optional<ParkingDTO> findDTOByID(Long id) {
-		
-		ParkingDTO parking = parkingRepository.findDTOById(id).orElseThrow(()->new RequestException("Parqueadero no encontrado"));	
-		return Optional.of(parking);
+			
+		return Optional.of(parkingRepository.findDTOById(id).orElseThrow(()->new RequestException("Parqueadero no encontrado")));
 	}
 
 	@Override
