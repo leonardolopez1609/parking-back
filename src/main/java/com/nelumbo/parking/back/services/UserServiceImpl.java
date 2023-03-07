@@ -90,14 +90,15 @@ public class UserServiceImpl implements IUserService {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public String sendEmail(EmailContentDTO emailContent) {
+	public Map<String, Object> sendEmail(EmailContentDTO emailContent) {
 		HttpHeaders headers = new HttpHeaders();
 	      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	      HttpEntity<EmailContentDTO> entity = new HttpEntity<EmailContentDTO>(emailContent,headers);
 	      
 	      return restTemplate.exchange(
-	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, String.class).getBody();
+	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, Map.class).getBody();
 	}
 
 }

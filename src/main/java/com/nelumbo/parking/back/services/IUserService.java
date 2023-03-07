@@ -24,6 +24,6 @@ public interface IUserService {
 	
 	void associateParking(Long idUser, Long idParking);
 
-	String sendEmail(EmailContentDTO user);
+	Map<String, Object> sendEmail(EmailContentDTO user);
 
 	}

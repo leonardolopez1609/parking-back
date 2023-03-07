@@ -60,15 +60,12 @@ public class UserController {
 		return response;
 	}
 	
-	//Por implementar
+	//Validar existe placa y parqueadero
 	@PostMapping(path="/email",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Map<String, Object> sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
 
-		Map<String, Object> response = new HashMap<>();
-        response.put("mensaje", userService.sendEmail(emailContent));
-		//return userService.sendEmail(emailContent);
-
+		Map<String, Object> response = userService.sendEmail(emailContent);
 		return response;
 	}
     
