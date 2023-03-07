@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.nelumbo.parking.back.DTO.EmailContentDTO;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
@@ -23,8 +21,6 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IUserRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class UserServiceImpl implements IUserService {
 
@@ -33,6 +29,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	IParkingService parkingService;
+	
+	@Autowired
+	IVehicleService vehicleService;
 	
 	@Autowired
     RestTemplate restTemplate;
@@ -93,6 +92,9 @@ public class UserServiceImpl implements IUserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> sendEmail(EmailContentDTO emailContent) {
+		
+		parkingService.findOneByName(emailContent.getParking());
+		vehicleService.findOneByPlate(emailContent.getPlate());
 		HttpHeaders headers = new HttpHeaders();
 	      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	      HttpEntity<EmailContentDTO> entity = new HttpEntity<EmailContentDTO>(emailContent,headers);

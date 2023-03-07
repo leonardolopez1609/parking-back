@@ -1,8 +1,6 @@
 package com.nelumbo.parking.back.DTO;
 
 import java.util.List;
-import com.nelumbo.parking.back.entities.Vehicle;
-
 import lombok.Data;
 
 @Data

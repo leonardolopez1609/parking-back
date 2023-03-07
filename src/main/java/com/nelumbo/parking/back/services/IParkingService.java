@@ -17,6 +17,8 @@ public interface IParkingService {
 
 	Parking findById(Long idParking);
 	
+	Parking findOneByName(String name);
+	
 	List<ParkingDTO> findAllByUser(Long iduser);
 	
 	Optional<ParkingDTO> findDTOByID(Long id);

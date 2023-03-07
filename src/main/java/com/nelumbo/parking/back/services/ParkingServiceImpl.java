@@ -2,7 +2,6 @@ package com.nelumbo.parking.back.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -138,7 +137,7 @@ public class ParkingServiceImpl implements IParkingService {
 
 	
 	
-    //Actualizr la validacion
+    
 	@Override
 	public Optional<ParkingDTO> findDTOByID(Long id) {
 		
@@ -285,6 +284,11 @@ public class ParkingServiceImpl implements IParkingService {
 			throw new RequestException("No existe ningún parqueadero");
 		}
 		return parkings.stream().map(parkingDTOMapper).collect(Collectors.toList());
+	}
+
+	@Override
+	public Parking findOneByName(String name) {
+		return parkingRepository.findOneByName(name).orElseThrow(() ->  new RequestException("Parqueadero no encontrado"));
 	}
 
 
