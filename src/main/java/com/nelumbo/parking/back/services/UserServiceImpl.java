@@ -3,6 +3,7 @@ package com.nelumbo.parking.back.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -88,6 +89,7 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
+
 	@Override
 	public String sendEmail(EmailContentDTO emailContent) {
 		HttpHeaders headers = new HttpHeaders();
@@ -95,7 +97,7 @@ public class UserServiceImpl implements IUserService {
 	      HttpEntity<EmailContentDTO> entity = new HttpEntity<EmailContentDTO>(emailContent,headers);
 	      
 	      return restTemplate.exchange(
-	         "http://localhost:8081", HttpMethod.POST, entity, String.class).getBody();
+	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, String.class).getBody();
 	}
 
 }

@@ -66,8 +66,8 @@ public class UserController {
 	public Map<String, Object> sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
 
 		Map<String, Object> response = new HashMap<>();
-
-		response.put("mensaje", userService.sendEmail(emailContent));
+        response.put("mensaje", userService.sendEmail(emailContent));
+		//return userService.sendEmail(emailContent);
 
 		return response;
 	}
