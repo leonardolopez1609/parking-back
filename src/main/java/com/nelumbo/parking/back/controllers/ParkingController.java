@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +25,8 @@ import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.entities.Vehicle;
 import com.nelumbo.parking.back.services.IParkingService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/parkings")
 @CrossOrigin(origins = { "*" })
@@ -39,111 +41,120 @@ public class ParkingController {
 
 	
 	//Revisado
-	@GetMapping("getone/{id}")
-	public ResponseEntity<?> getParking(@PathVariable Long id) {
+	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Parking getParking(@PathVariable Long id) {
 
-		return new ResponseEntity<Parking>(parkingService.findById(id), HttpStatus.OK);
+		return parkingService.findById(id);
 	}
 	
 	//Revisado
-		@GetMapping()
-		@ResponseStatus(value = HttpStatus.OK)
+		@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 		public List<ParkingDTO> getParkings() {
 			return parkingService.findAll();
 		}
 
 	//Revisado
-	@GetMapping("getall/byuser/{id}")
-	public ResponseEntity<?> getParkings(@PathVariable Long id) {
+	@GetMapping(path="/user/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ParkingDTO> getParkings(@PathVariable Long id) {
         
-		return new ResponseEntity<List<ParkingDTO>>(parkingService.findAllByUser(id), HttpStatus.OK);
+		return parkingService.findAllByUser(id);
 	}
     
 	//Revisado
-	@GetMapping("getvehiclesact/{id}")
-	public ResponseEntity<?> getVehiclesAct(@PathVariable Long id) {
+	@GetMapping(path="/{id}/vehiclesact",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<VehicleEntDTO> getVehiclesAct(@PathVariable Long id) {
 
-		return new ResponseEntity<List<VehicleEntDTO>>(parkingService.entVehicleDetails(id), HttpStatus.OK);
+		return parkingService.entVehicleDetails(id);
 	}
 	
 	//Revisado
-	@GetMapping("getvehicleact/{id}")
-	public ResponseEntity<?> getVehicleAct(@PathVariable Long id) {
+	@GetMapping(path="active/vehicle/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public VehicleEntDTO getVehicleAct(@PathVariable Long id) {
 
-		return new ResponseEntity<VehicleEntDTO>(parkingService.vehicleById(id), HttpStatus.OK);
+		return parkingService.vehicleById(id);
 	}
 	
 	//Revisado
-	@GetMapping("getvehiclesfirst")
-	public ResponseEntity<?> getVehicleFistTime() {
+	@GetMapping(path="vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Vehicle> getVehicleFistTime() {
 
-		return new ResponseEntity<List<Vehicle>>(parkingService.vehiclesFirstTime(), HttpStatus.OK);
+		return parkingService.vehiclesFirstTime();
 	}
 	
 	//Revisado
-	@GetMapping("getvehiclesrep")
-	public ResponseEntity<?> getVehicleRepeatedly() {
+	@GetMapping(path="vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Vehicle> getVehicleRepeatedly() {
 
-		return new ResponseEntity<List<Vehicle>>(parkingService.vehiclesRepeatedly(), HttpStatus.OK);
+		return parkingService.vehiclesRepeatedly();
 	}
 	
 	//Revisado
-	@GetMapping("getvehiclesrank/{id}")
-	public ResponseEntity<?> getVehiclesRank(@PathVariable Long id) {
+	@GetMapping(path="/{id}/vehiclesrank",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<VehicleRankDTO> getVehiclesRank(@PathVariable Long id) {
 
-		return new ResponseEntity<List<VehicleRankDTO>>(parkingService.rankVehicles(id), HttpStatus.OK);
+		return parkingService.rankVehicles(id);
 	}
 	
-	//No retornar String
-	@GetMapping("getaverage/min/{dateMin}/max/{dateMax}/in/{id}")
-	public ResponseEntity<?> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
+	//Revisado
+	@GetMapping(path="/{id}/average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
 		
+		 Map<String, Object> response = new HashMap<>();
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
-		
-		return new ResponseEntity<String>("Parqueadero con promedio de "+parkingService.averageUsageByid(
+		response.put("mensaje","Parqueadero con promedio de "+parkingService.averageUsageByid(
 				dateMin2,
 				dateMax2,
 				id,
-				parkingService.getDays(dateMin2, dateMax2))+" entradas por día", HttpStatus.OK);
+				parkingService.getDays(dateMin2, dateMax2))+" entradas por día");
+		return response;
 	}
 	
-	//No retornar String
-	@GetMapping("getaverageall/min/{dateMin}/max/{dateMax}")
-	public ResponseEntity<?> getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
+	//Revisado
+	@GetMapping(path="average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
+		
+		Map<String, Object> response = new HashMap<>();
+		
 		
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
 		
-		return new ResponseEntity<String>("Parqueaderos con promedio de "+parkingService.averageUsageAll(
+		response.put("mensaje","Parqueaderos con promedio de "+parkingService.averageUsageAll(
 				dateMin2,
 				dateMax2,
-				parkingService.getDays(dateMin2, dateMax2))+" entradas por día", HttpStatus.OK);
+				parkingService.getDays(dateMin2, dateMax2))+" entradas por día");
+		
+		return response;
 	}
 
-	//Obtener segundos en ves de horas Y No retorna string
-	@GetMapping("getaveragehours/{id}")
-	public ResponseEntity<?> getAverageHours(@PathVariable Long id) {
-
-		return new ResponseEntity<String>("El parqueadero posee un promedio de "+parkingService.averageHoursById(id)+" horas de uso por vehículo", HttpStatus.OK);
+	//Revisado
+	@GetMapping(path="/{id}/getaveragehours",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getAverageHours(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("mensaje", "El parqueadero posee un promedio de "+parkingService.averageHoursById(id)+" de uso por vehículo");
+		return response;
 	}
 	 
 	
-	//validaciones
-	@PostMapping
-	public ResponseEntity<?> createParking(@RequestBody ParkingDTO parking) {
+	//Revisado
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public Map<String, Object> createParking(@Valid @RequestBody ParkingDTO parking) {
 		Map<String, Object> response = new HashMap<>();
 
 		response.put("parking", parkingService.create(parking));
 		response.put("mensaje", "Parqueadero creado con éxito!");
 
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		return response;
 	}
 
 	
-	//url por cambiar 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<?> updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id) {
+	//Revisado 
+	@PutMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public Map<String, Object> updateParking(@Valid @RequestBody ParkingDTO parking, @PathVariable Long id) {
 
 		
 		Map<String, Object> response = new HashMap<>();
@@ -151,18 +162,19 @@ public class ParkingController {
 		response.put("parking", parkingService.updateDTO(parking, id));
 		response.put("mensaje", "Parquedero actualizado con éxito!");
 
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		return response;
 
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteParking(@PathVariable Long id) {
+	
+	@DeleteMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> deleteParking(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
 
 		parkingService.delete(id);
 		response.put("mensaje", "Parqueadero eliminado con éxito!");
 
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		return response;
 	}
 
 }

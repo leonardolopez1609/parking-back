@@ -263,6 +263,9 @@ public class ParkingServiceImpl implements IParkingService {
 		this.findById(idparking);
 		
 		Long average =parkingRepository.averageUsageHours(idparking);
+		if(average==null) {
+			throw new BusinessException(HttpStatus.OK, "El parqueadero no posee registros");
+		}
 		 Long hour = (average / 3600);
 		 Long  min = ((average - hour * 3600) / 60);
 		 Long  sec = average - (hour * 3600 + min * 60);  

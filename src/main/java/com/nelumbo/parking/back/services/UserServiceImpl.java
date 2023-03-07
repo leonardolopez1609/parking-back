@@ -37,13 +37,9 @@ public class UserServiceImpl implements IUserService {
     RestTemplate restTemplate;
 
 	@Override
-	public Optional<User> findById(Long id) {
+	public User findById(Long id) {
 
-		Optional<User> user = userRepository.findById(id);
-		if (user.isEmpty()) {
-			throw new RequestException("El usuario con ID: " + id + " no existe en la base de datos!");
-		}
-		return user;
+		return userRepository.findById(id).orElseThrow(() ->  new RequestException("El usuario con ID: " + id + " no existe en la base de datos!") );
 	}
 
 	@Override
@@ -64,7 +60,7 @@ public class UserServiceImpl implements IUserService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero ya tiene un socio asignado!");
 		}
 		
-		parking.setUser(this.findById(idUser).get());
+		parking.setUser(this.findById(idUser));
 		parkingService.updateWhitUser(parking, idParking);
 	}
 
