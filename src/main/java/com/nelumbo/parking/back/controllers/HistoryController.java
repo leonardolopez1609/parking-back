@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.entities.History;
 import com.nelumbo.parking.back.services.IHistoryService;
@@ -29,49 +31,55 @@ public class HistoryController {
 	
 	
     //Revisado
-	@GetMapping("getone/{id}")
-	public ResponseEntity<?> getHistory(@PathVariable Long id) {
-		return new ResponseEntity<History>(historyService.findById(id).get(), HttpStatus.OK);
+	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public History getHistory(@PathVariable Long id) {
+		return historyService.findById(id).get();
 	}
 	
 	//Revisado
-	@GetMapping("getvehicles/min/{dateMin}/max/{dateMax}/in/{id}")
-	public ResponseEntity<?> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
+	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
 
 		Date dateMin2 = historyService.parseDate(dateMin);
 		Date dateMax2 = historyService.parseDate(dateMax);
 		
 		 historyService.getDays(dateMin2, dateMax2);
 		
-		return new ResponseEntity<List<VehicleHistoryDTO>>(historyService.getHistoryByRangeDate(
+		return historyService.getHistoryByRangeDate(
 				dateMin2,
 				dateMax2,
-				id), HttpStatus.OK);
+				id);
 	}
 	
 	//Revisado
-	@GetMapping("getvehicles/min/{dateMin}/max/{dateMax}/in/{id}/plate/{plate}")
-	public ResponseEntity<?> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
+	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}/plate/{plate}",
+			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
 
 		Date dateMin2 = historyService.parseDate(dateMin);
 		Date dateMax2 = historyService.parseDate(dateMax);
 		
 		 historyService.getDays(dateMin2, dateMax2);
 		
-		return new ResponseEntity<List<VehicleHistoryDTO>>(historyService.getHistoryByRangeDateAndPlate(
+		return historyService.getHistoryByRangeDateAndPlate(
 				dateMin2,
 				dateMax2,
-				id,plate), HttpStatus.OK);
+				id,plate);
 	}
 
-
-	@PostMapping("/departure/{plate}")
-	public ResponseEntity<?> createHistory(@PathVariable String plate) {
+ 
+	//Revisado
+	@PostMapping(path="/departure/vehicle/{plate}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public Map<String, Object> createHistory(@PathVariable String plate) {
 		Map<String, Object> response = new HashMap<>();
 		historyService.create(plate);
 		response.put("mensaje", "Salida registrada");
 
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		return response;
 
 	}
 }
