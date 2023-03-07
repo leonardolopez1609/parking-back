@@ -32,14 +32,12 @@ public class HistoryController {
 	
     //Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public History getHistory(@PathVariable Long id) {
 		return historyService.findById(id).get();
 	}
 	
 	//Revisado
 	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
 
 		Date dateMin2 = historyService.parseDate(dateMin);
@@ -56,7 +54,6 @@ public class HistoryController {
 	//Revisado
 	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}/plate/{plate}",
 			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
 
 		Date dateMin2 = historyService.parseDate(dateMin);
@@ -73,7 +70,6 @@ public class HistoryController {
  
 	//Revisado
 	@PostMapping(path="/departure/vehicle/{plate}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public Map<String, Object> createHistory(@PathVariable String plate) {
 		Map<String, Object> response = new HashMap<>();
 		historyService.create(plate);

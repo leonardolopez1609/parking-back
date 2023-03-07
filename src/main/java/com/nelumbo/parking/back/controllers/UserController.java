@@ -33,7 +33,6 @@ public class UserController {
 
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public User getUser(@PathVariable Long id) {
 
 		return userService.findById(id);
@@ -42,7 +41,6 @@ public class UserController {
 
 	//Revisado
 	@GetMapping(path="/{id}/parkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public List<ParkingVehicleDTO> getParkings(@PathVariable Long id) {
 
 		return userService.findAllParkingsInd(id);
@@ -77,7 +75,6 @@ public class UserController {
 	
 	//Revisado
 	@PutMapping(path="/{iduser}/associate/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public Map<String, Object> asignateParking(@PathVariable Long idparking, @PathVariable Long iduser) {
        
 		userService.associateParking(iduser, idparking);

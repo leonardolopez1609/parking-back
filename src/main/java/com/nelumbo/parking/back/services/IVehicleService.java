@@ -8,7 +8,7 @@ public interface IVehicleService {
 
 	Optional<Vehicle> findById(Long id);
 	
-    Optional<Vehicle> findOneByPlate(String plate);
+    Vehicle findOneByPlate(String plate);
 	
 	List<Vehicle> findFirstTime();
 	

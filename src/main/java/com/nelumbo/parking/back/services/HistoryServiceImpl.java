@@ -47,7 +47,7 @@ public class HistoryServiceImpl implements IHistoryService {
 					"No se puede Registrar Salida, no existe la placa");
 		}
 
-		Entering ent = enteringService.findOneByPlate(plate).get();
+		Entering ent = enteringService.findOneByPlate(plate);
 		
 		Parking parking = parkingService.findById(ent.getParking().getIdparking());
 		parking.setSpots(parking.getSpots() + 1);

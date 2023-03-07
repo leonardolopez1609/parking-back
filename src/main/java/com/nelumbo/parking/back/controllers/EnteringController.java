@@ -30,7 +30,6 @@ public class EnteringController {
 	
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public Entering getEntering(@PathVariable Long id) {
 
 		return enteringService.findById(id).get();

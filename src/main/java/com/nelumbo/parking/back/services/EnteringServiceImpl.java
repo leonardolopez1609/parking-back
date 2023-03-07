@@ -54,17 +54,15 @@ public class EnteringServiceImpl implements IEnteringService {
 		 if(!vehicleService.exists(plate)) {
 			 vehicleService.create(new Vehicle(plate));
 		 }
-		ent.setVehicle(vehicleService.findOneByPlate(plate).get());
+		ent.setVehicle(vehicleService.findOneByPlate(plate));
 		return enteringRepository.save(ent);
 	}
 
 	@Override
-	public Optional<Entering> findOneByPlate(String plate) {
-		Optional<Entering> entering = enteringRepository.findOneByVehicle_plate(plate);
-		if (entering.isEmpty()) {
-			throw new RequestException(
-					"El registro de entrada con vehículo de placa: " + plate + " no existe en la base de datos!");
-		}
+	public Entering findOneByPlate(String plate) {
+		Entering entering = enteringRepository.findOneByVehicle_plate(plate).orElseThrow(() ->  new RequestException(
+				"El registro de entrada con vehículo de placa: " + plate + " no existe en la base de datos!"));
+		
 		return entering;
 	}
 

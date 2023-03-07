@@ -41,14 +41,10 @@ public class VehicleServiceImpl implements IVehicleService {
 	}
 
 	@Override
-	public Optional<Vehicle> findOneByPlate(String plate) {
+	public Vehicle findOneByPlate(String plate) {
 		this.invalidPlate(plate);
-		Optional<Vehicle> vehicle = vehicleRepository.findOneByPlate(plate);
-
-		if (vehicle.isEmpty()) {
-			throw new RequestException("El vehículo con la placa: " + plate + " no existe en la base de datos!");
-		}
-
+		Vehicle vehicle = vehicleRepository.findOneByPlate(plate).orElseThrow(() ->  new RequestException("El vehículo con la placa: " + plate + " no existe en la base de datos!"));
+		
 		return vehicle;
 	}
 

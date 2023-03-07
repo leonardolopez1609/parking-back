@@ -24,7 +24,7 @@ import com.nelumbo.parking.back.DTO.VehicleRankDTO;
 import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.entities.Vehicle;
 import com.nelumbo.parking.back.services.IParkingService;
-
+import com.nelumbo.parking.back.DTO.TimeHoursDTO;
 import jakarta.validation.Valid;
 
 @RestController
@@ -132,8 +132,10 @@ public class ParkingController {
 	@GetMapping(path="/{id}/getaveragehours",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getAverageHours(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
+		TimeHoursDTO time=parkingService.averageHoursById(id);
 		
-		response.put("mensaje", "El parqueadero posee un promedio de "+parkingService.averageHoursById(id)+" de uso por vehículo");
+		response.put("mensaje", "El parqueadero posee un promedio de "+ time.horas()+" horas "+
+		time.minutos()+" minutos y "+time.segundos()+" segundos de uso por vehículo");
 		return response;
 	}
 	 
@@ -166,7 +168,7 @@ public class ParkingController {
 
 	}
 
-	
+	//Revisado
 	@DeleteMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> deleteParking(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();

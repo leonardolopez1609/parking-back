@@ -44,11 +44,6 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User create(User user) {
-		/**
-		if(userRepository.findOneByName(user.getName())!=(null)) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "El nombre de usuario ya está registrado!");
-		}**/
-
 		return userRepository.save(user);
 	}
 

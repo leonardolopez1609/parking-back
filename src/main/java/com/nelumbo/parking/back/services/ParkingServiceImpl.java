@@ -61,13 +61,9 @@ public class ParkingServiceImpl implements IParkingService {
 	@Override
 	public void delete(Long id) {
 		
-		
-		
-		
 		if (parkingRepository.findById(id).isEmpty()) {
 			throw new RequestException("El parqueadero a eliminar no existe!");
 		}
-		
 		
 		List<Entering> enterings=parkingRepository.enteringsByIdParking(id);
 		List<History> histories = parkingRepository.historiesByIdParking(id);
@@ -103,7 +99,7 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 
-	//eliminar las validaciones por campos
+	
 	public Parking create(ParkingDTO parking) {
 		if (parking.getSpots() < 0) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero!");
@@ -142,7 +138,7 @@ public class ParkingServiceImpl implements IParkingService {
 
 	
 	
-
+    //Actualizr la validacion
 	@Override
 	public Optional<ParkingDTO> findDTOByID(Long id) {
 		
@@ -163,7 +159,7 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 	
-	//usar el vehiculosEnt DTO para vehiculos
+	
 	@Override
 	public List<VehicleEntDTO> vehiclesByParkingInd(Long idparking) {
 		List<VehicleEntDTO> enterings = enteringService.findAllByParking_idparkingInd(idparking).stream().map(vehicleEntMapper)

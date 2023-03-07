@@ -12,7 +12,7 @@ public interface IEnteringService {
 
 	List<Entering> findAllByParking_idparkingInd(Long idparking);
 
-	Optional<Entering> findOneByPlate(String plate);
+	Entering findOneByPlate(String plate);
 
 	Entering create(Long idparking, String plate);
 
