@@ -60,7 +60,7 @@ public class UserController {
 		return response;
 	}
 	
-	//Validar existe placa y parqueadero
+	//Revisado
 	@PostMapping(path="/email",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Map<String, Object> sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
