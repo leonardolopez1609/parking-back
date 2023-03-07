@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -22,7 +24,9 @@ public class Parking implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idparking;
 	
-	@Column(name="name", nullable = true, length = 100)
+	@Column(name="name", nullable = true, length = 100, unique=true)
+	@NotNull(message = "El nombre es requerido")
+	@NotBlank(message = "El nombre es requerido")
 	private String name;
 	
 	@ManyToOne
@@ -30,6 +34,7 @@ public class Parking implements Serializable{
 	private User user;
 	
 	@Column(name="spots")
+	@NotNull(message = "La capacidad es requerida")
 	private int spots;
 	
 	public Parking(String name, int spots) {

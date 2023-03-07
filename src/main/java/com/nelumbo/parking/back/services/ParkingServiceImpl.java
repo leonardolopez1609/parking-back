@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
+import com.nelumbo.parking.back.DTO.TimeHoursDTO;
 import com.nelumbo.parking.back.DTO.VehicleEntDTO;
 import com.nelumbo.parking.back.DTO.VehicleRankDTO;
 import com.nelumbo.parking.back.entities.Entering;
@@ -23,6 +24,7 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IParkingRepository;
 import com.nelumbo.parking.back.servicesDTO.ParkingVehicleDTOMapper;
+import com.nelumbo.parking.back.servicesDTO.VehicleEntMapper;
 import com.nelumbo.parking.back.servicesDTO.ParkingDTOMapper;
 import com.nelumbo.parking.back.servicesDTO.ParkingEntityMapper;
 
@@ -52,6 +54,9 @@ public class ParkingServiceImpl implements IParkingService {
 	
 	@Autowired
 	private ParkingDTOMapper parkingDTOMapper;
+	
+	@Autowired
+	private VehicleEntMapper vehicleEntMapper;
 
 	@Override
 	public void delete(Long id) {
@@ -97,12 +102,9 @@ public class ParkingServiceImpl implements IParkingService {
 		
 	}
 
+
 	//eliminar las validaciones por campos
 	public Parking create(ParkingDTO parking) {
-		if (parking.getName()==(null)||parking.getName().equals("")) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "El nombre del parqueadero es requerido!");
-		}
-		
 		if (parking.getSpots() < 0) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero!");
 		}
@@ -111,7 +113,7 @@ public class ParkingServiceImpl implements IParkingService {
 
 		return parkingRepository.save(parkingMap.map(parkingEntityMapper).get());
 	}
-	
+	 
      
 	@Override
 	public List<VehicleEntDTO> entVehicleDetails(Long id) {
@@ -163,13 +165,11 @@ public class ParkingServiceImpl implements IParkingService {
 	
 	//usar el vehiculosEnt DTO para vehiculos
 	@Override
-	public List<Vehicle> vehiclesByParkingInd(Long idparking) {
-		List<Entering> enterings = enteringService.findAllByParking_idparkingInd(idparking);
-		List<Vehicle> vehicles = new ArrayList<>();
-		for (Entering entering : enterings) {
-			vehicles.add(entering.getVehicle());
-		}
-		return vehicles;
+	public List<VehicleEntDTO> vehiclesByParkingInd(Long idparking) {
+		List<VehicleEntDTO> enterings = enteringService.findAllByParking_idparkingInd(idparking).stream().map(vehicleEntMapper)
+				.collect(Collectors.toList());
+		
+		return enterings;
 	}
 
 	@Override
@@ -259,13 +259,15 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 	@Override
-	public Long averageHoursById(Long idparking) {
+	public TimeHoursDTO averageHoursById(Long idparking) {
 		this.findById(idparking);
+		
 		Long average =parkingRepository.averageUsageHours(idparking);
-		if(average==null||average<=0) {
-			throw new RequestException("Aún no se puede calcular el promedio de horas para este parqueadero");
-		}
-		return average;
+		 Long hour = (average / 3600);
+		 Long  min = ((average - hour * 3600) / 60);
+		 Long  sec = average - (hour * 3600 + min * 60);  
+	
+		return new TimeHoursDTO(hour,min,sec);
 	}
 
 	
@@ -275,6 +277,15 @@ public class ParkingServiceImpl implements IParkingService {
 		
 		return parkingRepository.save(this.findById(id));
 	    
+	}
+
+	@Override
+	public List<ParkingDTO> findAll() {
+		List<Parking> parkings=parkingRepository.findAll();
+		if(parkings.isEmpty()) {
+			throw new RequestException("No existe ningún parqueadero");
+		}
+		return parkings.stream().map(parkingDTOMapper).collect(Collectors.toList());
 	}
 
 

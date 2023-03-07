@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
+import com.nelumbo.parking.back.DTO.TimeHoursDTO;
 import com.nelumbo.parking.back.DTO.VehicleEntDTO;
 import com.nelumbo.parking.back.DTO.VehicleRankDTO;
 import com.nelumbo.parking.back.entities.Parking;
@@ -22,7 +23,7 @@ public interface IParkingService {
 	
 	List<ParkingVehicleDTO> findAllByUserInd(Long iduser);
 	
-	List<Vehicle> vehiclesByParkingInd(Long idparking);
+	List<VehicleEntDTO> vehiclesByParkingInd(Long idparking);
 	
 	List<VehicleEntDTO> entVehicleDetails(Long id);
 	
@@ -38,7 +39,7 @@ public interface IParkingService {
 	
 	Long averageUsageAll(Date min, Date max, int days);
 	
-	Long averageHoursById(Long idparking);
+	TimeHoursDTO averageHoursById(Long idparking);
 	
 	Parking create(ParkingDTO parking);
 	
@@ -53,6 +54,8 @@ public interface IParkingService {
 	Date parseDate(String date);
 	
 	int getDays(Date min, Date max);
+
+	List<ParkingDTO> findAll();
 	
 
 }

@@ -11,9 +11,9 @@ public class ParkingVehicleDTO {
 	private String name;
 	private String user;
 	private int spots;
-	private List<Vehicle> vehicles;
+	private List<VehicleEntDTO> vehicles;
 
-	public ParkingVehicleDTO(Long idparking, String name, String user, int spots, List<Vehicle> vehicles) {
+	public ParkingVehicleDTO(Long idparking, String name, String user, int spots, List<VehicleEntDTO> vehicles) {
 		super();
 		this.idparking = idparking;
 		this.name = name;

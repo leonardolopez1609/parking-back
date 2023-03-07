@@ -20,7 +20,7 @@ import com.nelumbo.parking.back.DTO.VehicleHistoryDTO;
 
 
 @RestController
-@RequestMapping("/api/histories")
+@RequestMapping("/histories")
 @CrossOrigin(origins = { "*" })
 public class HistoryController {
 

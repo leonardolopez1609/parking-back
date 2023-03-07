@@ -29,7 +29,7 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
 	@Query(value="select ((count(h.idhistory))/:days) as usos from History as h where h.enteringDate BETWEEN :min and :max ")
 	public Long averageUsageAll(Date min, Date max, int days);
 	
-	@Query(value="select sum(DATEDIFF(hour,h.enteringDate,h.departureDate))/count(h.idhistory) as horas_uso from History as h where h.parking.idparking =:idparking")
+	@Query(value="select sum(DATEDIFF(second,h.enteringDate,h.departureDate))/count(h.idhistory) as horas_uso from History as h where h.parking.idparking =:idparking")
 	public Long averageUsageHours(Long idparking);
 
     @Query(value="select new com.nelumbo.parking.back.DTO.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.idparking=:id")

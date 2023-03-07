@@ -1,11 +1,19 @@
 package com.nelumbo.parking.back.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.nelumbo.parking.back.DTO.EmailContentDTO;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
 import com.nelumbo.parking.back.entities.Parking;
@@ -13,6 +21,8 @@ import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IUserRepository;
+
+import jakarta.validation.Valid;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -22,6 +32,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	IParkingService parkingService;
+	
+	@Autowired
+    RestTemplate restTemplate;
 
 	@Override
 	public Optional<User> findById(Long id) {
@@ -35,15 +48,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User create(User user) {
-		if (user==null||user.getName()==null||user.getName().equals("")) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "El nombre del usuario es requerido!");
-		}
-		if(user.getRole()==null) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "El Rol del usuario es requerido!");
-		}
+		/**
 		if(userRepository.findOneByName(user.getName())!=(null)) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El nombre de usuario ya está registrado!");
-		}
+		}**/
 
 		return userRepository.save(user);
 	}
@@ -87,6 +95,16 @@ public class UserServiceImpl implements IUserService {
 		}
 		return parkingsVeh;
 
+	}
+
+	@Override
+	public String sendEmail(EmailContentDTO emailContent) {
+		HttpHeaders headers = new HttpHeaders();
+	      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	      HttpEntity<EmailContentDTO> entity = new HttpEntity<EmailContentDTO>(emailContent,headers);
+	      
+	      return restTemplate.exchange(
+	         "http://localhost:8081", HttpMethod.POST, entity, String.class).getBody();
 	}
 
 }

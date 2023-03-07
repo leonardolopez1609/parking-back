@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.services.IUserService;
+
+import jakarta.validation.Valid;
+
+import com.nelumbo.parking.back.DTO.EmailContentDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @CrossOrigin(origins = { "*" })
 public class UserController {
 
@@ -27,11 +31,12 @@ public class UserController {
 	private IUserService userService;
 
 	//Revisado
-	@GetMapping("getone/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getUser(@PathVariable Long id) {
 
 		return new ResponseEntity<User>(userService.findById(id).get(), HttpStatus.OK);
 	}
+
 
 	//Agregar al DTO del vehiculo la fecha de ingreso
 	@GetMapping("getparkings/{id}")
@@ -43,12 +48,22 @@ public class UserController {
 	
 	//Revisado
 	@PostMapping
-	public ResponseEntity<?> createUser(@RequestBody User user) {
+	public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
 
 		Map<String, Object> response = new HashMap<>();
 
 		response.put("user", userService.create(user));
 		response.put("mensaje", "Usuario creado con éxito!");
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("sendemail")
+	public ResponseEntity<?> sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		response.put("mensaje", userService.sendEmail(emailContent));
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}

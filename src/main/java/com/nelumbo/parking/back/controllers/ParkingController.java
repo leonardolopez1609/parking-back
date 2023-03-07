@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.VehicleEntDTO;
@@ -25,10 +26,11 @@ import com.nelumbo.parking.back.entities.Vehicle;
 import com.nelumbo.parking.back.services.IParkingService;
 
 @RestController
-@RequestMapping("/api/parkings")
+@RequestMapping("/parkings")
 @CrossOrigin(origins = { "*" })
 public class ParkingController {
 
+	
 	
 	//AGREGAR EL GET DE TODOS LOS PARQUEADEROS.
 	
@@ -42,6 +44,13 @@ public class ParkingController {
 
 		return new ResponseEntity<Parking>(parkingService.findById(id), HttpStatus.OK);
 	}
+	
+	//Revisado
+		@GetMapping()
+		@ResponseStatus(value = HttpStatus.OK)
+		public List<ParkingDTO> getParkings() {
+			return parkingService.findAll();
+		}
 
 	//Revisado
 	@GetMapping("getall/byuser/{id}")
@@ -112,13 +121,13 @@ public class ParkingController {
 				parkingService.getDays(dateMin2, dateMax2))+" entradas por día", HttpStatus.OK);
 	}
 
-	//Obtener segundos en ves de horas Y No retorna
+	//Obtener segundos en ves de horas Y No retorna string
 	@GetMapping("getaveragehours/{id}")
 	public ResponseEntity<?> getAverageHours(@PathVariable Long id) {
 
 		return new ResponseEntity<String>("El parqueadero posee un promedio de "+parkingService.averageHoursById(id)+" horas de uso por vehículo", HttpStatus.OK);
 	}
-	
+	 
 	
 	//validaciones
 	@PostMapping
@@ -132,7 +141,7 @@ public class ParkingController {
 	}
 
 	
-	//Revisado
+	//url por cambiar
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id) {
 
