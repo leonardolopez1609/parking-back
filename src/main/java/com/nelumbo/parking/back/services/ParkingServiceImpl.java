@@ -104,9 +104,7 @@ public class ParkingServiceImpl implements IParkingService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero!");
 		}
         
-		Optional<ParkingDTO> parkingMap = Optional.of(parking);
-
-		return parkingRepository.save(parkingMap.map(parkingEntityMapper).get());
+		return parkingRepository.save(Optional.of(parking).map(parkingEntityMapper).get());
 	}
 	 
      
@@ -178,7 +176,7 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 	
-	
+	//---------------------------------------------------------------------------------------------------------
 	@Override
 	public VehicleEntDTO vehicleById(Long idvehicle) {
 	
@@ -191,6 +189,7 @@ public class ParkingServiceImpl implements IParkingService {
 		return vehicleEntDTO.get();
 	
 	}
+	//----------------------------------------------------------------------------------------------------------
 
 	@Override
 	public List<Vehicle> vehiclesFirstTime() {
