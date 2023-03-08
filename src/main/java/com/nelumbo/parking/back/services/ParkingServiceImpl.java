@@ -75,12 +75,12 @@ public class ParkingServiceImpl implements IParkingService {
 	@Override
 	public Parking update(Parking newParking, Long id) {
 		
-		Optional<ParkingDTO> parkingDb = this.findDTOByID(id);
+		ParkingDTO parkingDb = this.findDTOByID(id);
 		
-		parkingDb.get().setName(newParking.getName());
-		parkingDb.get().setSpots(newParking.getSpots());
+		parkingDb.setName(newParking.getName());
+		parkingDb.setSpots(newParking.getSpots());
 
-		return this.create(parkingDb.get());
+		return this.create(parkingDb);
 	}
 
 	@Override
@@ -139,9 +139,9 @@ public class ParkingServiceImpl implements IParkingService {
 	
     
 	@Override
-	public Optional<ParkingDTO> findDTOByID(Long id) {
+	public ParkingDTO findDTOByID(Long id) {
 			
-		return Optional.of(parkingRepository.findDTOById(id).orElseThrow(()->new RequestException("Parqueadero no encontrado")));
+		return parkingRepository.findDTOById(id).orElseThrow(()->new RequestException("Parqueadero no encontrado"));
 	}
 
 	@Override
