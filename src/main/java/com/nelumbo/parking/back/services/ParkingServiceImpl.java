@@ -118,23 +118,15 @@ public class ParkingServiceImpl implements IParkingService {
 			throw new RequestException("No existen registros de entrada para el parqueadero con ID: "+id);
 		}
 		return vehiclesEntDTO;
-		
-
 	}
 
 
 	@Override
 	public Parking findById(Long idParking) {
-		Optional<Parking> parking = parkingRepository.findById(idParking);
-		if (parking.isEmpty()) {
-			throw new RequestException("Parqueadero no encontrado");
-		}
-		return parkingRepository.findById(idParking).get();
-	
+		
+		return parkingRepository.findById(idParking).orElseThrow(()->new RequestException("Parqueadero no encontrado"));	
 	}
 
-	
-	
     
 	@Override
 	public ParkingDTO findDTOByID(Long id) {
