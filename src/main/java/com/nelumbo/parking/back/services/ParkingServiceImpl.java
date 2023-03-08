@@ -176,21 +176,17 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 	
-	//---------------------------------------------------------------------------------------------------------
+	
 	@Override
 	public VehicleEntDTO vehicleById(Long idvehicle) {
 	
 		vehicleService.findById(idvehicle);
-		Optional<VehicleEntDTO> vehicleEntDTO= parkingRepository.getVehicleEnteringByIdVehicle(idvehicle);
-		if(vehicleEntDTO.isEmpty()) {
-			throw new RequestException("El vehículo con ID: "+idvehicle+" no se encuentra en ningún parqueadero");
-		}
+		VehicleEntDTO vehicleEntDTO= parkingRepository.getVehicleEnteringByIdVehicle(idvehicle).orElseThrow(()->new RequestException("El vehículo con ID: "+idvehicle+" no se encuentra en ningún parqueadero"));
 		
-		return vehicleEntDTO.get();
+		return vehicleEntDTO;
 	
 	}
-	//----------------------------------------------------------------------------------------------------------
-
+	
 	@Override
 	public List<Vehicle> vehiclesFirstTime() {
 		
@@ -217,6 +213,7 @@ public class ParkingServiceImpl implements IParkingService {
 	public Long averageUsageByid(Date min, Date max, Long idparking, int days) {
 		this.findById(idparking);
 		Long average=parkingRepository.averageUsageByid(min, max, idparking,days);
+		
 		if(average<=0) {
 			throw new BusinessException(HttpStatus.OK, "El promedio es menor a 1 vehículo por día");
 		}

@@ -1,7 +1,5 @@
 package com.nelumbo.parking.back.services;
 
-import java.util.Optional;
-
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
 import com.nelumbo.parking.back.DTO.TimeHoursDTO;
@@ -9,10 +7,8 @@ import com.nelumbo.parking.back.DTO.VehicleEntDTO;
 import com.nelumbo.parking.back.DTO.VehicleRankDTO;
 import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.entities.Vehicle;
-
 import java.util.Date;
 import java.util.List;
-
 public interface IParkingService {
 
 	Parking findById(Long idParking);
