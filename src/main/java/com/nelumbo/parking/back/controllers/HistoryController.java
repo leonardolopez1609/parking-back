@@ -56,7 +56,7 @@ public class HistoryController {
 		Date dateMin2 = historyService.parseDate(dateMin);
 		Date dateMax2 = historyService.parseDate(dateMax);
 		
-		 historyService.getDays(dateMin2, dateMax2);
+		// historyService.getDays(dateMin2, dateMax2);
 		
 		return historyService.getHistoryByRangeDateAndPlate(
 				dateMin2,
