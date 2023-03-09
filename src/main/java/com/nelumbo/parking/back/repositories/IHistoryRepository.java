@@ -13,10 +13,10 @@ public interface IHistoryRepository extends JpaRepository<History, Long> {
 	 public List<VehicleHistoryDTO> findHistoryByRangeDate(Date min, Date max,Long idparking);
 	 
 	
-      @Query(value="select new  com.nelumbo.parking.back.DTO.VehicleHistoryDTO (h.vehicle.idvehicle, h.vehicle.plate,h.enteringDate, h.departureDate as dep) " 
+      @Query(value="select new  com.nelumbo.parking.back.DTO.VehicleHistoryDTO (h.parking.idparking, h.vehicle.idvehicle, h.vehicle.plate,h.enteringDate, h.departureDate as dep) " 
 			 +"from History as h "
 			 +"where " 
-			  +"h.enteringDate BETWEEN :min and :max "
+			 +"h.enteringDate BETWEEN :min and :max "
 			 +"AND h.vehicle.plate like %:plate% AND h.parking.idparking=:idparking "
 			 +"order by dep desc "
 			 )

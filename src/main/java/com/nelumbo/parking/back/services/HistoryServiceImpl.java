@@ -101,10 +101,10 @@ public class HistoryServiceImpl implements IHistoryService {
 		
 		List<VehicleHistoryDTO> vehiclesHist = historyRepository.findHistoryByRangeDateAndPlate(min, max, idParking,plate);
 		
-		//revisar, retornar vacio
+		/**
 		if(vehiclesHist.isEmpty()) {
 			throw new RequestException("No hay registro de vehículos que coincidan con los filtros");
-		}
+		}**/
 		return vehiclesHist;
 	}
 

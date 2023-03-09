@@ -52,19 +52,19 @@ public class VehicleServiceImpl implements IVehicleService {
 	public List<Vehicle> findFirstTime() {
 		List<Vehicle> vehicle = vehicleRepository.findFirstTime();
 
-		if (vehicle.isEmpty()) {
+		/**if (vehicle.isEmpty()) {
 			throw new RequestException("No existen vehículos parqueados por primera vez");
-		}
+		}**/
 		return vehicle;
 	}
 
 	@Override
 	public List<Vehicle> findRepeatedly() {
 		List<Vehicle> vehicle = vehicleRepository.findRepeatedly();
-
+/**
 		if (vehicle.isEmpty()) {
 			throw new RequestException("No existen vehículos parqueados con anteriores registros");
-		}
+		}**/
 		return vehicle;
 	}
 

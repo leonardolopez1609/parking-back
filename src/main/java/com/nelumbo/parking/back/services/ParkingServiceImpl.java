@@ -114,9 +114,9 @@ public class ParkingServiceImpl implements IParkingService {
 		this.findById(id);
 		
 		List<VehicleEntDTO> vehiclesEntDTO = parkingRepository.getVehiclesEnteringByIdParking(id);
-		if(vehiclesEntDTO.isEmpty()) {
+		/**if(vehiclesEntDTO.isEmpty()) {
 			throw new RequestException("No existen registros de entrada para el parqueadero con ID: "+id);
-		}
+		}**/
 		return vehiclesEntDTO;
 	}
 
@@ -137,9 +137,9 @@ public class ParkingServiceImpl implements IParkingService {
 	@Override
 	public List<ParkingVehicleDTO> findAllByUserInd(Long iduser) {
 		List<Parking> parking = parkingRepository.findAllByUser_iduser(iduser);
-		if (parking.isEmpty()) {
+		/**if (parking.isEmpty()) {
 			throw new RequestException("El usuario no posee parqueaderos asociados");
-		}
+		}**/
 		return parking.stream().map(parkingVehicleDTOMapper).collect(Collectors.toList());
 	}
 
@@ -194,9 +194,10 @@ public class ParkingServiceImpl implements IParkingService {
 	public List<VehicleRankDTO> rankVehicles(Long id) {
 		this.findById(id);
 		List<VehicleRankDTO> vehicles = parkingRepository.findRank(id);
+		/**
 		if (vehicles.isEmpty()) {
 			throw new RequestException("El parqueadero no tiene registros");
-		}
+		}**/
 		
 		return vehicles;
 	}

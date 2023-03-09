@@ -81,9 +81,9 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 
-		if (parkingsVeh.isEmpty()) {
+		/**if (parkingsVeh.isEmpty()) {
 			throw new RequestException("No hay vehiculos en los parqueaderos");
-		}
+		}**/
 		return parkingsVeh;
 
 	}

@@ -10,7 +10,7 @@ public class VehicleEntMapper implements Function<Entering, VehicleEntDTO> {
 
 	@Override
 	public VehicleEntDTO apply(Entering t) {
-		return new VehicleEntDTO(t.getVehicle().getIdvehicle(), t.getVehicle().getPlate(), t.getDate());
+		return new VehicleEntDTO(t.getParking().getIdparking(),t.getVehicle().getIdvehicle(), t.getVehicle().getPlate(), t.getDate());
 	}
 
 }

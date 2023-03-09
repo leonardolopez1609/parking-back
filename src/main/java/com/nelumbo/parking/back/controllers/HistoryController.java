@@ -51,16 +51,20 @@ public class HistoryController {
 	//Revisado
 	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}/plate/{plate}",
 			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
+	public  Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
 
+		Map<String, Object> response = new HashMap<>();
+		
 		Date dateMin2 = historyService.parseDate(dateMin);
 		Date dateMax2 = historyService.parseDate(dateMax);
 		
-			
-		return historyService.getHistoryByRangeDateAndPlate(
+		
+		response.put("vehicles", historyService.getHistoryByRangeDateAndPlate(
 				dateMin2,
 				dateMax2,
-				id,plate);
+				id,plate));
+			
+		return response;
 	}
 
  

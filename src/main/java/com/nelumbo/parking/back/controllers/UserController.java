@@ -41,9 +41,12 @@ public class UserController {
 
 	//Revisado
 	@GetMapping(path="/{id}/parkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<ParkingVehicleDTO> getParkings(@PathVariable Long id) {
+	public Map<String, Object> getParkings(@PathVariable Long id) {
 
-		return userService.findAllParkingsInd(id);
+		Map<String, Object> response = new HashMap<>();
+		response.put("parkings", userService.findAllParkingsInd(id));
+		
+		return response;
 	}
 
 	

@@ -38,7 +38,7 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
     @Query(value="select new com.nelumbo.parking.back.DTO.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.user.iduser=:iduser")
     public List<ParkingDTO> findAllDTOByUser(Long iduser);
     
-    @Query(value="select new com.nelumbo.parking.back.DTO.VehicleEntDTO(v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")
+    @Query(value="select new com.nelumbo.parking.back.DTO.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")
   	List<VehicleEntDTO> getVehiclesEnteringByIdParking(Long id);
     
     @Query(value="select new com.nelumbo.parking.back.DTO.VehicleEntDTO(v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.vehicle.idvehicle=:idvehicle")

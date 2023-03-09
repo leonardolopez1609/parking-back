@@ -49,8 +49,10 @@ public class ParkingController {
 	
 	//Revisado
 		@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<ParkingDTO> getParkings() {
-			return parkingService.findAll();
+		public Map<String, Object> getParkings() {
+			Map<String, Object> response = new HashMap<>();
+			response.put("parkings", parkingService.findAll());
+			return response;
 		}
 
 	//Revisado
@@ -62,9 +64,11 @@ public class ParkingController {
     
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesact",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<VehicleEntDTO> getVehiclesAct(@PathVariable Long id) {
-
-		return parkingService.entVehicleDetails(id);
+	public Map<String, Object> getVehiclesAct(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+	
+		response.put("vehicles", parkingService.entVehicleDetails(id));
+		return response;
 	}
 	
 	//Revisado
@@ -76,23 +80,32 @@ public class ParkingController {
 	
 	//Revisado
 	@GetMapping(path="vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Vehicle> getVehicleFistTime() {
-
-		return parkingService.vehiclesFirstTime();
+	public Map<String, Object> getVehicleFistTime() {
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("vehicles",parkingService.vehiclesFirstTime());
+		
+		return response;
 	}
 	
 	//Revisado
 	@GetMapping(path="vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Vehicle> getVehicleRepeatedly() {
-
-		return parkingService.vehiclesRepeatedly();
+	public Map<String, Object> getVehicleRepeatedly() {
+       Map<String, Object> response = new HashMap<>();
+		
+		response.put("vehicles",parkingService.vehiclesRepeatedly());
+		
+		return response;
 	}
 	
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesrank",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<VehicleRankDTO> getVehiclesRank(@PathVariable Long id) {
-
-		return parkingService.rankVehicles(id);
+	public Map<String, Object> getVehiclesRank(@PathVariable Long id) {
+		 Map<String, Object> response = new HashMap<>();
+			
+			response.put("vehicles",parkingService.rankVehicles(id));
+			
+			return response;
 	}
 	
 	//Revisado
