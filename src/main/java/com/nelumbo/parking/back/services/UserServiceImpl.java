@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -96,6 +98,17 @@ public class UserServiceImpl implements IUserService {
 	      
 	      return restTemplate.exchange(
 	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, Map.class).getBody();
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return userRepository.findByEmail(email) ;
+	}
+
+	@Override
+	public User save(User user) {
+		
+		return userRepository.save(user);
 	}
 
 }
