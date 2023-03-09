@@ -19,7 +19,6 @@ public class EmailContentDTO {
 	@NotNull(message = "El mensaje es requerido")
 	@NotBlank(message = "El mensaje es requerido")
 	String message;
-	@NotNull(message = "El nombre del parqueadero es requerido")
-	@NotBlank(message = "El nombre del parqueadero es requerido")
-	String parking;
+	@NotNull(message = "El parqueadero es requerido")
+	Long  idparking;
 }

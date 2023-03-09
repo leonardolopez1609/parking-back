@@ -88,7 +88,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public Map<String, Object> sendEmail(EmailContentDTO emailContent) {
 		
-		parkingService.findOneByName(emailContent.getParking());
+		parkingService.findById(emailContent.getIdparking());
 		vehicleService.findOneByPlate(emailContent.getPlate());
 		HttpHeaders headers = new HttpHeaders();
 	      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
