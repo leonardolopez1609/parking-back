@@ -10,8 +10,6 @@ public interface IHistoryService {
 
 	Optional<History> findById(Long id);
 
-	List<VehicleHistoryDTO> getHistoryByRangeDate(Date min, Date max, Long idParking);
-
 	List<VehicleHistoryDTO> getHistoryByRangeDateAndPlate(Date min, Date max, Long idParking, String plate);
 
 	History create(String plate);

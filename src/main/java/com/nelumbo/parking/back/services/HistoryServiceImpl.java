@@ -66,15 +66,6 @@ public class HistoryServiceImpl implements IHistoryService {
 		return historyRepository.save(his);
 	}
 
-	@Override
-	public List<VehicleHistoryDTO> getHistoryByRangeDate(Date min, Date max, Long idParking) {
-		parkingService.findById(idParking);
-		List<VehicleHistoryDTO> vehiclesHist = historyRepository.findHistoryByRangeDate(min, max, idParking);
-		if(vehiclesHist.isEmpty()) {
-			throw new RequestException("No hay registro de vehiculos en ese rango de fecha");
-		}
-		return vehiclesHist;
-	}
 
 	@Override
 	public Date parseDate(String date) {
@@ -101,10 +92,6 @@ public class HistoryServiceImpl implements IHistoryService {
 		
 		List<VehicleHistoryDTO> vehiclesHist = historyRepository.findHistoryByRangeDateAndPlate(min, max, idParking,plate);
 		
-		/**
-		if(vehiclesHist.isEmpty()) {
-			throw new RequestException("No hay registro de vehículos que coincidan con los filtros");
-		}**/
 		return vehiclesHist;
 	}
 

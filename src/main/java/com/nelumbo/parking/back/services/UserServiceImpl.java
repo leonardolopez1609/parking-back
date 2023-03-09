@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User findById(Long id) {
 
-		return userRepository.findById(id).orElseThrow(() ->  new RequestException("El usuario con ID: " + id + " no existe en la base de datos!") );
+		return userRepository.findById(id).orElseThrow(() ->  new RequestException("El usuario con ID: " + id + " no existe en la base de datos") );
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService {
 		
 		Parking parking = parkingService.findById(idParking);
 		if (!(parking.getUser() == null)) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero ya tiene un socio asignado!");
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero ya tiene un socio asignado");
 		}
 		
 		parking.setUser(this.findById(idUser));
@@ -80,12 +80,7 @@ public class UserServiceImpl implements IUserService {
 				parkingsVeh.add(p);
 			}
 		}
-
-		/**if (parkingsVeh.isEmpty()) {
-			throw new RequestException("No hay vehiculos en los parqueaderos");
-		}**/
 		return parkingsVeh;
-
 	}
 
 

@@ -61,7 +61,7 @@ public class ParkingServiceImpl implements IParkingService {
 	public void delete(Long id) {
 		
 		if (parkingRepository.findById(id).isEmpty()) {
-			throw new RequestException("El parqueadero a eliminar no existe!");
+			throw new RequestException("El parqueadero a eliminar no existe");
 		}
 		
 		List<Entering> enterings=parkingRepository.enteringsByIdParking(id);
@@ -101,7 +101,7 @@ public class ParkingServiceImpl implements IParkingService {
 	
 	public Parking create(ParkingDTO parking) {
 		if (parking.getSpots() < 0) {
-			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero!");
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero");
 		}
         
 		return parkingRepository.save(Optional.of(parking).map(parkingEntityMapper).get());
@@ -112,11 +112,8 @@ public class ParkingServiceImpl implements IParkingService {
 	public List<VehicleEntDTO> entVehicleDetails(Long id) {
 		
 		this.findById(id);
-		
 		List<VehicleEntDTO> vehiclesEntDTO = parkingRepository.getVehiclesEnteringByIdParking(id);
-		/**if(vehiclesEntDTO.isEmpty()) {
-			throw new RequestException("No existen registros de entrada para el parqueadero con ID: "+id);
-		}**/
+		
 		return vehiclesEntDTO;
 	}
 
@@ -136,10 +133,9 @@ public class ParkingServiceImpl implements IParkingService {
 
 	@Override
 	public List<ParkingVehicleDTO> findAllByUserInd(Long iduser) {
+		
 		List<Parking> parking = parkingRepository.findAllByUser_iduser(iduser);
-		/**if (parking.isEmpty()) {
-			throw new RequestException("El usuario no posee parqueaderos asociados");
-		}**/
+		
 		return parking.stream().map(parkingVehicleDTOMapper).collect(Collectors.toList());
 	}
 
@@ -194,10 +190,6 @@ public class ParkingServiceImpl implements IParkingService {
 	public List<VehicleRankDTO> rankVehicles(Long id) {
 		this.findById(id);
 		List<VehicleRankDTO> vehicles = parkingRepository.findRank(id);
-		/**
-		if (vehicles.isEmpty()) {
-			throw new RequestException("El parqueadero no tiene registros");
-		}**/
 		
 		return vehicles;
 	}

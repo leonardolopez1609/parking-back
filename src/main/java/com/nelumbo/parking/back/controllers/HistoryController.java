@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.entities.History;
 import com.nelumbo.parking.back.services.IHistoryService;
-import com.nelumbo.parking.back.DTO.VehicleHistoryDTO;
 
 
 @RestController
@@ -33,20 +31,7 @@ public class HistoryController {
 		return historyService.findById(id).get();
 	}
 	
-	//Revisado
-	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<VehicleHistoryDTO> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id) throws ParseException {
-
-		Date dateMin2 = historyService.parseDate(dateMin);
-		Date dateMax2 = historyService.parseDate(dateMax);
-		
-		 historyService.getDays(dateMin2, dateMax2);
-		
-		return historyService.getHistoryByRangeDate(
-				dateMin2,
-				dateMax2,
-				id);
-	}
+	
 	
 	//Revisado
 	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}/plate/{plate}",
