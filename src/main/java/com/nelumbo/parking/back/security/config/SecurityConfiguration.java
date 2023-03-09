@@ -24,8 +24,8 @@ public class SecurityConfiguration {
       @Autowired
 	  private  AuthenticationProvider authenticationProvider;
       
-     /** @Autowired
-	  private LogoutHandler logoutHandler;**/
+      @Autowired
+	  private LogoutHandler logoutHandler;
 
 	  
 	  @Bean
@@ -49,11 +49,11 @@ public class SecurityConfiguration {
 	        //Revisar
 	        .authenticationProvider(authenticationProvider)
 	        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-	        //.logout()
-	        //.logoutUrl("/auth/logout")
-	       // .addLogoutHandler(logoutHandler)
+	        .logout()
+	        .logoutUrl("/auth/logout")
+	        .addLogoutHandler(logoutHandler)
 	        //---------------------------------------------------------------------------------Revisar
-	       // .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+	        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
 	    ;
 
 	    return http.build();

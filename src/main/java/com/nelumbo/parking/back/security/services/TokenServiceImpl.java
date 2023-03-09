@@ -23,7 +23,7 @@ public class TokenServiceImpl implements ITokenService{
 	@Override
 	public Optional<Token> findByToken(String token) {
 		
-		return tokenRepository.findByToken(token) ;
+		return tokenRepository.findByToken(token);
 	}
 
 	@Override

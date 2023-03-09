@@ -8,7 +8,7 @@ import com.nelumbo.parking.back.entities.Token;
 public interface ITokenService {
 	List<Token> findAllValidTokenByUser(Long id);
 
-	  Optional<Token> findByToken(String token);
+	 Optional<Token> findByToken(String token);
 
 	Token save(Token token);
 
