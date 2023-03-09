@@ -42,6 +42,9 @@ public class SecurityConfiguration {
 	        .authorizeHttpRequests()
 	        .requestMatchers("/parkings/**").hasAuthority(Role.SOCIO.toString())
 	        .and()
+	        .authorizeHttpRequests()
+	        .requestMatchers("/users/**").hasAuthority(Role.SOCIO.toString())
+	        .and()
 	        .sessionManagement()
 	        //revisar
 	         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
