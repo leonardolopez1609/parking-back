@@ -69,7 +69,7 @@ public class HistoryServiceImpl implements IHistoryService {
 	@Override
 	public List<VehicleHistoryDTO> getHistoryByRangeDate(Date min, Date max, Long idParking) {
 		parkingService.findById(idParking);
-		List<VehicleHistoryDTO> vehiclesHist = historyRepository.getHistoryByRangeDate(min, max, idParking);
+		List<VehicleHistoryDTO> vehiclesHist = historyRepository.findHistoryByRangeDate(min, max, idParking);
 		if(vehiclesHist.isEmpty()) {
 			throw new RequestException("No hay registro de vehiculos en ese rango de fecha");
 		}
@@ -82,7 +82,7 @@ public class HistoryServiceImpl implements IHistoryService {
 		try {
 	    return formato.parse(date);
 		} catch (ParseException e) { 
-			return null;
+			return new Date();
 		}
 	}
 
@@ -94,8 +94,14 @@ public class HistoryServiceImpl implements IHistoryService {
 	@Override
 	public List<VehicleHistoryDTO> getHistoryByRangeDateAndPlate(Date min, Date max, Long idParking, String plate) {
 		parkingService.findById(idParking);
-		List<VehicleHistoryDTO> vehiclesHist = historyRepository.getHistoryByRangeDateAndPlate(min, max, idParking,plate);
-		//revisar
+	
+		if(plate.equals("*") ){
+			plate="";
+		}
+		
+		List<VehicleHistoryDTO> vehiclesHist = historyRepository.findHistoryByRangeDateAndPlate(min, max, idParking,plate);
+		
+		//revisar, retornar vacio
 		if(vehiclesHist.isEmpty()) {
 			throw new RequestException("No hay registro de vehículos que coincidan con los filtros");
 		}
