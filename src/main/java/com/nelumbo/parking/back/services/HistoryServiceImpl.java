@@ -1,5 +1,6 @@
 package com.nelumbo.parking.back.services;
 
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,9 @@ import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IHistoryRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 @Service
 public class HistoryServiceImpl implements IHistoryService {
@@ -74,7 +78,12 @@ public class HistoryServiceImpl implements IHistoryService {
 
 	@Override
 	public Date parseDate(String date) {
-		return parkingService.parseDate(date);
+		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
+		try {
+	    return formato.parse(date);
+		} catch (ParseException e) { 
+			return null;
+		}
 	}
 
 	@Override
@@ -86,6 +95,7 @@ public class HistoryServiceImpl implements IHistoryService {
 	public List<VehicleHistoryDTO> getHistoryByRangeDateAndPlate(Date min, Date max, Long idParking, String plate) {
 		parkingService.findById(idParking);
 		List<VehicleHistoryDTO> vehiclesHist = historyRepository.getHistoryByRangeDateAndPlate(min, max, idParking,plate);
+		//revisar
 		if(vehiclesHist.isEmpty()) {
 			throw new RequestException("No hay registro de vehículos que coincidan con los filtros");
 		}
