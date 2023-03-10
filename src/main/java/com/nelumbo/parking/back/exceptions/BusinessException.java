@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 
 import lombok.Data;
 
-@SuppressWarnings("serial")
 @Data
 public class BusinessException extends RuntimeException {
 
@@ -14,7 +13,5 @@ public class BusinessException extends RuntimeException {
 		super(message);
 		this.status = status;
 	}
-	
-	
 
 }

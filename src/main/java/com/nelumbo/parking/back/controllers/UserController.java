@@ -18,6 +18,7 @@ import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.services.IUserService;
 import jakarta.validation.Valid;
 import com.nelumbo.parking.back.DTO.EmailContentDTO;
+import com.nelumbo.parking.back.DTO.UserDTO;
 
 @RestController
 @RequestMapping("/users")
@@ -29,9 +30,9 @@ public class UserController {
 
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public User getUser(@PathVariable Long id) {
+	public UserDTO getUser(@PathVariable Long id) {
 
-		return userService.findById(id);
+		return userService.findDTOById(id);
 	}
 
 

@@ -43,30 +43,31 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter{
 	      filterChain.doFilter(request, response);
 	      return;
 	    }
-	    jwt = authHeader.substring(7);
-	    userEmail = jwtService.extractUsername(jwt);
-	    //----------------------------------------------Revisar
-	    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-	      UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-	      var isTokenValid = tokenService.findByToken(jwt)
-	          .map(t -> !t.isExpired() && !t.isRevoked())
-	          .orElse(false);
-	      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-	       //Revisar-------------------------------------------------------------------
-	    	  UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-	            userDetails,
-	            null,
-	            userDetails.getAuthorities()
-	        );
-	    	  //Revisar-----------------------------------------
-	        authToken.setDetails(
-	            new WebAuthenticationDetailsSource().buildDetails(request)
-	        );
-	        //Revisar-------------------------------------------------
-	        SecurityContextHolder.getContext().setAuthentication(authToken);
-	      }
-	    }
-	    filterChain.doFilter(request, response);
+	    	 jwt = authHeader.substring(7);
+	 	    userEmail = jwtService.extractUsername(jwt);
+	 	    //----------------------------------------------Revisar
+	 	    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+	 	      UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+	 	      var isTokenValid = tokenService.findByToken(jwt)
+	 	          .map(t -> !t.isExpired() && !t.isRevoked())
+	 	          .orElse(false);
+	 	   
+	 	      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+	 	       //Revisar-------------------------------------------------------------------
+	 	    	  UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+	 	            userDetails,
+	 	            null,
+	 	            userDetails.getAuthorities()
+	 	        );
+	 	    	  //Revisar-----------------------------------------
+	 	        authToken.setDetails(
+	 	            new WebAuthenticationDetailsSource().buildDetails(request)
+	 	        );
+	 	        //Revisar-------------------------------------------------
+	 	        SecurityContextHolder.getContext().setAuthentication(authToken);
+	 	      }
+	 	    }
+	 	    filterChain.doFilter(request, response);
 	  }
 
 }

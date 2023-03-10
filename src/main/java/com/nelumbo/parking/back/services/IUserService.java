@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.nelumbo.parking.back.DTO.EmailContentDTO;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
+import com.nelumbo.parking.back.DTO.UserDTO;
 import com.nelumbo.parking.back.entities.User;
 
 
@@ -15,6 +16,8 @@ public interface IUserService {
 	User save(User user);
 	
 	User findById(Long id);
+	
+	UserDTO findDTOById(Long id);
 	
 	List<ParkingVehicleDTO> findAllParkingsInd(Long id);
 	

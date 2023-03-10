@@ -40,9 +40,8 @@ public class ParkingController {
 	
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Parking getParking(@PathVariable Long id) {
-
-		return parkingService.findById(id);
+	public ParkingDTO getParking(@PathVariable Long id) {
+           return parkingService.findDTOByID(id);	
 	}
 	
 	//Revisado

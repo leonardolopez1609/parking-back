@@ -1,6 +1,5 @@
 package com.nelumbo.parking.back.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,51 +26,47 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="_user")
-public class User implements Serializable, UserDetails{
+@Table(name = "_user")
+public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long iduser;
-	
-	
-	@Column(name="name", nullable = true, length = 100, unique=true)
+
+	@Column(name = "name", nullable = true, length = 100, unique = true)
 	@NotNull(message = "El nombre es requerido")
 	@NotBlank(message = "El nombre es requerido")
 	private String name;
-	
-	 @Enumerated(EnumType.STRING)
-	 @Column(name="_role")
-	 @NotNull(message = "El Rol es requerido")
-	  private Role role;
-	
-	 @Column(name="email",unique=true)
-	 @NotNull(message = "El email es requerido")
-	 private String email;
-	 
-	 @Column(name="password")
-	 @NotNull(message = "La contraseña es requerida")
-	 private String password;
 
-	 @OneToMany(mappedBy = "user")
-	  private List<Token> tokens;
-	 
-	 //Relacion one to many con token
-	 
-	 public User(String name,
-			 Role role,
-			 String email,
-			 String password) {
+	@Enumerated(EnumType.STRING)
+	@Column(name = "_role")
+	@NotNull(message = "El Rol es requerido")
+	private Role role;
+
+	@Column(name = "email", unique = true)
+	@NotNull(message = "El email es requerido")
+	private String email;
+
+	@Column(name = "password")
+	@NotNull(message = "La contraseña es requerida")
+	private String password;
+
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
+
+	// Relacion one to many con token
+
+	public User(String name,
+			Role role,
+			String email,
+			String password) {
 		this.name = name;
 		this.role = role;
 		this.email = email;
 		this.password = password;
 	}
-
-	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,7 +75,7 @@ public class User implements Serializable, UserDetails{
 
 	@Override
 	public String getPassword() {
-		
+
 		return password;
 	}
 
@@ -108,11 +103,5 @@ public class User implements Serializable, UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-
-	
-
-	
-	
-	
 
 }

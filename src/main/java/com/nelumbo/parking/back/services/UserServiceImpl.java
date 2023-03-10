@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.nelumbo.parking.back.DTO.EmailContentDTO;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.ParkingVehicleDTO;
+import com.nelumbo.parking.back.DTO.UserDTO;
 import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.exceptions.BusinessException;
@@ -109,6 +110,12 @@ public class UserServiceImpl implements IUserService {
 	public User save(User user) {
 		
 		return userRepository.save(user);
+	}
+
+	@Override
+	public UserDTO findDTOById(Long id) {
+		User user= this.findById(id);
+		return new UserDTO(user.getName(),user.getEmail(),user.getRole().toString()) ;
 	}
 
 }
