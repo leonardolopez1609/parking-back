@@ -32,7 +32,7 @@ public class VehicleServiceImpl implements IVehicleService {
 	public Vehicle create(Vehicle vehicle) {
 		String plate = vehicle.getPlate();
 		
-		this.invalidPlate(plate);
+		//this.invalidPlate(plate);
 			
 		if (this.exists(plate)) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "La placa del vehículo ya está registrada!");

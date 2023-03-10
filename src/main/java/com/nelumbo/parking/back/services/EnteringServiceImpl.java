@@ -12,6 +12,8 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IEnteringRepository;
 
+import jakarta.validation.Valid;
+
 @Service
 public class EnteringServiceImpl implements IEnteringService {
 
@@ -35,25 +37,26 @@ public class EnteringServiceImpl implements IEnteringService {
 
 	@Override
 	public Entering create(Long idParking, String plate) {
-
+         
 		if (this.vehicleIsPresent(plate)) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST,
 					"El vehiculo de placa: " + plate + " ya tiene registrado un ingreso!");
 		}
          
 		Parking parking = parkingService.findById(idParking);
-		vehicleService.invalidPlate(plate);
+		
+		//vehicleService.invalidPlate(plate);
 		if (parking.getSpots() <= 0) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero no posee cupos disponibles!");
 		}
-		parking.setSpots(parking.getSpots() - 1);
-		parkingService.update(parking, idParking);
-		Entering ent = new Entering();
-		ent.setParking(parking);
 		
 		 if(!vehicleService.exists(plate)) {
-			 vehicleService.create(new Vehicle(plate));
+			 vehicleService.create( new Vehicle(plate));
 		 }
+		 parking.setSpots(parking.getSpots() - 1);
+			parkingService.update(parking, idParking);
+			Entering ent = new Entering();
+			ent.setParking(parking);
 		ent.setVehicle(vehicleService.findOneByPlate(plate));
 		return enteringRepository.save(ent);
 	}

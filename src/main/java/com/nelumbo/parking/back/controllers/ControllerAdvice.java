@@ -81,7 +81,7 @@ public class ControllerAdvice {
 
 	@ExceptionHandler(value = ConstraintViolationException.class)
 	public ResponseEntity<ErrorData> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-		ErrorData error = ErrorData.builder().message(ex.fillInStackTrace().getLocalizedMessage()).build();
+		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 

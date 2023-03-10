@@ -16,7 +16,7 @@ import com.nelumbo.parking.back.customvalidators.ValuePlateValidator;
 @Documented
 public @interface ValuePlate {
 
-	String message() default "{com.autentia.core.persistentce.constraints.nif}";
+	String message() default "El formato de la placa es invalido";
 	 
 	Class<?>[] groups() default {};
 	

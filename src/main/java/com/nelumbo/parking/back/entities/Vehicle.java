@@ -24,7 +24,7 @@ public class Vehicle implements Serializable {
 	private Long idvehicle;	
 	
 	@Column(name="plate", nullable = true, length = 6 ,unique=true)
-	@ValuePlate
+	@ValuePlate(message="El formato de la placa es invalido")
 	private String plate;
 
 	public Vehicle(String plate) {

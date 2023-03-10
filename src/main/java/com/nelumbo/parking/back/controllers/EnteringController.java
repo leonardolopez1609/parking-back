@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.nelumbo.parking.back.customvalidators.ValuePlate;
 import com.nelumbo.parking.back.entities.Entering;
 import com.nelumbo.parking.back.services.IEnteringService;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
@@ -36,11 +39,11 @@ public class EnteringController {
 
 	}
 
-	// Revisado
+	// Revisado -- @Pattern(regexp = "^[a-zA-Z0-9]", message = "length must be 3") @Max(6)
 	@PostMapping(path = "/vehicle/{plate}/in/parking/{idparking}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Map<String, Object> createEntering(@PathVariable Long idparking,
-			 @PathVariable @Min(6) @Max(6) @Pattern(regexp = "^[a-zA-Z0-9]", message = "length must be 3") String plate) {
+			 @PathVariable @Min(6) String plate) {
 		
 		Map<String, Object> response = new HashMap<>();
 
