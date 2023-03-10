@@ -1,5 +1,8 @@
 package com.nelumbo.parking.back.controllers;
 
+import java.util.List;
+
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +37,18 @@ public class ControllerAdvice {
 		return new ResponseEntity<>(error,ex.getStatusCode());
 	}
 	
+	
+	//-------------Reemplazar por anotacion personalizada
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
 	public ResponseEntity<ErrorData> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getRootCause().getLocalizedMessage()).build();
+	String param=ex.getRootCause().fillInStackTrace().getMessage()
+			.substring(94)
+			.replace(" la llave", "")
+			.replace(")=(", ": ")
+	        .replace("(", "")
+	        .replace(")", "");
+		String errorMessage=param;
+		ErrorData error = ErrorData.builder().message(errorMessage).build();
 		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 	}
 	

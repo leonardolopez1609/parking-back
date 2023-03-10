@@ -11,6 +11,8 @@ import com.nelumbo.parking.back.security.entities.AuthenticationResponse;
 import com.nelumbo.parking.back.security.entities.RegisterRequest;
 import com.nelumbo.parking.back.security.services.AuthenticationService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -21,13 +23,13 @@ public class AuthenticationController {
 
 	  @PostMapping("/register")
 	  public ResponseEntity<AuthenticationResponse> register(
-	      @RequestBody RegisterRequest request
+	      @Valid @RequestBody RegisterRequest request
 	  ) {
 	    return ResponseEntity.ok(service.register(request));
 	  }
 	  @PostMapping("/authenticate")
 	  public ResponseEntity<AuthenticationResponse> authenticate(
-	      @RequestBody AuthenticationRequest request
+			  @Valid @RequestBody AuthenticationRequest request
 	  ) {
 	    return ResponseEntity.ok(service.authenticate(request));
 	  }

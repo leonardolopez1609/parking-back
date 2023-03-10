@@ -3,6 +3,7 @@ package com.nelumbo.parking.back.security.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.nelumbo.parking.back.entities.Role;
 import com.nelumbo.parking.back.entities.Token;
 import com.nelumbo.parking.back.entities.TokenType;
 import com.nelumbo.parking.back.entities.User;
+import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.security.entities.AuthenticationRequest;
 import com.nelumbo.parking.back.security.entities.AuthenticationResponse;
 import com.nelumbo.parking.back.security.entities.RegisterRequest;
@@ -56,13 +58,21 @@ public class AuthenticationService {
 
 		  public AuthenticationResponse authenticate(AuthenticationRequest request) {
 		    
+			  
+			  try {
+				  authenticationManager.authenticate(
+					        new UsernamePasswordAuthenticationToken(
+					            request.getEmail(),
+					            request.getPassword()
+					        )
+					    );
+				
+			} catch (AuthenticationException e) {
+				throw new RequestException("Usuario o contraseña incorrectos");
+			}
 			  //Capturar error cuando no se pueda autenticar
-			  authenticationManager.authenticate(
-		        new UsernamePasswordAuthenticationToken(
-		            request.getEmail(),
-		            request.getPassword()
-		        )
-		    );
+			  
+			  
 		    
 		    
 		    //lamar al servicio de usuario para obtener por email---capturar error
