@@ -1,6 +1,7 @@
 package com.nelumbo.parking.back.security.entities;
 
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class RegisterRequest {
 	  
       
       @NotBlank(message = "El email es requerido")
+      @Email(message = "El email no tiene el formato correcto")
 	  private String email;
 	  
 	 

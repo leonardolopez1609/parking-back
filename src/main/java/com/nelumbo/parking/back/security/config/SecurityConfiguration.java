@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,42 +31,43 @@ public class SecurityConfiguration {
 	  
 	  @Bean
 	  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http
-	        .csrf()
-	        .disable()
-	        .authorizeHttpRequests()
-	        .requestMatchers("/auth/**")
-	         .permitAll()
-	        //.anyRequest()
-	       // .authenticated()
-	        .and()
-	        .authorizeHttpRequests()
-	        .requestMatchers("/parkings/**")
-	        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString())
-	        //.hasAuthority(Role.SOCIO.toString())	        
-	        .and()
-	        .authorizeHttpRequests()
-	        .requestMatchers("/users/**")
-	        .hasAuthority(Role.ADMIN.toString())
-	        .and()
-	        .authorizeHttpRequests()
-	        .requestMatchers("/enterings/**")
-	        .hasAuthority(Role.SOCIO.toString())
-	        .and()
-	        .sessionManagement()
-	        //revisar
-	         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	        .and()
-	        //Revisar
-	        .authenticationProvider(authenticationProvider)
-	        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-	        .logout()
-	        .logoutUrl("/auth/logout")
-	        .addLogoutHandler(logoutHandler)
-	        //---------------------------------------------------------------------------------Revisar
-	        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-	    ;
-
+	   
+			  http
+		        .csrf()
+		        .disable()
+		        .authorizeHttpRequests()
+		        .requestMatchers("/auth/**")
+		         .permitAll()
+		        //.anyRequest()
+		       // .authenticated()
+		        .and()
+		        .authorizeHttpRequests()
+		        .requestMatchers("/parkings/**")
+		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString())
+		        //.hasAuthority(Role.SOCIO.toString())	        
+		        .and()
+		        .authorizeHttpRequests()
+		        .requestMatchers("/users/**")
+		        .hasAuthority(Role.ADMIN.toString())
+		        .and()
+		        .authorizeHttpRequests()
+		        .requestMatchers("/enterings/**")
+		        .hasAuthority(Role.SOCIO.toString())
+		        .and()
+		        .sessionManagement()
+		        //revisar
+		         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		        .and()
+		        //Revisar
+		        .authenticationProvider(authenticationProvider)
+		        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+		        .logout()
+		        .logoutUrl("/auth/logout")
+		        .addLogoutHandler(logoutHandler)
+		        //---------------------------------------------------------------------------------Revisar
+		        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+		    ;
+			  
 	    return http.build();
 	  }
 }

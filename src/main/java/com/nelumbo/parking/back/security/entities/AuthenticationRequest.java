@@ -1,5 +1,6 @@
 package com.nelumbo.parking.back.security.entities;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class AuthenticationRequest {
 
 	@NotNull(message = "El email es requerido")
     @NotBlank(message = "El email es requerido")
+	@Email(message = "El email no tiene el formato correcto")
 	private String email;
 	
 	 @NotNull(message = "La contraseña es requerida")

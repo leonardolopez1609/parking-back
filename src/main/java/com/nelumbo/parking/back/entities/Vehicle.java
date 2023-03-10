@@ -2,6 +2,8 @@ package com.nelumbo.parking.back.entities;
 
 import java.io.Serializable;
 
+import com.nelumbo.parking.back.customvalidators.ValuePlate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class Vehicle implements Serializable {
 	private Long idvehicle;	
 	
 	@Column(name="plate", nullable = true, length = 6 ,unique=true)
+	@ValuePlate
 	private String plate;
 
 	public Vehicle(String plate) {
