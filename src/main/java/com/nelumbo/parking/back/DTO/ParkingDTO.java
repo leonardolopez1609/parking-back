@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ParkingDTO {
 	private Long idparking;
-	@NotNull(message = "El nombre es requerido")
+	
 	@NotBlank(message = "El nombre es requerido")
 	private String name;
 	private String partner;
