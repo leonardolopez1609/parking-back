@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.entities.Entering;
@@ -39,7 +40,8 @@ public class EnteringController {
 	@PostMapping(path = "/vehicle/{plate}/in/parking/{idparking}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Map<String, Object> createEntering(@PathVariable Long idparking,
-			@PathVariable("plate") @Min(6) @Max(6) @Pattern(regexp = "^[a-zA-Z0-9]", message = "length must be 3") String plate) {
+			 @PathVariable @Min(6) @Max(6) @Pattern(regexp = "^[a-zA-Z0-9]", message = "length must be 3") String plate) {
+		
 		Map<String, Object> response = new HashMap<>();
 
 		response.put("id", enteringService.create(idparking, plate).getIdentering());
