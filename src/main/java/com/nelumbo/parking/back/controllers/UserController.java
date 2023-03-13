@@ -25,7 +25,7 @@ import com.nelumbo.parking.back.services.business.IUserService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @CrossOrigin(origins = { "*" })
 public class UserController {
 
@@ -53,15 +53,7 @@ public class UserController {
 		return response;
 	}
 	
-	@GetMapping(path="/allparkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getAllParkings() {
-
-		Map<String, Object> response = new HashMap<>();
-		response.put("parkings", userService.findAllVehiclesInAllParkingsInd());
-		
-		return response;
-	}
-
+	
 	
 	//Revisado
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -86,17 +78,5 @@ public class UserController {
 	}
     
 	
-	//Revisado
-	@PutMapping(path="/{iduser}/associate/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> asignateParking(@PathVariable Long idparking, @PathVariable Long iduser,HttpServletRequest request) {
-       
-		
-		//dataAccessFilter.userAccessIdFilter(request, iduser);
-		userService.associateParking(iduser, idparking);
-		Map<String, Object> response = new HashMap<>();
-		response.put("mensaje", "Parqueadero asociado con éxito!");
-
-		return response;
-
-	}
+	
 }
