@@ -10,6 +10,8 @@ import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.User;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 
 public interface IUserService {
 	
@@ -19,7 +21,9 @@ public interface IUserService {
 	
 	UserDTO findDTOById(Long id);
 	
-	List<ParkingVehicleDTO> findAllParkingsInd(Long id);
+	List<ParkingVehicleDTO> findAllVehiclesInParkingsInd(Long id);
+	
+	List<ParkingVehicleDTO> findAllVehiclesInAllParkingsInd();
 	
 	List<ParkingDTO> findAllParkings(Long id);
 
@@ -32,5 +36,6 @@ public interface IUserService {
 	Map<String, Object> sendEmail(EmailContentDTO user);
 	
 	Optional<User> findByEmail(String email);
+	
 
 	}

@@ -113,6 +113,11 @@ public class EnteringServiceImpl implements IEnteringService {
 		
 	}
 
+	@Override
+	public List<Entering> findAll() {
+		return enteringRepository.findAll();
+	}
+
 	
 
 }

@@ -58,11 +58,11 @@ public interface IParkingService {
 
 	List<ParkingDTO> findAll();
 
-	void parkingAccessIdFilter(HttpServletRequest request, Long id);
-
 	Long averageUsageAllByUser(Date dateMin2, Date dateMax2, int days, Long iduser);
 	
 	void parkingAccessIdUserFilter(HttpServletRequest request, Long iduser);
+
+	List<ParkingVehicleDTO> findAllWithVehiclesInd();
 	
 
 }

@@ -23,6 +23,7 @@ import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.TimeHoursDTO;
 import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
 import com.nelumbo.parking.back.services.business.IParkingService;
+import com.nelumbo.parking.back.services.security.DataAccessFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -35,6 +36,9 @@ public class ParkingController {
 	
 	@Autowired
 	private IParkingService parkingService;
+	
+	@Autowired
+	private DataAccessFilter dataAccessFilter;
 
 	
 	//Revisado
@@ -42,7 +46,7 @@ public class ParkingController {
 	public ParkingDTO getParking(@PathVariable Long id,HttpServletRequest request) {
           // System.out.println("------------- Token: "+  request.getHeader("Authorization"));
 		
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		return parkingService.findDTOByID(id);	
 	}
 	
@@ -55,7 +59,7 @@ public class ParkingController {
 			return response;
 		}
 
-	//Revisado
+	//Revisado------access
 	@GetMapping(path="/user/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<ParkingDTO> getParkings(@PathVariable Long id) {
         
@@ -65,7 +69,8 @@ public class ParkingController {
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesact",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getVehiclesAct(@PathVariable Long id,HttpServletRequest request) {
-		parkingService.parkingAccessIdFilter(request,id);
+		
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		Map<String, Object> response = new HashMap<>();
 	
 		response.put("vehicles", parkingService.entVehicleDetails(id));
@@ -102,7 +107,7 @@ public class ParkingController {
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesrank",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getVehiclesRank(@PathVariable Long id,HttpServletRequest request) {
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		 Map<String, Object> response = new HashMap<>();
 			
 			response.put("vehicles",parkingService.rankVehicles(id));
@@ -113,7 +118,7 @@ public class ParkingController {
 	//Revisado
 	@GetMapping(path="/{id}/average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,HttpServletRequest request) throws ParseException {
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		 Map<String, Object> response = new HashMap<>();
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
@@ -168,7 +173,7 @@ public class ParkingController {
 	//Revisado--
 	@GetMapping(path="/{id}/averagehours",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getAverageHours(@PathVariable Long id,HttpServletRequest request) {
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		Map<String, Object> response = new HashMap<>();
 		TimeHoursDTO time=parkingService.averageHoursById(id);
 		
@@ -196,7 +201,7 @@ public class ParkingController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public Map<String, Object> updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id,HttpServletRequest request) {
  
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		Map<String, Object> response = new HashMap<>();
 
 		response.put("parking", parkingService.updateDTO(parking, id));
@@ -210,7 +215,7 @@ public class ParkingController {
 	@DeleteMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> deleteParking(@PathVariable Long id,HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
-		parkingService.parkingAccessIdFilter(request,id);
+		dataAccessFilter.parkingAccessIdFilter(request,id);
 		parkingService.delete(id);
 		response.put("mensaje", "Parqueadero eliminado con éxito!");
 

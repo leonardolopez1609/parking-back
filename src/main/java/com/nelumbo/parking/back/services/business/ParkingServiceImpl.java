@@ -273,18 +273,7 @@ public class ParkingServiceImpl implements IParkingService {
 		return parkingRepository.findOneByName(name).orElseThrow(() ->  new RequestException("Parqueadero no encontrado"));
 	}
 
-	@Override
-	public void parkingAccessIdFilter(HttpServletRequest request,Long id) {
-		 final String authHeader = request.getHeader("Authorization");
-		 final String jwt;
-		    
-		jwt = authHeader.substring(7);
-		Parking p = this.findById(id);    
-        if(!p.getUser().getEmail().equals(jwtService.extractUsername(jwt))) {
-        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
-        }
-		
-	}
+	
 
 	@Override
 	public Long averageUsageAllByUser(Date dateMin2, Date dateMax2, int days, Long iduser) {
@@ -308,6 +297,13 @@ public class ParkingServiceImpl implements IParkingService {
         	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
         }
 		
+	}
+
+	@Override
+	public List<ParkingVehicleDTO> findAllWithVehiclesInd() {
+         List<Parking> parkings = parkingRepository.findAll();
+		
+		return parkings.stream().map(parkingVehicleDTOMapper).collect(Collectors.toList());
 	}
 
 }

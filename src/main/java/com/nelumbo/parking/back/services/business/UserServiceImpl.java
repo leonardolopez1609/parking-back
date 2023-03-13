@@ -24,6 +24,9 @@ import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.repositories.IUserRepository;
+import com.nelumbo.parking.back.services.security.JwtService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -39,6 +42,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
     RestTemplate restTemplate;
+	
+	@Autowired
+	private JwtService jwtService;
 
 	@Override
 	public User findById(Long id) {
@@ -75,7 +81,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<ParkingVehicleDTO> findAllParkingsInd(Long id) {
+	public List<ParkingVehicleDTO> findAllVehiclesInParkingsInd(Long id) {
 		this.findById(id);
 		List<ParkingVehicleDTO> parkings = parkingService.findAllByUserInd(id);
 		List<ParkingVehicleDTO> parkingsVeh = new ArrayList<>();
@@ -118,5 +124,21 @@ public class UserServiceImpl implements IUserService {
 		User user= this.findById(id);
 		return new UserDTO(user.getName(),user.getEmail(),user.getRole().toString()) ;
 	}
+
+	@Override
+	public List<ParkingVehicleDTO> findAllVehiclesInAllParkingsInd() {
+		
+		List<ParkingVehicleDTO> parkings = parkingService.findAllWithVehiclesInd();
+		List<ParkingVehicleDTO> parkingsVeh = new ArrayList<>();
+		for (ParkingVehicleDTO p : parkings) {
+			if (!p.getVehicles().isEmpty()) {
+				parkingsVeh.add(p);
+			}
+		}
+		return parkingsVeh;
+		
+	}
+
+	
 
 }
