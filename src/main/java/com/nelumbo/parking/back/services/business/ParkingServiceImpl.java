@@ -20,12 +20,16 @@ import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
 import com.nelumbo.parking.back.models.entities.Entering;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
+import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.repositories.IParkingRepository;
 import com.nelumbo.parking.back.services.dto.ParkingDTOMapper;
 import com.nelumbo.parking.back.services.dto.ParkingEntityMapper;
 import com.nelumbo.parking.back.services.dto.ParkingVehicleDTOMapper;
 import com.nelumbo.parking.back.services.dto.VehicleEntMapper;
+import com.nelumbo.parking.back.services.security.JwtService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class ParkingServiceImpl implements IParkingService {
@@ -57,6 +61,9 @@ public class ParkingServiceImpl implements IParkingService {
 	@Autowired
 	private VehicleEntMapper vehicleEntMapper;
 
+	@Autowired
+	private JwtService jwtService;
+	
 	@Override
 	public void delete(Long id) {
 		
@@ -264,6 +271,43 @@ public class ParkingServiceImpl implements IParkingService {
 	@Override
 	public Parking findOneByName(String name) {
 		return parkingRepository.findOneByName(name).orElseThrow(() ->  new RequestException("Parqueadero no encontrado"));
+	}
+
+	@Override
+	public void parkingAccessIdFilter(HttpServletRequest request,Long id) {
+		 final String authHeader = request.getHeader("Authorization");
+		 final String jwt;
+		    
+		jwt = authHeader.substring(7);
+		Parking p = this.findById(id);    
+        if(!p.getUser().getEmail().equals(jwtService.extractUsername(jwt))) {
+        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
+        }
+		
+	}
+
+	@Override
+	public Long averageUsageAllByUser(Date dateMin2, Date dateMax2, int days, Long iduser) {
+		
+		Long average= parkingRepository.averageUsageAllByUser(dateMin2, dateMax2, days, iduser);
+		
+		if(average<=0) {
+			throw new BusinessException(HttpStatus.OK, "El promedio es menor a 1 vehículo por día");
+		}
+		return average;
+	}
+
+	@Override
+	public void parkingAccessIdUserFilter(HttpServletRequest request, Long iduser) {
+		 final String authHeader = request.getHeader("Authorization");
+		 final String jwt;
+		    
+		jwt = authHeader.substring(7);
+		User user=userService.findById(iduser);    
+        if(!user.getEmail().equals(jwtService.extractUsername(jwt))) {
+        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
+        }
+		
 	}
 
 }

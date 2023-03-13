@@ -1,4 +1,4 @@
-package com.nelumbo.parking.back.security.config;
+package com.nelumbo.parking.back.config.security;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;

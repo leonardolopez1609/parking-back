@@ -34,24 +34,25 @@ public class AuthenticationService {
 	  
 	  
 	  
-	  public AuthenticationResponse register(RegisterRequest request) {
-		   //Construir el usuario a partir del request(Usuario mapeado)
+	  public AuthenticationResponse register(RegisterRequest request, Role role) {
+		  
 			  User user = User.builder()
 				.name(request.getName())
 		        .email(request.getEmail())
 		        .password(passwordEncoder.encode(request.getPassword()))
-		        .role(Role.SOCIO)
+		        .role(role)
 		        .build();
-			  
-			  //llamar al servicio de guardar token
+			
 		    var savedUser = userService.save(user);
 		    
 		    var jwtToken = jwtService.generateToken(user);
-		  //  saveUserToken(savedUser, jwtToken);
+		  
 		    return AuthenticationResponse.builder()
 		        .token(jwtToken)
 		        .build();
 		  }
+	  
+	  
 
 		  public AuthenticationResponse authenticate(AuthenticationRequest request) {
 		    
@@ -83,28 +84,5 @@ public class AuthenticationService {
 		        .build();
 		  }
 
-		  /**private void saveUserToken(User user, String jwtToken) {
-		    var token = Token.builder()
-		        .user(user)
-		        .token(jwtToken)
-		        .tokenType(TokenType.BEARER)
-		        .expired(false)
-		        .revoked(false)
-		        .build();
-		    //llamar al servicio de token
-		    tokenService.save(token);
-		  }**/
-
-		 /** private void revokeAllUserTokens(User user) {
-		    var validUserTokens = tokenService.findAllValidTokenByUser(user.getIduser());
-		    if (validUserTokens.isEmpty())
-		      return;
-		    validUserTokens.forEach(token -> {
-		      token.setExpired(true);
-		      token.setRevoked(true);
-		    });
-		    //llamar al serrvicio de token
-		    tokenService.saveAll(validUserTokens);
-		  }**/
 	
 }

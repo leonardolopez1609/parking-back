@@ -29,6 +29,9 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
 	@Query(value="select ((count(h.idhistory))/:days) as usos from History as h where h.enteringDate BETWEEN :min and :max ")
 	public Long averageUsageAll(Date min, Date max, int days);
 	
+	@Query(value="select ((count(h.idhistory))/:days) as usos from History as h where h.enteringDate BETWEEN :min and :max and h.parking.user.iduser= :iduser ")
+	public Long averageUsageAllByUser(Date min, Date max, int days,Long iduser);
+	
 	@Query(value="select sum(DATEDIFF(second,h.enteringDate,h.departureDate))/count(h.idhistory) as horas_uso from History as h where h.parking.idparking =:idparking")
 	public Long averageUsageHours(Long idparking);
 
@@ -41,7 +44,7 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
     @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")
   	List<VehicleEntDTO> getVehiclesEnteringByIdParking(Long id);
     
-    @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.vehicle.idvehicle=:idvehicle")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.vehicle.idvehicle=:idvehicle")
     Optional<VehicleEntDTO> getVehicleEnteringByIdVehicle(Long idvehicle);
    
     @Query(value="select e from Entering as e where e.parking.idparking=:idparking")
