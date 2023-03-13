@@ -12,8 +12,6 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.repositories.IEnteringRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class EnteringServiceImpl implements IEnteringService {
 

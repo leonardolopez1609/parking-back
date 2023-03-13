@@ -2,7 +2,7 @@ package com.nelumbo.parking.back.entities;
 
 
 public enum Role {
-	DEFAULT,
+	USUARIO,
 	ADMIN,
 	SOCIO
 }

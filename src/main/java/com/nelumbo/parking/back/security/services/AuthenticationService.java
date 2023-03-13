@@ -6,9 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.nelumbo.parking.back.entities.Role;
-import com.nelumbo.parking.back.entities.Token;
 import com.nelumbo.parking.back.entities.TokenType;
 import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.exceptions.RequestException;
@@ -23,8 +21,6 @@ public class AuthenticationService {
 	  @Autowired
 	  private IUserService userService;
 	  
-	  @Autowired
-	  private ITokenService tokenService;
 	  
 	  @Autowired
 	  private PasswordEncoder passwordEncoder;
@@ -50,7 +46,7 @@ public class AuthenticationService {
 		    var savedUser = userService.save(user);
 		    
 		    var jwtToken = jwtService.generateToken(user);
-		    saveUserToken(savedUser, jwtToken);
+		  //  saveUserToken(savedUser, jwtToken);
 		    return AuthenticationResponse.builder()
 		        .token(jwtToken)
 		        .build();
@@ -79,14 +75,14 @@ public class AuthenticationService {
 		    var user = userService.findByEmail(request.getEmail())
 		        .orElseThrow();
 		    var jwtToken = jwtService.generateToken(user);
-		    revokeAllUserTokens(user);
-		    saveUserToken(user, jwtToken);
+		   // revokeAllUserTokens(user);
+		   // saveUserToken(user, jwtToken);
 		    return AuthenticationResponse.builder()
 		        .token(jwtToken)
 		        .build();
 		  }
 
-		  private void saveUserToken(User user, String jwtToken) {
+		  /**private void saveUserToken(User user, String jwtToken) {
 		    var token = Token.builder()
 		        .user(user)
 		        .token(jwtToken)
@@ -96,9 +92,9 @@ public class AuthenticationService {
 		        .build();
 		    //llamar al servicio de token
 		    tokenService.save(token);
-		  }
+		  }**/
 
-		  private void revokeAllUserTokens(User user) {
+		 /** private void revokeAllUserTokens(User user) {
 		    var validUserTokens = tokenService.findAllValidTokenByUser(user.getIduser());
 		    if (validUserTokens.isEmpty())
 		      return;
@@ -108,6 +104,6 @@ public class AuthenticationService {
 		    });
 		    //llamar al serrvicio de token
 		    tokenService.saveAll(validUserTokens);
-		  }
+		  }**/
 	
 }

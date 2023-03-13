@@ -2,7 +2,6 @@ package com.nelumbo.parking.back.security.config;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,9 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.nelumbo.parking.back.exceptions.RequestException;
-import com.nelumbo.parking.back.security.services.ITokenService;
 import com.nelumbo.parking.back.security.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,9 +24,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
-	@Autowired
-	private ITokenService tokenService;
 
 	@Override
 	protected void doFilterInternal(
@@ -55,10 +48,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// ----------------------------------------------Revisar
 		if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-			boolean isTokenValid = tokenService.findByToken(jwt)
-					.map(t -> !t.isExpired() && !t.isRevoked()).orElse(false);
+			//boolean isTokenValid = tokenService.findByToken(jwt)
+					//.map(t -> !t.isExpired() && !t.isRevoked()).orElse(false);
 
-			if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+			if (jwtService.isTokenValid(jwt, userDetails)) {
 				// Revisar-------------------------------------------------------------------
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
 						null, userDetails.getAuthorities());

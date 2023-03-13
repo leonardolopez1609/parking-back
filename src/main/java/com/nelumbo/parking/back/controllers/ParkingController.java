@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.DTO.ParkingDTO;
 import com.nelumbo.parking.back.DTO.VehicleEntDTO;
-import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.services.IParkingService;
 import com.nelumbo.parking.back.DTO.TimeHoursDTO;
 import jakarta.validation.Valid;
@@ -30,9 +29,6 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = { "*" })
 public class ParkingController {
 
-	
-	
-	//AGREGAR EL GET DE TODOS LOS PARQUEADEROS.
 	
 	@Autowired
 	private IParkingService parkingService;

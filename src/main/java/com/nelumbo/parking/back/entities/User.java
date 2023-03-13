@@ -12,7 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,8 +52,6 @@ public class User implements UserDetails {
 	@NotNull(message = "La contraseña es requerida")
 	private String password;
 
-	@OneToMany(mappedBy = "user")
-	private List<Token> tokens;
 
 	// Relacion one to many con token
 

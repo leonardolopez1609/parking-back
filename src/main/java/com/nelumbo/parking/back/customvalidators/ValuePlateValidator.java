@@ -1,8 +1,6 @@
 package com.nelumbo.parking.back.customvalidators;
 
-import java.util.regex.Pattern;
 
-import org.springframework.http.HttpStatus;
 
 
 

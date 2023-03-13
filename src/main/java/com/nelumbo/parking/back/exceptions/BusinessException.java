@@ -7,6 +7,10 @@ import lombok.Data;
 @Data
 public class BusinessException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private HttpStatus status;
 
 	public BusinessException(HttpStatus status, String message) {

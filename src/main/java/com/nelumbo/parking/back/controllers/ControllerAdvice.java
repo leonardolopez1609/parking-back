@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.yaml.snakeyaml.serializer.SerializerException;
-
 import com.nelumbo.parking.back.entities.ErrorData;
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
@@ -52,12 +49,6 @@ public class ControllerAdvice {
 		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
 		return new ResponseEntity<>(error, ex.getStatus());
 	}
-/**
-	@ExceptionHandler(value = MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorData> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getFieldError().getDefaultMessage()).build();
-		return new ResponseEntity<>(error, ex.getStatusCode());
-	}**/
 
 	// -------------Reemplazar por anotacion personalizada
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
@@ -92,6 +83,4 @@ public class ControllerAdvice {
 	}
 	
 	
-	
-	//AccessDeniedException
 }

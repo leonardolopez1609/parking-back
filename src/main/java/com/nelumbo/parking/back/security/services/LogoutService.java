@@ -9,14 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.nelumbo.parking.back.entities.Token;
 
 @Service
 public class LogoutService implements LogoutHandler{
 
 	//llamar al servicio de token
-	  @Autowired
-	  private ITokenService tokenService;
+	 
 
 	  @Override
 	  public void logout(
@@ -32,15 +30,15 @@ public class LogoutService implements LogoutHandler{
 	    jwt = authHeader.substring(7);
 	    
 	    //---------No encuentra el token
-	    Token storedToken = tokenService.findByToken(jwt)
+	  /** Token storedToken = tokenService.findByToken(jwt)
 	        .orElse(null);
 	    if (storedToken != null) {
 	      storedToken.setExpired(true);
 	      storedToken.setRevoked(true);
 	      
 	      //llamar al servicio de token
-	      tokenService.save(storedToken);
+	      tokenService.save(storedToken);**/
 	      SecurityContextHolder.clearContext();
-	    }
+	    //}
 	  }
 }

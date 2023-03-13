@@ -268,8 +268,4 @@ public class ParkingServiceImpl implements IParkingService {
 		return parkingRepository.findOneByName(name).orElseThrow(() ->  new RequestException("Parqueadero no encontrado"));
 	}
 
-	
-
-
-
 }
