@@ -63,6 +63,10 @@ public interface IParkingService {
 	void parkingAccessIdUserFilter(HttpServletRequest request, Long iduser);
 
 	List<ParkingVehicleDTO> findAllWithVehiclesInd();
+
+	List<Vehicle> vehiclesFirstTimeByUser(Long iduser);
+	
+	List<Vehicle> vehiclesRepeatedlyByUser(Long iduser);
 	
 
 }

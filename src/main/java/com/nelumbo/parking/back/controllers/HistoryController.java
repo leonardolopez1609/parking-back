@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.models.dto.HistoryDTO;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.services.business.IHistoryService;
+import com.nelumbo.parking.back.services.security.DataAccessFilter;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -26,11 +29,14 @@ public class HistoryController {
 	@Autowired
 	private IHistoryService historyService;
 	
+	@Autowired
+	private DataAccessFilter dataAccessFilter;
+	
 	
     //Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public HistoryDTO getHistory(@PathVariable Long id) {
-		return historyService.findById(id);
+		return historyService.findDTOById(id);
 	}
 	
 	
@@ -38,8 +44,10 @@ public class HistoryController {
 	//Revisado
 	@GetMapping(path="vehicles/datemin/{dateMin}/datemax/{dateMax}/in/parking/{id}/plate/{plate}",
 			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public  Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,@PathVariable String plate) throws ParseException {
+	public  Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,
+			@PathVariable Long id,@PathVariable String plate,HttpServletRequest request) throws ParseException {
 
+		dataAccessFilter.parkingAccessIdFilter(request, id);
 		Map<String, Object> response = new HashMap<>();
 		
 		Date dateMin2 = historyService.parseDate(dateMin);
@@ -50,6 +58,19 @@ public class HistoryController {
 				dateMin2,
 				dateMax2,
 				id,plate));
+			
+		return response;
+	}
+	
+	@GetMapping(path="/vehicles/parking/{idparking}",
+			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public  Map<String, Object> getHistoryVehicles(@PathVariable Long idparking,HttpServletRequest request) throws ParseException {
+
+		
+		dataAccessFilter.parkingAccessIdFilter(request, idparking);
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("vehicles", historyService.getHistoryVehicles(idparking));
 			
 		return response;
 	}

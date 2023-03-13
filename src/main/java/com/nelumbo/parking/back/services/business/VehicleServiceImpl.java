@@ -78,4 +78,22 @@ public class VehicleServiceImpl implements IVehicleService {
 	}
 
 
+
+	@Override
+	public List<Vehicle> findFirstTimeByUser(Long iduser) {
+		List<Vehicle> vehicles = vehicleRepository.findFirstTimeByUser(iduser);
+
+		return vehicles;
+	}
+
+
+
+	@Override
+	public List<Vehicle> findRepeatedlyByUser(Long iduser) {
+		List<Vehicle> vehicles = vehicleRepository.findRepeatedlyByUser(iduser);
+
+		return vehicles;
+	}
+
+
 }

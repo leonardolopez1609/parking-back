@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.nelumbo.parking.back.models.dto.HistoryDTO;
 import com.nelumbo.parking.back.models.dto.VehicleHistoryDTO;
 import com.nelumbo.parking.back.models.entities.History;
+import com.nelumbo.parking.back.models.entities.Vehicle;
 
 public interface IHistoryRepository extends JpaRepository<History, Long> {
 
@@ -25,5 +26,9 @@ public interface IHistoryRepository extends JpaRepository<History, Long> {
 	 
       @Query(value="select new  com.nelumbo.parking.back.models.dto.HistoryDTO (h.enteringDate, h.departureDate, h.parking.name, h.vehicle.plate) from History as h where h.idhistory= :id")
       public Optional<HistoryDTO> findOneDTOById(Long id);
+      
+      
+      @Query(value="select h.vehicle as v from History as h where h.parking.idparking= :id")
+      public List<Vehicle> findHistoryVehicles(Long id);
 
 }

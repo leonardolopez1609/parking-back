@@ -21,4 +21,8 @@ public interface IVehicleService {
     
     void invalidPlate(String plate);
 
+	List<Vehicle> findFirstTimeByUser(Long iduser);
+	
+	List<Vehicle> findRepeatedlyByUser(Long iduser);
+
 }

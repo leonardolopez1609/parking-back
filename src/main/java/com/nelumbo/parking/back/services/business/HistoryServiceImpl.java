@@ -15,7 +15,10 @@ import com.nelumbo.parking.back.models.dto.VehicleHistoryDTO;
 import com.nelumbo.parking.back.models.entities.Entering;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
+import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.repositories.IHistoryRepository;
+import com.nelumbo.parking.back.services.security.DataAccessFilter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -34,10 +37,11 @@ public class HistoryServiceImpl implements IHistoryService {
 	
 	@Autowired
 	private IVehicleService vehicleService;
+	
 
 
 	@Override
-	public HistoryDTO findById(Long id) {
+	public HistoryDTO findDTOById(Long id) {
 		
 		return historyRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El historial con ID: " + id + " no existe en la base de datos!"));
 	}
@@ -98,6 +102,18 @@ public class HistoryServiceImpl implements IHistoryService {
 	public void deleteAllByList(List<History> histories) {
 		historyRepository.deleteAll(histories);
 		
+	}
+
+	@Override
+	public List<Vehicle> getHistoryVehicles(Long idparking) {
+		
+		return historyRepository.findHistoryVehicles(idparking);
+	}
+
+	@Override
+	public History findById(Long id) {
+		
+		return historyRepository.findById(id).orElse(null);
 	}
 
 	

@@ -84,7 +84,7 @@ public class ParkingController {
 		return parkingService.vehicleById(id);
 	}
 	
-	//Revisado---Agregar por parqueaderos del socio
+	//Revisado---Agregar por parqueaderos del socio----solo admin
 	@GetMapping(path="vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getVehicleFistTime() {
 		Map<String, Object> response = new HashMap<>();
@@ -94,12 +94,37 @@ public class ParkingController {
 		return response;
 	}
 	
-	//Revisado---Agregar por parqueaderos del socio
+	@GetMapping(path="/user/{iduser}/vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getVehicleFistTimeByUser(@PathVariable Long iduser,HttpServletRequest request) {
+		dataAccessFilter.userAccessIdFilter(request, iduser);
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("vehicles",parkingService.vehiclesFirstTimeByUser(iduser));
+		
+		return response;
+	}
+	
+	
+	
+	
+	
+	//Revisado---Agregar por parqueaderos del socio-----solo admin
 	@GetMapping(path="vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getVehicleRepeatedly() {
        Map<String, Object> response = new HashMap<>();
 		
 		response.put("vehicles",parkingService.vehiclesRepeatedly());
+		
+		return response;
+	}
+	
+	
+	@GetMapping(path="user/{iduser}/vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getVehicleRepeatedlyByUser(@PathVariable Long iduser,HttpServletRequest request) {
+		dataAccessFilter.userAccessIdFilter(request, iduser);
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("vehicles",parkingService.vehiclesRepeatedlyByUser(iduser));
 		
 		return response;
 	}
@@ -181,7 +206,7 @@ public class ParkingController {
 		time.minutos()+" minutos y "+time.segundos()+" segundos de uso por vehículo");
 		return response;
 	}
-	 
+	
 	
 	//Revisado
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)

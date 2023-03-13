@@ -306,4 +306,15 @@ public class ParkingServiceImpl implements IParkingService {
 		return parkings.stream().map(parkingVehicleDTOMapper).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Vehicle> vehiclesFirstTimeByUser(Long iduser) {
+	
+		return vehicleService.findFirstTimeByUser(iduser);
+	}
+
+	@Override
+	public List<Vehicle> vehiclesRepeatedlyByUser(Long iduser) {
+		return vehicleService.findRepeatedlyByUser(iduser);
+	}
+
 }
