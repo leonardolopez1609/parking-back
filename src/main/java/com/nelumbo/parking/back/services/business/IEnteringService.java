@@ -1,11 +1,8 @@
 package com.nelumbo.parking.back.services.business;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.nelumbo.parking.back.models.dto.EnteringDTO;
 import com.nelumbo.parking.back.models.entities.Entering;
-import com.nelumbo.parking.back.models.entities.Parking;
 
 public interface IEnteringService {
 

@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.nelumbo.parking.back.models.dto.HistoryDTO;
-import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.services.business.IHistoryService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
 

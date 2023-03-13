@@ -3,14 +3,11 @@ package com.nelumbo.parking.back.services.business;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.User;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 
 public interface IUserService {

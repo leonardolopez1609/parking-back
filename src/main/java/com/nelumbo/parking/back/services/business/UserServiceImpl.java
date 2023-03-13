@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
@@ -24,9 +22,6 @@ import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.repositories.IUserRepository;
-import com.nelumbo.parking.back.services.security.JwtService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -43,8 +38,6 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
     RestTemplate restTemplate;
 	
-	@Autowired
-	private JwtService jwtService;
 
 	@Override
 	public User findById(Long id) {

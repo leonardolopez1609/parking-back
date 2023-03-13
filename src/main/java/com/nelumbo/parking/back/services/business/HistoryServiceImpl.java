@@ -3,11 +3,9 @@ package com.nelumbo.parking.back.services.business;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.dto.HistoryDTO;
@@ -17,8 +15,6 @@ import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.repositories.IHistoryRepository;
-import com.nelumbo.parking.back.services.security.DataAccessFilter;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

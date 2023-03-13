@@ -8,7 +8,6 @@ import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
-import com.nelumbo.parking.back.services.business.IEnteringService;
 import com.nelumbo.parking.back.services.business.IHistoryService;
 import com.nelumbo.parking.back.services.business.IParkingService;
 import com.nelumbo.parking.back.services.business.IUserService;
@@ -23,9 +22,6 @@ public class DataAccessFilter {
 	
 	@Autowired
 	private IHistoryService historyService;
-	
-	@Autowired
-	private IEnteringService enteringService;
 	
 	@Autowired
 	private IUserService userService;

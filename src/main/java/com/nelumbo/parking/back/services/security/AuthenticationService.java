@@ -6,10 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.entities.Role;
-import com.nelumbo.parking.back.models.entities.TokenType;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.models.security.AuthenticationRequest;
 import com.nelumbo.parking.back.models.security.AuthenticationResponse;
