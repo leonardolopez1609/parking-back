@@ -150,7 +150,7 @@ public class ParkingServiceImpl implements IParkingService {
 	}
 
 	@Override
-	public Parking updateDTO(ParkingDTO newParking, Long id) {
+	public ParkingDTO updateDTO(ParkingDTO newParking, Long id) {
 		Parking p =this.findById(id); 
 		if(p.getUser()==null) {
 			p.setUser(new User());
@@ -160,7 +160,7 @@ public class ParkingServiceImpl implements IParkingService {
 		parkingDb.get().setName(newParking.getName());
 		parkingDb.get().setSpots(newParking.getSpots());
 		
-		return this.create(parkingDb.get());
+		return Optional.of(this.create(parkingDb.get())).map(parkingDTOMapper).get();
 	}
 
 	

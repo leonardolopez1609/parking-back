@@ -41,7 +41,7 @@ public interface IParkingService {
 	
 	Parking create(ParkingDTO parking);
 	
-	Parking updateDTO(ParkingDTO newParking, Long id);
+	ParkingDTO updateDTO(ParkingDTO newParking, Long id);
 	
 	Parking update(Parking newParking, Long id);
 	
