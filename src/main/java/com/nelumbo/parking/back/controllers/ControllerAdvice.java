@@ -70,11 +70,23 @@ public class ControllerAdvice {
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
+	
 	@ExceptionHandler(value = ConstraintViolationException.class)
 	public ResponseEntity<ErrorData> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		String m=ex.getMessage();
+		
+		
+		int n1=m.indexOf("messageTemplate='")+17;
+		int n2 =m.indexOf("'}");
+		
+		m = m.substring(n1,n2);
+		
+		ErrorData error = ErrorData.builder().message(m).build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	
 
 	@ExceptionHandler(value = SerializerException.class)
 	public ResponseEntity<ErrorData> accessDeniedException(SerializerException ex) {
