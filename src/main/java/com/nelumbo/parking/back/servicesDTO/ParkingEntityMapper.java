@@ -15,6 +15,8 @@ public class ParkingEntityMapper implements Function<ParkingDTO, Parking> {
 	@Autowired
 	IUserService userService;
 
+	
+	
 	@Override
 	public Parking apply(ParkingDTO t) {
 		return new Parking(t.getIdparking(), t.getName(), userService.findByName(t.getPartner()), t.getSpots());

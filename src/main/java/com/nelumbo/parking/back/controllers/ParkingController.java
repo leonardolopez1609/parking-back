@@ -162,7 +162,7 @@ public class ParkingController {
 	//Revisado 
 	@PutMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public Map<String, Object> updateParking(@Valid @RequestBody ParkingDTO parking, @PathVariable Long id) {
+	public Map<String, Object> updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id) {
 
 		
 		Map<String, Object> response = new HashMap<>();

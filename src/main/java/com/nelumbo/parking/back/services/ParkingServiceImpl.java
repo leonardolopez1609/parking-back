@@ -17,7 +17,6 @@ import com.nelumbo.parking.back.DTO.VehicleRankDTO;
 import com.nelumbo.parking.back.entities.Entering;
 import com.nelumbo.parking.back.entities.History;
 import com.nelumbo.parking.back.entities.Parking;
-import com.nelumbo.parking.back.entities.User;
 import com.nelumbo.parking.back.entities.Vehicle;
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
@@ -127,7 +126,9 @@ public class ParkingServiceImpl implements IParkingService {
     
 	@Override
 	public ParkingDTO findDTOByID(Long id) {
-			
+			if(this.findById(id).getUser()==null) {
+				return Optional.of(this.findById(id)).map(parkingDTOMapper).get();
+			}
 		return parkingRepository.findDTOById(id).orElseThrow(()->new RequestException("Parqueadero no encontrado"));
 	}
 
@@ -151,16 +152,12 @@ public class ParkingServiceImpl implements IParkingService {
 
 	@Override
 	public ParkingDTO updateDTO(ParkingDTO newParking, Long id) {
-		Parking p =this.findById(id); 
-		if(p.getUser()==null) {
-			p.setUser(new User());
-		}
-		Optional<ParkingDTO> parkingDb =Optional.of(p).map(parkingDTOMapper);
+		ParkingDTO p = this.findDTOByID(id);
 
-		parkingDb.get().setName(newParking.getName());
-		parkingDb.get().setSpots(newParking.getSpots());
+		p.setName(newParking.getName());
+		p.setSpots(newParking.getSpots());
 		
-		return Optional.of(this.create(parkingDb.get())).map(parkingDTOMapper).get();
+		return Optional.of(this.create(p)).map(parkingDTOMapper).get();
 	}
 
 	
