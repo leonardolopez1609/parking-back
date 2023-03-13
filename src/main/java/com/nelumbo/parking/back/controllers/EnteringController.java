@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import com.nelumbo.parking.back.DTO.EnteringDTO;
-import com.nelumbo.parking.back.services.IEnteringService;
+
+import com.nelumbo.parking.back.models.dto.EnteringDTO;
+import com.nelumbo.parking.back.services.business.IEnteringService;
+
 import jakarta.validation.constraints.Min;
 
 @RestController

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.yaml.snakeyaml.serializer.SerializerException;
-import com.nelumbo.parking.back.entities.ErrorData;
+
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
+import com.nelumbo.parking.back.models.entities.ErrorData;
+
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 

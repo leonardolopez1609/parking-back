@@ -7,12 +7,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.nelumbo.parking.back.DTO.ParkingDTO;
-import com.nelumbo.parking.back.DTO.VehicleEntDTO;
-import com.nelumbo.parking.back.DTO.VehicleRankDTO;
-import com.nelumbo.parking.back.entities.Entering;
-import com.nelumbo.parking.back.entities.History;
-import com.nelumbo.parking.back.entities.Parking;
+import com.nelumbo.parking.back.models.dto.ParkingDTO;
+import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
+import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
+import com.nelumbo.parking.back.models.entities.Entering;
+import com.nelumbo.parking.back.models.entities.History;
+import com.nelumbo.parking.back.models.entities.Parking;
 
 public interface IParkingRepository extends JpaRepository<Parking, Long> {
 
@@ -20,7 +20,7 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
 	
 	Optional<Parking> findOneByName(String name);
 	
-	@Query(value="select new com.nelumbo.parking.back.DTO.VehicleRankDTO(v.idvehicle as idvehicle,v.plate as plate, count(v) as quantity) from Vehicle as v inner join History as h on v.idvehicle = h.vehicle.idvehicle where h.parking.idparking =:idparking group by v.idvehicle order by quantity desc FETCH FIRST 10 ROWS ONLY")
+	@Query(value="select new com.nelumbo.parking.back.models.dto.VehicleRankDTO(v.idvehicle as idvehicle,v.plate as plate, count(v) as quantity) from Vehicle as v inner join History as h on v.idvehicle = h.vehicle.idvehicle where h.parking.idparking =:idparking group by v.idvehicle order by quantity desc FETCH FIRST 10 ROWS ONLY")
 	public List<VehicleRankDTO> findRank(Long idparking);
 	
 	@Query(value="select ((count(h.idhistory))/:days) as usos from History as h where h.enteringDate BETWEEN :min and :max AND h.parking.idparking =:idparking")
@@ -32,16 +32,16 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
 	@Query(value="select sum(DATEDIFF(second,h.enteringDate,h.departureDate))/count(h.idhistory) as horas_uso from History as h where h.parking.idparking =:idparking")
 	public Long averageUsageHours(Long idparking);
 
-    @Query(value="select new com.nelumbo.parking.back.DTO.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.idparking=:id")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.idparking=:id")
 	Optional<ParkingDTO> findDTOById(Long id);
     
-    @Query(value="select new com.nelumbo.parking.back.DTO.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.user.iduser=:iduser")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.user.iduser=:iduser")
     public List<ParkingDTO> findAllDTOByUser(Long iduser);
     
-    @Query(value="select new com.nelumbo.parking.back.DTO.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")
   	List<VehicleEntDTO> getVehiclesEnteringByIdParking(Long id);
     
-    @Query(value="select new com.nelumbo.parking.back.DTO.VehicleEntDTO(v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.vehicle.idvehicle=:idvehicle")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.vehicle.idvehicle=:idvehicle")
     Optional<VehicleEntDTO> getVehicleEnteringByIdVehicle(Long idvehicle);
    
     @Query(value="select e from Entering as e where e.parking.idparking=:idparking")

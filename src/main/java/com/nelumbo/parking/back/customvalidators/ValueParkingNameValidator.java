@@ -1,7 +1,9 @@
 package com.nelumbo.parking.back.customvalidators;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.nelumbo.parking.back.services.IParkingService;
+
+import com.nelumbo.parking.back.services.business.IParkingService;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

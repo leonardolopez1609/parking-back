@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import com.nelumbo.parking.back.entities.Role;
+import com.nelumbo.parking.back.models.entities.Role;
 
 @Configuration
 @EnableWebSecurity

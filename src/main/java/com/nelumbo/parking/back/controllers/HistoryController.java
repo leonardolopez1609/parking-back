@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nelumbo.parking.back.DTO.HistoryDTO;
-import com.nelumbo.parking.back.entities.History;
-import com.nelumbo.parking.back.services.IHistoryService;
+import com.nelumbo.parking.back.models.dto.HistoryDTO;
+import com.nelumbo.parking.back.models.entities.History;
+import com.nelumbo.parking.back.services.business.IHistoryService;
 
 
 @RestController

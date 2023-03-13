@@ -6,14 +6,15 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import com.nelumbo.parking.back.DTO.VehicleHistoryDTO;
-import com.nelumbo.parking.back.DTO.HistoryDTO;
-import com.nelumbo.parking.back.entities.History;
+
+import com.nelumbo.parking.back.models.dto.HistoryDTO;
+import com.nelumbo.parking.back.models.dto.VehicleHistoryDTO;
+import com.nelumbo.parking.back.models.entities.History;
 
 public interface IHistoryRepository extends JpaRepository<History, Long> {
 
 
-      @Query(value="select new  com.nelumbo.parking.back.DTO.VehicleHistoryDTO (h.parking.idparking, h.vehicle.idvehicle, h.vehicle.plate,h.enteringDate, h.departureDate as dep) " 
+      @Query(value="select new  com.nelumbo.parking.back.models.dto.VehicleHistoryDTO (h.parking.idparking, h.vehicle.idvehicle, h.vehicle.plate,h.enteringDate, h.departureDate as dep) " 
 			 +"from History as h "
 			 +"where " 
 			 +"h.enteringDate BETWEEN :min and :max "
@@ -22,7 +23,7 @@ public interface IHistoryRepository extends JpaRepository<History, Long> {
 			 )
 	    public List<VehicleHistoryDTO> findHistoryByRangeDateAndPlate(Date min, Date max,Long idparking, String plate);
 	 
-      @Query(value="select new  com.nelumbo.parking.back.DTO.HistoryDTO (h.enteringDate, h.departureDate, h.parking.name, h.vehicle.plate) from History as h where h.idhistory= :id")
+      @Query(value="select new  com.nelumbo.parking.back.models.dto.HistoryDTO (h.enteringDate, h.departureDate, h.parking.name, h.vehicle.plate) from History as h where h.idhistory= :id")
       public Optional<HistoryDTO> findOneDTOById(Long id);
 
 }
