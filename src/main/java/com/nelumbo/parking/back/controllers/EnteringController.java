@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import com.nelumbo.parking.back.entities.Entering;
+import com.nelumbo.parking.back.DTO.EnteringDTO;
 import com.nelumbo.parking.back.services.IEnteringService;
 import jakarta.validation.constraints.Min;
 
@@ -26,9 +26,9 @@ public class EnteringController {
 
 	// Revisado
 	@GetMapping(path = "/{id}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Entering getEntering(@PathVariable Long id) {
+	public EnteringDTO getEntering(@PathVariable Long id) {
 
-		return enteringService.findById(id).get();
+		return enteringService.findById(id);
 
 	}
 

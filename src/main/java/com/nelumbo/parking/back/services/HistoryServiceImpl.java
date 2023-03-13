@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.nelumbo.parking.back.DTO.HistoryDTO;
 import com.nelumbo.parking.back.DTO.VehicleHistoryDTO;
 import com.nelumbo.parking.back.entities.Entering;
 import com.nelumbo.parking.back.entities.History;
@@ -35,12 +37,9 @@ public class HistoryServiceImpl implements IHistoryService {
 
 
 	@Override
-	public Optional<History> findById(Long id) {
-		Optional<History> history = historyRepository.findById(id);
-		if (history.isEmpty()) {
-			throw new RequestException("El historial con ID: " + id + " no existe en la base de datos!");
-		}
-		return history;
+	public HistoryDTO findById(Long id) {
+		
+		return historyRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El historial con ID: " + id + " no existe en la base de datos!"));
 	}
 
 	@Override

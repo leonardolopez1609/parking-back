@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.nelumbo.parking.back.DTO.EnteringDTO;
 import com.nelumbo.parking.back.entities.Entering;
 import com.nelumbo.parking.back.entities.Parking;
 import com.nelumbo.parking.back.entities.Vehicle;
@@ -25,12 +27,9 @@ public class EnteringServiceImpl implements IEnteringService {
 	private IVehicleService vehicleService;
 
 	@Override
-	public Optional<Entering> findById(Long id) {
-		Optional<Entering> entering = enteringRepository.findById(id);
-		if (entering.isEmpty()) {
-			throw new RequestException("El registro de entrada con ID: " + id + " no existe en la base de datos!");
-		}
-		return entering;
+	public EnteringDTO findById(Long id) {
+		
+		return enteringRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El registro de entrada con ID: " + id + " no existe en la base de datos!"));
 	}
 
 	@Override

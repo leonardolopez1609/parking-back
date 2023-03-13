@@ -1,12 +1,12 @@
 package com.nelumbo.parking.back.services;
 
 import java.util.List;
-import java.util.Optional;
+import com.nelumbo.parking.back.DTO.EnteringDTO;
 import com.nelumbo.parking.back.entities.Entering;
 
 public interface IEnteringService {
 
-	Optional<Entering> findById(Long id);
+	EnteringDTO findById(Long id);
 
 	List<Entering> findAllByParking_idparking(Long idparking);
 

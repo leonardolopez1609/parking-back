@@ -2,9 +2,12 @@ package com.nelumbo.parking.back.repositories;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.nelumbo.parking.back.DTO.VehicleHistoryDTO;
+import com.nelumbo.parking.back.DTO.HistoryDTO;
 import com.nelumbo.parking.back.entities.History;
 
 public interface IHistoryRepository extends JpaRepository<History, Long> {
@@ -19,6 +22,7 @@ public interface IHistoryRepository extends JpaRepository<History, Long> {
 			 )
 	    public List<VehicleHistoryDTO> findHistoryByRangeDateAndPlate(Date min, Date max,Long idparking, String plate);
 	 
-	  
+      @Query(value="select new  com.nelumbo.parking.back.DTO.HistoryDTO (h.enteringDate, h.departureDate, h.parking.name, h.vehicle.plate) from History as h where h.idhistory= :id")
+      public Optional<HistoryDTO> findOneDTOById(Long id);
 
 }

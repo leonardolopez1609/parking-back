@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.nelumbo.parking.back.DTO.HistoryDTO;
 import com.nelumbo.parking.back.entities.History;
 import com.nelumbo.parking.back.services.IHistoryService;
 
@@ -27,8 +29,8 @@ public class HistoryController {
 	
     //Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public History getHistory(@PathVariable Long id) {
-		return historyService.findById(id).get();
+	public HistoryDTO getHistory(@PathVariable Long id) {
+		return historyService.findById(id);
 	}
 	
 	
