@@ -71,7 +71,7 @@ public class DataAccessFilter {
 		jwt = authHeader.substring(7);
 		User user=userService.findById(iduser); 
 		User userJwt = userService.findByEmail(jwtService.extractUsername(jwt)).get();
-       if(userJwt.getRole()!=Role.ADMIN&&(!user.equals(userJwt)  )) {
+       if(userJwt.getRole()!=Role.ADMIN&&(!user.equals(userJwt))) {
        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
        }
 		
@@ -103,5 +103,22 @@ public class DataAccessFilter {
      if(ut.getRole()!=Role.ADMIN &&!(e.getParking().getUser().equals(ut)||ut.getUser().equals(e.getParking().getUser()))) {
      	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
      }
+	}
+
+
+
+	public void parkingAccessIdAndPlateFilter(HttpServletRequest request, String plate) {
+		 final String authHeader = request.getHeader("Authorization");
+		 final String jwt;
+		    
+		jwt = authHeader.substring(7);
+		
+		User u= userService.findByEmail(jwtService.extractUsername(jwt)).get();
+	    Entering e = enteringService.findOneByPlate(plate);
+	   
+       if(u.getRole()!=Role.ADMIN&&!(e.getParking().getUser().equals(u)||u.getUser().equals(e.getParking().getUser()))) {
+       	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
+       }
+		
 	}
 }
