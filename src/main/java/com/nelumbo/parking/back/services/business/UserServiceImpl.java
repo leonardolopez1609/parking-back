@@ -116,7 +116,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDTO findDTOById(Long id) {
 		User user= this.findById(id);
-		return new UserDTO(user.getName(),user.getEmail(),user.getRole().toString()) ;
+		return new UserDTO(user.getName(),user.getEmail(),user.getRole()) ;
 	}
 
 	@Override
@@ -148,13 +148,16 @@ public class UserServiceImpl implements IUserService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "Los Roles a asociar son incorrectos");
 		}
 		
-		
-		
-		
 		usuario.setUser(socio);
 		
 		this.save(socio);
 		
+	}
+
+	@Override
+	public List<UserDTO> findAllUsersByPartnerInd(Long idpartner) {
+		this.findById(idpartner);
+		return userRepository.findAllByUserDTO(idpartner);
 	}
 
 	

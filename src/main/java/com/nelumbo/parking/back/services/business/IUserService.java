@@ -35,6 +35,8 @@ public interface IUserService {
 	Optional<User> findByEmail(String email);
 
 	void associateUser(Long idpartner, Long iduser);
+
+	List<UserDTO> findAllUsersByPartnerInd(Long idpartner);
 	
 
 	}

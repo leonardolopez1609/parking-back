@@ -54,7 +54,7 @@ public class UserController {
 	}
 	
 	
-	
+	/**
 	//Revisado
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
@@ -66,7 +66,7 @@ public class UserController {
 		response.put("mensaje", "Usuario creado con éxito!");
 
 		return response;
-	}
+	}**/
 	
 	//Revisado
 	@PostMapping(path="/email",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)

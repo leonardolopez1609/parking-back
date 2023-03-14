@@ -1,5 +1,7 @@
 package com.nelumbo.parking.back.models.dto;
 
-public record UserDTO (String name, String email, String Rol){
+import com.nelumbo.parking.back.models.entities.Role;
+
+public record UserDTO (String name, String email, Role role){
 
 }

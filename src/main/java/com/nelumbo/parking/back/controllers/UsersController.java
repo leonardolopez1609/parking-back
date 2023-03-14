@@ -34,6 +34,15 @@ public class UsersController {
 		return response;
 	}
 	
+	@GetMapping(path="/{idpartner}/usuarios",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getAllUsersByPartner(@PathVariable Long idpartner) {
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("usuarios", userService.findAllUsersByPartnerInd(idpartner));
+		
+		return response;
+	}
+	
 	//Revisado
 		@PutMapping(path="/{iduser}/associate/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 		public Map<String, Object> asignateParking(@PathVariable Long idparking, @PathVariable Long iduser,HttpServletRequest request) {
