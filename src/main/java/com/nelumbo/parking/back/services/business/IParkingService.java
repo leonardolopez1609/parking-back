@@ -7,9 +7,6 @@ import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
 import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.Vehicle;
-
-import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.Date;
 import java.util.List;
 public interface IParkingService {
@@ -59,8 +56,6 @@ public interface IParkingService {
 	List<ParkingDTO> findAll();
 
 	Long averageUsageAllByUser(Date dateMin2, Date dateMax2, int days, Long iduser);
-	
-	void parkingAccessIdUserFilter(HttpServletRequest request, Long iduser);
 
 	List<ParkingVehicleDTO> findAllWithVehiclesInd();
 

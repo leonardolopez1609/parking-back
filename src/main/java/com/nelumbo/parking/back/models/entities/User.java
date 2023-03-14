@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,7 +36,7 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long iduser;
 
-	@Column(name = "name", nullable = true, length = 100, unique = true)
+	@Column(name = "name", nullable = false, length = 100, unique = true)
 	@NotNull(message = "El nombre es requerido")
 	@NotBlank(message = "El nombre es requerido")
 	private String name;
@@ -51,6 +53,10 @@ public class User implements UserDetails {
 	@Column(name = "password")
 	@NotNull(message = "La contraseña es requerida")
 	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name="idpartner")
+	private User user;
 
 
 	// Relacion one to many con token

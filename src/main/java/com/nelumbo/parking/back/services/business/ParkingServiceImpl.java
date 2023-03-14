@@ -287,19 +287,7 @@ public class ParkingServiceImpl implements IParkingService {
 		return average;
 	}
 
-	@Override
-	public void parkingAccessIdUserFilter(HttpServletRequest request, Long iduser) {
-		 final String authHeader = request.getHeader("Authorization");
-		 final String jwt;
-		    
-		jwt = authHeader.substring(7);
-		User user=userService.findById(iduser); 
-		User userJwt = userService.findByEmail(jwtService.extractUsername(jwt)).get();
-        if(userJwt.getRole()!=Role.ADMIN&&!user.getEmail().equals(userJwt.getEmail())) {
-        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
-        }
-		
-	}
+	
 
 	@Override
 	public List<ParkingVehicleDTO> findAllWithVehiclesInd() {

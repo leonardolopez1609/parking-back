@@ -24,7 +24,7 @@ public class Parking implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idparking;
 	
-	@Column(name="name", nullable = true, length = 100, unique=true)
+	@Column(name="name", nullable = false, length = 100, unique=true)
 	@NotNull(message = "El nombre es requerido")
 	@NotBlank(message = "El nombre es requerido")
 	private String name;

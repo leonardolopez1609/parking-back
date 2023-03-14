@@ -79,6 +79,8 @@ public class HistoryController {
 	@PostMapping(path="/departure/vehicle/{plate}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> createHistory(@PathVariable String plate) {
 		Map<String, Object> response = new HashMap<>();
+		
+		//filtro que el vehiculo este en su parqueadero
 		historyService.create(plate);
 		response.put("mensaje", "Salida registrada");
 

@@ -136,7 +136,7 @@ public class ParkingController {
 	public Map<String, Object> getAverageUseAllByUser(@PathVariable String dateMin,@PathVariable String dateMax,
 			@PathVariable Long iduser ,HttpServletRequest request) throws ParseException {
 		
-		parkingService.parkingAccessIdUserFilter(request,iduser);
+		dataAccessFilter.parkingAccessIdUserFilter(request,iduser);
 		Map<String, Object> response = new HashMap<>();
 		
 		
