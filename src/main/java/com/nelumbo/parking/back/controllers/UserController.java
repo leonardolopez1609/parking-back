@@ -43,6 +43,7 @@ public class UserController {
 	//Revisado
 	@GetMapping(path="/{id}/parkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> getParkings(@PathVariable Long id,HttpServletRequest request) {
+		
 		dataAccessFilter.userAccessIdFilter(request, id);
 		Map<String, Object> response = new HashMap<>();
 		response.put("parkings", userService.findAllVehiclesInParkingsInd(id));

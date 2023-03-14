@@ -62,7 +62,8 @@ public class DataAccessFilter {
 		
 		User u = userService.findById(id);
 		User ut= this.getUserToken(request);
-       if(ut.getRole()!=Role.ADMIN &&!u.equals(ut)) {
+	
+       if(ut.getRole()!=Role.ADMIN &&!(u.equals(ut)||ut.getUser().equals(u))) {
        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
        }
 	}

@@ -60,7 +60,7 @@ public class SecurityConfiguration {
 		        .and()
 		        .authorizeHttpRequests()
 		        .requestMatchers("/user/**")
-		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString())
+		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString(),Role.USUARIO.toString())
 		        .and()
 		        .authorizeHttpRequests()
 		        .requestMatchers("/enterings/**")
