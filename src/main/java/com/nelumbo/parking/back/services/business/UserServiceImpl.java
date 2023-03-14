@@ -24,6 +24,8 @@ import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.repositories.IUserRepository;
 
+import jakarta.validation.ConstraintViolationException;
+
 @Service
 public class UserServiceImpl implements IUserService {
 
@@ -113,8 +115,12 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User save(User user) {
+		try {
+			return userRepository.save(user);
+		} catch (Exception e) {
+			throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al guardar el usuario, intente nuevamente");
+		}
 		
-		return userRepository.save(user);
 	}
 
 	@Override
