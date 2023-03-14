@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -76,6 +77,17 @@ public class UserController {
 		return response;
 	}
     
+	@PutMapping(path="/{iduser}/associate/partner/{idpartner}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
+       
+		dataAccessFilter.userAccessIdFilter(request, idpartner);
+		userService.associateUser(idpartner, iduser);
+		Map<String, Object> response = new HashMap<>();
+		response.put("mensaje", "Usuario asociado con éxito");
+
+		return response;
+
+	}
 	
 	
 }

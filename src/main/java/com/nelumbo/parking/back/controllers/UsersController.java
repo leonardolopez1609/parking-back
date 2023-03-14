@@ -42,7 +42,7 @@ public class UsersController {
 			//dataAccessFilter.userAccessIdFilter(request, iduser);
 			userService.associateParking(iduser, idparking);
 			Map<String, Object> response = new HashMap<>();
-			response.put("mensaje", "Parqueadero asociado con éxito!");
+			response.put("mensaje", "Parqueadero asociado con éxito");
 
 			return response;
 

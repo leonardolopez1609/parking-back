@@ -20,6 +20,7 @@ import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Parking;
+import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.repositories.IUserRepository;
 
@@ -129,6 +130,30 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 		return parkingsVeh;
+		
+	}
+
+	@Override
+	public void associateUser(Long idpartner, Long iduser) {
+	     //capturar errores
+		
+		User usuario = this.findById(iduser);
+		User socio = this.findById(idpartner);
+		
+		if(usuario.getUser()!=null) {
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "El Usuario ya tiene un socio asignado");
+		}
+		
+		if(usuario.getRole()!=Role.USUARIO||socio.getRole()!=Role.SOCIO) {
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "Los Roles a asociar son incorrectos");
+		}
+		
+		
+		
+		
+		usuario.setUser(socio);
+		
+		this.save(socio);
 		
 	}
 

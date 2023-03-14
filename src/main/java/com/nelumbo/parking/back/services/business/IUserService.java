@@ -33,6 +33,8 @@ public interface IUserService {
 	Map<String, Object> sendEmail(EmailContentDTO user);
 	
 	Optional<User> findByEmail(String email);
+
+	void associateUser(Long idpartner, Long iduser);
 	
 
 	}
