@@ -33,7 +33,8 @@ public class HistoryController {
 	
     //Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public HistoryDTO getHistory(@PathVariable Long id) {
+	public HistoryDTO getHistory(@PathVariable Long id,HttpServletRequest request) {
+		dataAccessFilter.historyAccessIdFilter(request, id);
 		return historyService.findDTOById(id);
 	}
 	

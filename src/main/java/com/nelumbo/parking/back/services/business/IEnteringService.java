@@ -6,7 +6,9 @@ import com.nelumbo.parking.back.models.entities.Entering;
 
 public interface IEnteringService {
 
-	EnteringDTO findById(Long id);
+	EnteringDTO findDTOById(Long id);
+	
+	Entering findById(Long id);
 
 	List<Entering> findAllByParking_idparking(Long idparking);
 

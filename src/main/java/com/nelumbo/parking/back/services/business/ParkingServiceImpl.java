@@ -20,6 +20,7 @@ import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
 import com.nelumbo.parking.back.models.entities.Entering;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
+import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.repositories.IParkingRepository;
@@ -292,8 +293,9 @@ public class ParkingServiceImpl implements IParkingService {
 		 final String jwt;
 		    
 		jwt = authHeader.substring(7);
-		User user=userService.findById(iduser);    
-        if(!user.getEmail().equals(jwtService.extractUsername(jwt))) {
+		User user=userService.findById(iduser); 
+		User userJwt = userService.findByEmail(jwtService.extractUsername(jwt)).get();
+        if(userJwt.getRole()!=Role.ADMIN&&!user.getEmail().equals(userJwt.getEmail())) {
         	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
         }
 		

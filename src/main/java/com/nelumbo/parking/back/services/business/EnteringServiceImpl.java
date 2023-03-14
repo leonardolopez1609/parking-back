@@ -27,7 +27,7 @@ public class EnteringServiceImpl implements IEnteringService {
 	private IVehicleService vehicleService;
 
 	@Override
-	public EnteringDTO findById(Long id) {
+	public EnteringDTO findDTOById(Long id) {
 		
 		return enteringRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El registro de entrada con ID: " + id + " no existe en la base de datos!"));
 	}
@@ -116,6 +116,12 @@ public class EnteringServiceImpl implements IEnteringService {
 	@Override
 	public List<Entering> findAll() {
 		return enteringRepository.findAll();
+	}
+
+	@Override
+	public Entering findById(Long id) {
+		
+		return enteringRepository.findById(id).orElse(null);
 	}
 
 	
