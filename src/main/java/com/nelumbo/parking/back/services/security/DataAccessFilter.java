@@ -13,6 +13,7 @@ import com.nelumbo.parking.back.services.business.IEnteringService;
 import com.nelumbo.parking.back.services.business.IHistoryService;
 import com.nelumbo.parking.back.services.business.IParkingService;
 import com.nelumbo.parking.back.services.business.IUserService;
+import com.nelumbo.parking.back.services.business.IVehicleService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -33,6 +34,9 @@ public class DataAccessFilter {
 	
 	@Autowired
 	private JwtService jwtService;
+	
+	@Autowired
+	private IVehicleService vehicleService;
 	
 	
 	
@@ -103,6 +107,8 @@ public class DataAccessFilter {
 
 
 	public void parkingAccessIdAndPlateFilter(HttpServletRequest request, String plate) {
+		
+		vehicleService.invalidPlate(plate);
 		
 		User u= this.getUserToken(request);
 	    Entering e = enteringService.findOneByPlate(plate);

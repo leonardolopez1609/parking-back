@@ -17,6 +17,7 @@ import com.nelumbo.parking.back.services.business.IHistoryService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -77,7 +78,7 @@ public class HistoryController {
  
 	//Revisado
 	@PostMapping(path="/departure/vehicle/{plate}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> createHistory(@PathVariable String plate,HttpServletRequest request) {
+	public Map<String, Object> createHistory(@Valid @PathVariable String plate,HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 		
 		//filtro que el vehiculo este en su parqueadero
