@@ -59,6 +59,10 @@ public class UserServiceImpl implements IUserService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero ya tiene un socio asignado");
 		}
 		
+		if(this.findById(idUser).getRole()!=Role.SOCIO) {
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "Solo se pueden asociar Socios a Parqueaderos");
+		}
+		
 		parking.setUser(this.findById(idUser));
 		parkingService.updateWhitUser(parking, idParking);
 	}
@@ -156,7 +160,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<UserDTO> findAllUsersByPartnerInd(Long idpartner) {
-		this.findById(idpartner);
+		
+		if(this.findById(idpartner).getRole()!=Role.SOCIO) {
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "Solo se pueden consultar por Socios");
+		}
 		return userRepository.findAllByUserDTO(idpartner);
 	}
 

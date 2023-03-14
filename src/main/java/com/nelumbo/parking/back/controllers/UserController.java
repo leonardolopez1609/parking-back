@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
-import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.services.business.IUserService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
 
