@@ -57,14 +57,14 @@ public class UserController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public TextResponseDTO sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
 
-		//Map<String, Object> response = userService.sendEmail(emailContent);
-		return (userService.sendEmail(emailContent));
+		return userService.sendEmail(emailContent);
 	}
     
 	@PutMapping(path="/{iduser}/associate/partner/{idpartner}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public TextResponseDTO asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
        
 		dataAccessFilter.userAccessIdFilter(request, idpartner);
+		userService.associateUser(idpartner, iduser);
 		return new TextResponseDTO("Usuario asociado con éxito");
 
 	}

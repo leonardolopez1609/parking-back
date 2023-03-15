@@ -42,7 +42,6 @@ public class ParkingController {
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ParkingDTO getParking(@PathVariable Long id,HttpServletRequest request) {
-          // System.out.println("------------- Token: "+  request.getHeader("Authorization"));
 		
 		dataAccessFilter.parkingAccessIdFilter(request,id);
 		return parkingService.findDTOByID(id);	
@@ -164,10 +163,6 @@ public class ParkingController {
 	public ParkingDTO updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id,HttpServletRequest request) {
  
 		dataAccessFilter.parkingAccessIdFilter(request,id);
-		//Map<String, Object> response = new HashMap<>();
-
-		//response.put("parking", parkingService.updateDTO(parking, id));
-		//response.put("mensaje", "Parquedero actualizado con éxito!");
 
 		return parkingService.updateDTO(parking, id);
 

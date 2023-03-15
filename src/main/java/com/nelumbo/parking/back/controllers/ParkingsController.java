@@ -46,7 +46,7 @@ public class ParkingsController {
 	}
 
 
-//Revisado---Agregar por parqueaderos del socio----solo admin
+//Revisado
 	@GetMapping(path="vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, List<Vehicle>> getVehicleFistTime() {
 		Map<String, List<Vehicle>> response = new HashMap<>();
@@ -65,7 +65,7 @@ public class ParkingsController {
 		return response;
 	}
 	
-	//Revisado--------Agregar parqueaderos por usuario
+	//Revisado
 		@GetMapping(path="average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 		public TextResponseDTO getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
 			

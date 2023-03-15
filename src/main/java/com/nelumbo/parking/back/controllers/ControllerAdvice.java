@@ -17,6 +17,7 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.entities.ErrorData;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 
@@ -38,13 +39,19 @@ public class ControllerAdvice {
 		return errors;
 	}
 	
-	
+	@ExceptionHandler(value = ExpiredJwtException.class)
+	public ResponseEntity<ErrorData> requestExceptionHandler(ExpiredJwtException ex) {
+		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
 	
 	@ExceptionHandler(value = RequestException.class)
 	public ResponseEntity<ErrorData> requestExceptionHandler(RequestException ex) {
 		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
+	
+	
 
 	@ExceptionHandler(value = BusinessException.class)
 	public ResponseEntity<ErrorData> businessExceptionHandler(BusinessException ex) {
