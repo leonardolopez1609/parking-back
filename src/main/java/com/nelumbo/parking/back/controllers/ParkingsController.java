@@ -3,6 +3,7 @@ package com.nelumbo.parking.back.controllers;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
+import com.nelumbo.parking.back.models.entities.Parking;
+import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.services.business.IParkingService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,18 +39,17 @@ public class ParkingsController {
 	// Revisado
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getParkings(HttpServletRequest request) {
-		Map<String, Object> response = new HashMap<>();
+	public Map<String, List<ParkingDTO>> getParkings(HttpServletRequest request) {
+		Map<String, List<ParkingDTO>> response = new HashMap<>();
 		response.put("parkings", parkingService.findAll());
-		// response.put("token", request.getHeader("Authorization"));
 		return response;
 	}
 
 
 //Revisado---Agregar por parqueaderos del socio----solo admin
 	@GetMapping(path="vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehicleFistTime() {
-		Map<String, Object> response = new HashMap<>();
+	public Map<String, List<Vehicle>> getVehicleFistTime() {
+		Map<String, List<Vehicle>> response = new HashMap<>();
 		
 		response.put("vehicles",parkingService.vehiclesFirstTime());
 		
@@ -54,8 +57,8 @@ public class ParkingsController {
 	}
 	
 	@GetMapping(path="vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehicleRepeatedly() {
-       Map<String, Object> response = new HashMap<>();
+	public Map<String, List<Vehicle>> getVehicleRepeatedly() {
+       Map<String, List<Vehicle>> response = new HashMap<>();
 		
 		response.put("vehicles",parkingService.vehiclesRepeatedly());
 		
@@ -64,41 +67,30 @@ public class ParkingsController {
 	
 	//Revisado--------Agregar parqueaderos por usuario
 		@GetMapping(path="average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-		public Map<String, Object> getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
-			
-			Map<String, Object> response = new HashMap<>();
-			
+		public TextResponseDTO getAverageUseAll(@PathVariable String dateMin,@PathVariable String dateMax) throws ParseException {
 			
 			Date dateMin2 = parkingService.parseDate(dateMin);
 			Date dateMax2 = parkingService.parseDate(dateMax);
 			
-			response.put("mensaje","Parqueaderos con promedio de "+parkingService.averageUsageAll(
+			return new TextResponseDTO("Parqueaderos con promedio de "+parkingService.averageUsageAll(
 					dateMin2,
 					dateMax2,
 					parkingService.getDays(dateMin2, dateMax2))+" entradas por día");
-			
-			return response;
 		}
 		
 		//Revisado
 		@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 		@ResponseStatus(value = HttpStatus.CREATED)
-		public Map<String, Object> createParking(@Valid @RequestBody ParkingDTO parking) {
-			Map<String, Object> response = new HashMap<>();
-
-			response.put("parking", parkingService.create(parking));
-			response.put("mensaje", "Parqueadero creado con éxito!");
-
-			return response;
+		public Parking createParking(@Valid @RequestBody ParkingDTO parking) {
+			
+			return parkingService.create(parking);
 		}
 		
 		//Revisado
 		@DeleteMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-		public Map<String, Object> deleteParking(@PathVariable Long id,HttpServletRequest request) {
-			Map<String, Object> response = new HashMap<>();
+		public TextResponseDTO deleteParking(@PathVariable Long id,HttpServletRequest request) {
+			
 			parkingService.delete(id);
-			response.put("mensaje", "Parqueadero eliminado con éxito!");
-
-			return response;
+			return new TextResponseDTO("Parqueadero eliminado con éxito!");
 		}
 }

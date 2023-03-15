@@ -18,6 +18,7 @@ import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.Role;
@@ -96,7 +97,7 @@ public class UserServiceImpl implements IUserService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> sendEmail(EmailContentDTO emailContent) {
+	public TextResponseDTO sendEmail(EmailContentDTO emailContent) {
 		
 		parkingService.findById(emailContent.getIdparking());
 		vehicleService.findOneByPlate(emailContent.getPlate());
@@ -105,7 +106,7 @@ public class UserServiceImpl implements IUserService {
 	      HttpEntity<EmailContentDTO> entity = new HttpEntity<EmailContentDTO>(emailContent,headers);
 	      
 	      return restTemplate.exchange(
-	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, Map.class).getBody();
+	    		  "http://localhost:8090/emails", HttpMethod.POST, entity, TextResponseDTO.class).getBody();
 	}
 
 	@Override

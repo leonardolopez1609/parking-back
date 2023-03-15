@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.User;
 
@@ -30,7 +31,7 @@ public interface IUserService {
 	
 	void associateParking(Long idUser, Long idParking);
 
-	Map<String, Object> sendEmail(EmailContentDTO user);
+	TextResponseDTO sendEmail(EmailContentDTO user);
 	
 	Optional<User> findByEmail(String email);
 

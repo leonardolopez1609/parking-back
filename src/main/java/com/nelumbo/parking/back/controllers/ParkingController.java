@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.TimeHoursDTO;
 import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
+import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
+import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.services.business.IParkingService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,10 +59,10 @@ public class ParkingController {
     
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesact",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehiclesAct(@PathVariable Long id,HttpServletRequest request) {
+	public Map<String, List<VehicleEntDTO>> getVehiclesAct(@PathVariable Long id,HttpServletRequest request) {
 		
 		dataAccessFilter.parkingAccessIdFilter(request,id);
-		Map<String, Object> response = new HashMap<>();
+		Map<String, List<VehicleEntDTO>> response = new HashMap<>();
 	
 		response.put("vehicles", parkingService.entVehicleDetails(id));
 		return response;
@@ -75,9 +78,9 @@ public class ParkingController {
 	
 	
 	@GetMapping(path="/user/{iduser}/vehiclesfirst",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehicleFistTimeByUser(@PathVariable Long iduser,HttpServletRequest request) {
+	public Map<String, List<Vehicle>> getVehicleFistTimeByUser(@PathVariable Long iduser,HttpServletRequest request) {
 		dataAccessFilter.userAccessIdFilter(request, iduser);
-		Map<String, Object> response = new HashMap<>();
+		Map<String, List<Vehicle>> response = new HashMap<>();
 		
 		response.put("vehicles",parkingService.vehiclesFirstTimeByUser(iduser));
 		
@@ -85,17 +88,10 @@ public class ParkingController {
 	}
 	
 	
-	
-	
-	
-	//Revisado---Agregar por parqueaderos del socio-----solo admin
-	
-	
-	
 	@GetMapping(path="user/{iduser}/vehiclesrep",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehicleRepeatedlyByUser(@PathVariable Long iduser,HttpServletRequest request) {
+	public Map<String, List<Vehicle>> getVehicleRepeatedlyByUser(@PathVariable Long iduser,HttpServletRequest request) {
 		dataAccessFilter.userAccessIdFilter(request, iduser);
-		Map<String, Object> response = new HashMap<>();
+		Map<String, List<Vehicle>> response = new HashMap<>();
 		
 		response.put("vehicles",parkingService.vehiclesRepeatedlyByUser(iduser));
 		
@@ -104,9 +100,9 @@ public class ParkingController {
 	
 	//Revisado
 	@GetMapping(path="/{id}/vehiclesrank",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getVehiclesRank(@PathVariable Long id,HttpServletRequest request) {
+	public Map<String, List<VehicleRankDTO>> getVehiclesRank(@PathVariable Long id,HttpServletRequest request) {
 		dataAccessFilter.parkingAccessIdFilter(request,id);
-		 Map<String, Object> response = new HashMap<>();
+		 Map<String, List<VehicleRankDTO>> response = new HashMap<>();
 			
 			response.put("vehicles",parkingService.rankVehicles(id));
 			
@@ -115,17 +111,17 @@ public class ParkingController {
 	
 	//Revisado
 	@GetMapping(path="/{id}/average/datemin/{dateMin}/datemax/{dateMax}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,HttpServletRequest request) throws ParseException {
+	public TextResponseDTO getAverageUseById(@PathVariable String dateMin,@PathVariable String dateMax,@PathVariable Long id,HttpServletRequest request) throws ParseException {
+		
 		dataAccessFilter.parkingAccessIdFilter(request,id);
-		 Map<String, Object> response = new HashMap<>();
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
-		response.put("mensaje","Parqueadero con promedio de "+parkingService.averageUsageByid(
+		return new TextResponseDTO("Parqueadero con promedio de "+parkingService.averageUsageByid(
 				dateMin2,
 				dateMax2,
 				id,
 				parkingService.getDays(dateMin2, dateMax2))+" entradas por día");
-		return response;
+	
 	}
 	
 	
@@ -133,35 +129,29 @@ public class ParkingController {
 	
 	@GetMapping(path="average/user/{iduser}/datemin/{dateMin}/datemax/{dateMax}",
 			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getAverageUseAllByUser(@PathVariable String dateMin,@PathVariable String dateMax,
+	public TextResponseDTO getAverageUseAllByUser(@PathVariable String dateMin,@PathVariable String dateMax,
 			@PathVariable Long iduser ,HttpServletRequest request) throws ParseException {
 		
 		dataAccessFilter.parkingAccessIdUserFilter(request,iduser);
-		Map<String, Object> response = new HashMap<>();
-		
-		
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
 		
-		response.put("mensaje","Parqueaderos con promedio de "+parkingService.averageUsageAllByUser(
+		return new TextResponseDTO("Parqueaderos con promedio de "+parkingService.averageUsageAllByUser(
 				dateMin2,
 				dateMax2,
 				parkingService.getDays(dateMin2, dateMax2), iduser)+" entradas por día");
-		
-		return response;
 	}
 	
 
 	//Revisado--
 	@GetMapping(path="/{id}/averagehours",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getAverageHours(@PathVariable Long id,HttpServletRequest request) {
-		dataAccessFilter.parkingAccessIdFilter(request,id);
-		Map<String, Object> response = new HashMap<>();
-		TimeHoursDTO time=parkingService.averageHoursById(id);
+	public TextResponseDTO getAverageHours(@PathVariable Long id,HttpServletRequest request) {
 		
-		response.put("mensaje", "El parqueadero posee un promedio de "+ time.horas()+" horas "+
+		dataAccessFilter.parkingAccessIdFilter(request,id);		
+		TimeHoursDTO time=parkingService.averageHoursById(id);
+		return new TextResponseDTO("El parqueadero posee un promedio de "+ time.horas()+" horas "+
 		time.minutos()+" minutos y "+time.segundos()+" segundos de uso por vehículo");
-		return response;
+	
 	}
 	
 	
@@ -171,15 +161,15 @@ public class ParkingController {
 	//Revisado 
 	@PutMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public Map<String, Object> updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id,HttpServletRequest request) {
+	public ParkingDTO updateParking(@RequestBody ParkingDTO parking, @PathVariable Long id,HttpServletRequest request) {
  
 		dataAccessFilter.parkingAccessIdFilter(request,id);
-		Map<String, Object> response = new HashMap<>();
+		//Map<String, Object> response = new HashMap<>();
 
-		response.put("parking", parkingService.updateDTO(parking, id));
-		response.put("mensaje", "Parquedero actualizado con éxito!");
+		//response.put("parking", parkingService.updateDTO(parking, id));
+		//response.put("mensaje", "Parquedero actualizado con éxito!");
 
-		return response;
+		return parkingService.updateDTO(parking, id);
 
 	}
 

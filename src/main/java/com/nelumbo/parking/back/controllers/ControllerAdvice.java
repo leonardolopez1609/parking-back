@@ -26,8 +26,8 @@ public class ControllerAdvice {
 	
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, Object> handleValidateExceptions(MethodArgumentNotValidException ex) {
-		Map<String, Object> errors = new HashMap<String, Object>();
+	public Map<String,List<ErrorData>> handleValidateExceptions(MethodArgumentNotValidException ex) {
+		Map<String, List<ErrorData>> errors = new HashMap<String, List<ErrorData>>();
 		List<ErrorData> errorsList = new ArrayList<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
 			ErrorData errorData = ErrorData.builder().message(error.getDefaultMessage()).build();

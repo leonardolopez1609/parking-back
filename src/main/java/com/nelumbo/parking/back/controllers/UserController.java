@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.services.business.IUserService;
 import com.nelumbo.parking.back.services.security.DataAccessFilter;
@@ -51,39 +52,20 @@ public class UserController {
 		return response;
 	}
 	
-	
-	/**
-	//Revisado
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public Map<String, Object> createUser(@Valid @RequestBody User user) {
-
-		Map<String, Object> response = new HashMap<>();
-
-		response.put("user", userService.create(user));
-		response.put("mensaje", "Usuario creado con éxito!");
-
-		return response;
-	}**/
-	
 	//Revisado
 	@PostMapping(path="/email",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public Map<String, Object> sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
+	public TextResponseDTO sendEmail(@Valid @RequestBody EmailContentDTO emailContent) {
 
-		Map<String, Object> response = userService.sendEmail(emailContent);
-		return response;
+		//Map<String, Object> response = userService.sendEmail(emailContent);
+		return (userService.sendEmail(emailContent));
 	}
     
 	@PutMapping(path="/{iduser}/associate/partner/{idpartner}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
+	public TextResponseDTO asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
        
 		dataAccessFilter.userAccessIdFilter(request, idpartner);
-		userService.associateUser(idpartner, iduser);
-		Map<String, Object> response = new HashMap<>();
-		response.put("mensaje", "Usuario asociado con éxito");
-
-		return response;
+		return new TextResponseDTO("Usuario asociado con éxito");
 
 	}
 	

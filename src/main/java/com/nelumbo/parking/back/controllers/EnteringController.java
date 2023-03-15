@@ -41,11 +41,11 @@ public class EnteringController {
 	// Revisado -- @Pattern(regexp = "^[a-zA-Z0-9]", message = "length must be 3") @Max(6)
 	@PostMapping(path = "/vehicle/{plate}/in/parking/{idparking}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public Map<String, Object> createEntering(@PathVariable Long idparking,
-			 @PathVariable @Min(6) String plate,HttpServletRequest request) {
+	public Map<String, Long> createEntering(@PathVariable Long idparking,
+			 @PathVariable @Min(3) String plate,HttpServletRequest request) {
 		
 		dataAccessFilter.parkingAccessIdFilter(request, idparking);
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Long> response = new HashMap<>();
 
 		response.put("id", enteringService.create(idparking, plate).getIdentering());
 
