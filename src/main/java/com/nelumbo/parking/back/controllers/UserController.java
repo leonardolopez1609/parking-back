@@ -1,6 +1,7 @@
 package com.nelumbo.parking.back.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
+import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.services.business.IUserService;
@@ -36,17 +38,17 @@ public class UserController {
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserDTO getUser(@PathVariable Long id,HttpServletRequest request) {
-		dataAccessFilter.userAccessIdFilter(request, id);
+		dataAccessFilter.userDetailAccessIdFilter(request, id);
 		return userService.findDTOById(id);
 	}
 
 
 	//Revisado
 	@GetMapping(path="/{id}/parkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getParkings(@PathVariable Long id,HttpServletRequest request) {
+	public Map<String, List<ParkingVehicleDTO>> getParkings(@PathVariable Long id,HttpServletRequest request) {
 		
 		dataAccessFilter.userAccessIdFilter(request, id);
-		Map<String, Object> response = new HashMap<>();
+		Map<String, List<ParkingVehicleDTO>> response = new HashMap<>();
 		response.put("parkings", userService.findAllVehiclesInParkingsInd(id));
 		
 		return response;

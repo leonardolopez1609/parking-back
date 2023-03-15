@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,6 +19,8 @@ import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.entities.ErrorData;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 
@@ -38,6 +41,25 @@ public class ControllerAdvice {
 		errors.put("Errors", errorsList);
 		return errors;
 	}
+	
+	
+	 
+	
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<ErrorData> ExceptionHandler(Exception ex) {
+		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
+	
+	@ExceptionHandler(value = ServletException.class)
+	public ResponseEntity<ErrorData> servletExceptionHandler(ServletException ex) {
+		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
 	
 	@ExceptionHandler(value = ExpiredJwtException.class)
 	public ResponseEntity<ErrorData> requestExceptionHandler(ExpiredJwtException ex) {

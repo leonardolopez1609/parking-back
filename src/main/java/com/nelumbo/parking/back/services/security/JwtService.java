@@ -10,14 +10,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.nelumbo.parking.back.exceptions.BusinessException;
 
 @Service
+
 public class JwtService {
 
 	private static final String SECRET_KEY = "50655368566D5971337336763979244226452948404D635166546A576E5A7234";
