@@ -9,14 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import com.nelumbo.parking.back.models.entities.Role;
-import lombok.extern.slf4j.Slf4j;
+
 
 @Configuration
 @EnableWebSecurity
-@Slf4j
+
 public class SecurityConfiguration {
 	
       @Autowired
@@ -52,8 +53,8 @@ public class SecurityConfiguration {
 		        .requestMatchers("/user/**","/enterings/**","/histories/**")
 		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString(),Role.USUARIO.toString())
 		        .and().exceptionHandling()
-		        .accessDeniedHandler(new CustomAccessDeniedHandler())
 		        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+		        .accessDeniedHandler(new CustomAccessDeniedHandler())
 		        .and()
 		        .sessionManagement()
 		        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -69,4 +70,6 @@ public class SecurityConfiguration {
 				  return http.build();
 	   
 	  }
+	  
+	
 }

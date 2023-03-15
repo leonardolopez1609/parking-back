@@ -38,7 +38,7 @@ public class UserController {
 	//Revisado
 	@GetMapping(path="/{id}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserDTO getUser(@PathVariable Long id,HttpServletRequest request) {
-		dataAccessFilter.userDetailAccessIdFilter(request, id);
+		dataAccessFilter.userAccessIdFilter(request, id);
 		return userService.findDTOById(id);
 	}
 
