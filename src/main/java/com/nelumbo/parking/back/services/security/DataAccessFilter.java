@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.nelumbo.parking.back.exceptions.BusinessException;
+import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.entities.Entering;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
@@ -92,7 +93,11 @@ public class DataAccessFilter {
 		 
 		History h = historyService.findById(id);    
 		User ut= this.getUserToken(request);
-      if(ut.getRole()!=Role.ADMIN &&!(h.getParking().getUser().equals(ut)||ut.getUser().equals(h.getParking().getUser()) )) {
+		if(h==null) {
+			throw new RequestException("No existe el registro de salida con ID: "+id);
+		}
+		
+		if(ut.getRole()!=Role.ADMIN &&!(h.getParking().getUser().equals(ut)||ut.getUser().equals(h.getParking().getUser()) )) {
       	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
       }
 	}
@@ -103,6 +108,10 @@ public class DataAccessFilter {
 		 
 		Entering e = enteringService.findById(id);
 		User ut= this.getUserToken(request);
+		
+		if(e==null) {
+			throw new RequestException("No existe el registro de entrada con ID: "+id);
+		}
      if(ut.getRole()!=Role.ADMIN &&!(e.getParking().getUser().equals(ut)||ut.getUser().equals(e.getParking().getUser()))) {
      	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
      }
