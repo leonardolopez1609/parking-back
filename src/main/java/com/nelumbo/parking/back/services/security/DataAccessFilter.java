@@ -122,4 +122,15 @@ public class DataAccessFilter {
        }
 		
 	}
+
+
+	public void userPartnerAccessIdFilter(HttpServletRequest request, Long idpartner) {
+		
+		User u = userService.findById(idpartner);
+		User ut= this.getUserToken(request);
+		
+       if(ut.getRole()!=Role.ADMIN &&!(u.equals(ut))) {
+       	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
+       }
+	}
 }

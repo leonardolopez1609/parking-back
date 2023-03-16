@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,7 @@ public class UserController {
 
 
 	//Revisado
+	
 	@GetMapping(path="/{id}/parkings",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, List<ParkingVehicleDTO>> getParkings(@PathVariable Long id,HttpServletRequest request) {
 		
@@ -62,10 +64,12 @@ public class UserController {
 		return userService.sendEmail(emailContent);
 	}
     
+	
+	
 	@PutMapping(path="/{iduser}/associate/partner/{idpartner}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public TextResponseDTO asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
        
-        dataAccessFilter.userAccessIdFilter(request, idpartner);
+        dataAccessFilter.userPartnerAccessIdFilter(request, idpartner);
 		userService.associateUser(idpartner, iduser);
 		return new TextResponseDTO("Usuario asociado con éxito");
 
