@@ -2,6 +2,9 @@ package com.nelumbo.parking.back.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,8 +34,9 @@ public class History implements Serializable{
 		departureDate= new Date();
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="entering_date")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date enteringDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)

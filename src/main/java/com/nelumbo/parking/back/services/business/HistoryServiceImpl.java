@@ -38,7 +38,7 @@ public class HistoryServiceImpl implements IHistoryService {
 
 	@Override
 	public HistoryDTO findDTOById(Long id) {
-		
+	
 		return historyRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El historial con ID: " + id + " no existe en la base de datos!"));
 	}
 
