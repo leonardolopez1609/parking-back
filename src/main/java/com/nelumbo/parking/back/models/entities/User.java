@@ -2,9 +2,13 @@ package com.nelumbo.parking.back.models.entities;
 
 import java.util.Collection;
 import java.util.List;
+
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -54,12 +58,12 @@ public class User implements UserDetails {
 	@NotNull(message = "La contraseña es requerida")
 	private String password;
 	
-	@ManyToOne
+	//cascade = CascadeType.ALL
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="idpartner")
 	private User user;
 
 
-	// Relacion one to many con token
 
 	public User(String name,
 			Role role,
@@ -106,5 +110,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
+	
 
 }

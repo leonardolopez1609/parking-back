@@ -65,7 +65,7 @@ public class UserController {
 	@PutMapping(path="/{iduser}/associate/partner/{idpartner}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public TextResponseDTO asignateParking(@PathVariable Long idpartner, @PathVariable Long iduser,HttpServletRequest request) {
        
-		dataAccessFilter.userAccessIdFilter(request, idpartner);
+        dataAccessFilter.userAccessIdFilter(request, idpartner);
 		userService.associateUser(idpartner, iduser);
 		return new TextResponseDTO("Usuario asociado con éxito");
 

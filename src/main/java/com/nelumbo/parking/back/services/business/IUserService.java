@@ -1,14 +1,19 @@
 package com.nelumbo.parking.back.services.business;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.User;
+
+
 
 
 public interface IUserService {
@@ -29,13 +34,15 @@ public interface IUserService {
 
 	User create(User user);
 	
+	
 	void associateParking(Long idUser, Long idParking);
 
 	TextResponseDTO sendEmail(EmailContentDTO user);
 	
 	Optional<User> findByEmail(String email);
 
-	void associateUser(Long idpartner, Long iduser);
+	
+	User associateUser(Long idpartner, Long iduser);
 
 	List<UserDTO> findAllUsersByPartnerInd(Long idpartner);
 	

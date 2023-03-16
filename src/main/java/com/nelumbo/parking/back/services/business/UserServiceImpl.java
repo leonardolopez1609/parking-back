@@ -145,9 +145,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void associateUser(Long idpartner, Long iduser) {
-	     //capturar errores
-		
+	public User associateUser(Long idpartner, Long iduser) {
+	    
 		User usuario = this.findById(iduser);
 		User socio = this.findById(idpartner);
 		
@@ -161,7 +160,8 @@ public class UserServiceImpl implements IUserService {
 		
 		usuario.setUser(socio);
 		
-		this.save(socio);
+		System.out.println(usuario);
+		return userRepository.save(usuario);
 		
 	}
 
