@@ -79,9 +79,9 @@ public class AdminsController {
 	}
 	
 	
-	@PutMapping(path="/partners/{iduser}/associate/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public TextResponseDTO asignateParking(@PathVariable Long idparking, @PathVariable Long iduser,HttpServletRequest request) {
-		userService.associateParking(iduser, idparking);
+	@PutMapping(path="/partners/{idpartner}/associate/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public TextResponseDTO asignateParking(@PathVariable Long idparking, @PathVariable Long idpartner,HttpServletRequest request) {
+		userService.associateParking(idpartner, idparking);
 		return new TextResponseDTO("Parqueadero asociado con éxito");
 	}
 	

@@ -33,11 +33,24 @@ public class ControllerAdvice {
 			errorsList.add(errorData);
 		});
 		
-		errors.put("Errors", errorsList);
+		errors.put("validateErrors", errorsList);
 		return errors;
 	}
 	
-	
+	/**
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value= RequestException.class)
+	public Map<String,List<ErrorData>> handleListRequestExceptions(MethodArgumentNotValidException ex) {
+		Map<String, List<ErrorData>> errors = new HashMap<String, List<ErrorData>>();
+		List<ErrorData> errorsList = new ArrayList<>();
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			ErrorData errorData = ErrorData.builder().message(ex.getMessage()).build();
+			errorsList.add(errorData);
+		});
+		
+		errors.put("notFoundErrors", errorsList);
+		return errors;
+	}**/
 	 
 	
 	@ExceptionHandler(value = Exception.class)
