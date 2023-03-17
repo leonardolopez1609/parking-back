@@ -124,6 +124,13 @@ public class EnteringServiceImpl implements IEnteringService {
 		return enteringRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public Entering findByIdVehicle(Long idvehicle) {
+		
+		return enteringRepository.findOneByVehicle_idvehicle(idvehicle).orElseThrow(() ->  new RequestException(
+				"El vehiculo no se encuentra en ningun parqueadero"));
+	}
+
 	
 
 }

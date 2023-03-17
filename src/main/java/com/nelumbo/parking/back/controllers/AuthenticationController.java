@@ -22,13 +22,6 @@ public class AuthenticationController {
 	@Autowired
 	private  AuthenticationService service;
 	
-
-	  @PostMapping("socio/register")
-	  public ResponseEntity<AuthenticationResponse> registerSocio(
-	      @Valid @RequestBody RegisterRequest request
-	  ) {
-	    return ResponseEntity.ok(service.register(request,Role.SOCIO));
-	  }
 	  
 	  @PostMapping("admin/register")
 	  public ResponseEntity<AuthenticationResponse> registerAdmin(
@@ -36,14 +29,7 @@ public class AuthenticationController {
 	  ) {
 	    return ResponseEntity.ok(service.register(request,Role.ADMIN));
 	  }
-	  
-	  @PostMapping("usuario/register")
-	  public ResponseEntity<AuthenticationResponse> registerUsuario(
-	      @Valid @RequestBody RegisterRequest request
-	  ) {
-	    return ResponseEntity.ok(service.register(request,Role.USUARIO));
-	  }
-	  
+	 
 	  
 	  @PostMapping("/authenticate")
 	  public ResponseEntity<AuthenticationResponse> authenticate(

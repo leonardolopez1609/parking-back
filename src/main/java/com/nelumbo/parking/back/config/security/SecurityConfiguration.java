@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import com.nelumbo.parking.back.models.entities.Role;
@@ -42,16 +41,20 @@ public class SecurityConfiguration {
 		        .permitAll()
 		        .and()
 		        .authorizeHttpRequests()
-		        .requestMatchers("/parkings/**","/users/**","/auth/socio/**")
+		        .requestMatchers("/admins/**")
 		        .hasAuthority(Role.ADMIN.toString())
 		        .and()
 		        .authorizeHttpRequests()
-		        .requestMatchers("/auth/usuario/**","/parking/**")
-		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString())
+		        .requestMatchers("/partners/**")
+		        .hasAuthority(Role.SOCIO.toString())
 		        .and()
 		        .authorizeHttpRequests()
-		        .requestMatchers("/user/**","/enterings/**","/histories/**")
-		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString(),Role.USUARIO.toString())
+		        .requestMatchers("/users/**")
+		        .hasAuthority(Role.USUARIO.toString())
+		        .and()
+		        .authorizeHttpRequests()
+		        .requestMatchers("/emails/**")
+		        .hasAnyAuthority(Role.ADMIN.toString(),Role.SOCIO.toString())
 		        .and().exceptionHandling()
 		        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
 		        .accessDeniedHandler(new CustomAccessDeniedHandler())

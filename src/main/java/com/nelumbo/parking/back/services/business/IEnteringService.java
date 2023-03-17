@@ -25,5 +25,7 @@ public interface IEnteringService {
 	void deleteAllByList(List<Entering> enterings);
 
 	List<Entering> findAll();
+	
+	Entering findByIdVehicle(Long idvehicle);
 
 }

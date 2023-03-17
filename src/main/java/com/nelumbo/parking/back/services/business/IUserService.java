@@ -2,10 +2,6 @@ package com.nelumbo.parking.back.services.business;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.transaction.TransactionSystemException;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.nelumbo.parking.back.models.dto.EmailContentDTO;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;

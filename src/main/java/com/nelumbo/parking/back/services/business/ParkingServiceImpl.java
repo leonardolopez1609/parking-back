@@ -20,17 +20,12 @@ import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
 import com.nelumbo.parking.back.models.entities.Entering;
 import com.nelumbo.parking.back.models.entities.History;
 import com.nelumbo.parking.back.models.entities.Parking;
-import com.nelumbo.parking.back.models.entities.Role;
-import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.models.entities.Vehicle;
 import com.nelumbo.parking.back.repositories.IParkingRepository;
 import com.nelumbo.parking.back.services.dto.ParkingDTOMapper;
 import com.nelumbo.parking.back.services.dto.ParkingEntityMapper;
 import com.nelumbo.parking.back.services.dto.ParkingVehicleDTOMapper;
 import com.nelumbo.parking.back.services.dto.VehicleEntMapper;
-import com.nelumbo.parking.back.services.security.JwtService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class ParkingServiceImpl implements IParkingService {
@@ -62,8 +57,6 @@ public class ParkingServiceImpl implements IParkingService {
 	@Autowired
 	private VehicleEntMapper vehicleEntMapper;
 
-	@Autowired
-	private JwtService jwtService;
 	
 	@Override
 	public void delete(Long id) {

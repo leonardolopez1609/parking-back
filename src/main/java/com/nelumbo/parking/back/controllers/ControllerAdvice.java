@@ -4,23 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.yaml.snakeyaml.serializer.SerializerException;
-
 import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.entities.ErrorData;
-
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 
@@ -81,19 +76,8 @@ public class ControllerAdvice {
 		return new ResponseEntity<>(error, ex.getStatus());
 	}
 
-	// -------------Reemplazar por anotacion personalizada
-	@ExceptionHandler(value = DataIntegrityViolationException.class)
-	public ResponseEntity<ErrorData> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException ex) {
-		String param = ex.getRootCause().fillInStackTrace().getMessage()
-				.substring(94)
-				.replace(" la llave", "")
-				.replace(")=(", ": ")
-				.replace("(", "")
-				.replace(")", "");
-		String errorMessage = param;
-		ErrorData error = ErrorData.builder().message(errorMessage).build();
-		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-	}
+
+	
 
 	@ExceptionHandler(value = UnexpectedTypeException.class)
 	public ResponseEntity<ErrorData> unexpectedTypeExceptionHandler(UnexpectedTypeException ex) {

@@ -21,5 +21,7 @@ public interface IEnteringRepository extends JpaRepository<Entering, Long> {
     public Optional<EnteringDTO> findOneDTOById(Long id);
     
    
+    
+   
 
 }

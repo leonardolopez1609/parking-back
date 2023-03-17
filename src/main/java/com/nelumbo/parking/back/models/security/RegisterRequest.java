@@ -2,7 +2,7 @@ package com.nelumbo.parking.back.models.security;
 
 
 import com.nelumbo.parking.back.customvalidators.UniqueEmail;
-
+import com.nelumbo.parking.back.customvalidators.UniqueUserName;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
 	
 	  @NotBlank(message = "El nombre es requerido")
+	  @UniqueUserName
 	  private String name;
 	  
       

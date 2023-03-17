@@ -41,7 +41,7 @@ public class AuthenticationService {
 		        .role(role)
 		        .build();
 			
-		    var savedUser = userService.save(user);
+		    userService.save(user);
 		    
 		    var jwtToken = jwtService.generateToken(user);
 		  
@@ -66,12 +66,6 @@ public class AuthenticationService {
 			} catch (AuthenticationException e) {
 				throw new RequestException("Usuario o contraseña incorrectos");
 			}
-			  //Capturar error cuando no se pueda autenticar
-			  
-			  
-		    
-		    
-		    //lamar al servicio de usuario para obtener por email---capturar error
 		    var user = userService.findByEmail(request.getEmail())
 		        .orElseThrow();
 		    var jwtToken = jwtService.generateToken(user);

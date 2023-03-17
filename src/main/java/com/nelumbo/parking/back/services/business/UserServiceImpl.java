@@ -3,7 +3,6 @@ package com.nelumbo.parking.back.services.business;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -24,8 +23,6 @@ import com.nelumbo.parking.back.models.entities.Parking;
 import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.repositories.IUserRepository;
-
-import jakarta.validation.ConstraintViolationException;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -95,7 +92,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public TextResponseDTO sendEmail(EmailContentDTO emailContent) {
 		
