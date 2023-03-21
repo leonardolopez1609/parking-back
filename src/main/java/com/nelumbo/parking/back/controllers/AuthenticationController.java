@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.security.AuthenticationRequest;
 import com.nelumbo.parking.back.models.security.AuthenticationResponse;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 	
 	  
 	  @PostMapping("admin/register")
-	  public ResponseEntity<AuthenticationResponse> registerAdmin(
+	  public ResponseEntity<UserDTO> registerAdmin(
 	      @Valid @RequestBody RegisterRequest request
 	  ) {
 	    return ResponseEntity.ok(service.register(request,Role.ADMIN));

@@ -7,6 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.nelumbo.parking.back.exceptions.RequestException;
+import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.entities.Role;
 import com.nelumbo.parking.back.models.entities.User;
 import com.nelumbo.parking.back.models.security.AuthenticationRequest;
@@ -32,7 +33,7 @@ public class AuthenticationService {
 	  
 	  
 	  
-	  public AuthenticationResponse register(RegisterRequest request, Role role) {
+	  public UserDTO register(RegisterRequest request, Role role) {
 		  
 			  User user = User.builder()
 				.name(request.getName())
@@ -41,13 +42,8 @@ public class AuthenticationService {
 		        .role(role)
 		        .build();
 			
-		    userService.save(user);
-		    
-		    var jwtToken = jwtService.generateToken(user);
-		  
-		    return AuthenticationResponse.builder()
-		        .token(jwtToken)
-		        .build();
+		   User u= userService.save(user);
+		   return new UserDTO(u.getName(),u.getEmail(),u.getRole());
 		  }
 	  
 	  

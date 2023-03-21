@@ -63,7 +63,7 @@ public class AdminsController {
 	//---------------------------------------------PARTNERS URI'S-------------------------------------------------------
 	
 	@PostMapping(path="/partners",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<AuthenticationResponse> registerPartner(
+	  public ResponseEntity<UserDTO> registerPartner(
 	      @Valid @RequestBody RegisterRequest request
 	  ) {
 	    return ResponseEntity.ok(service.register(request,Role.SOCIO));
@@ -177,8 +177,8 @@ public class AdminsController {
 
 	//-------------------------------------------USERS URI'S--------------------------------------------------------------
 	
-	@PostMapping("/users/register")
-	  public ResponseEntity<AuthenticationResponse> registerUsuario(
+	@PostMapping("/users")
+	  public ResponseEntity<UserDTO> registerUsuario(
 	      @Valid @RequestBody RegisterRequest request
 	  ) {
 	    return ResponseEntity.ok(service.register(request,Role.USUARIO));

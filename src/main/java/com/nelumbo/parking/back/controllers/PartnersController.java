@@ -20,6 +20,7 @@ import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
 import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.TimeHoursDTO;
+import com.nelumbo.parking.back.models.dto.UserDTO;
 import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
 import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
 import com.nelumbo.parking.back.models.entities.Role;
@@ -81,11 +82,9 @@ public class PartnersController {
 		dataAccessFilter.accessParkingPartnerFilter(request, idparking);
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
-		return new TextResponseDTO("Parqueadero con promedio de "+parkingService.averageUsageByid(
-				dateMin2,
-				dateMax2,
-				idparking,
-				parkingService.getDays(dateMin2, dateMax2))+" entradas por día");
+		return parkingService.averageUsageByidResponse(dateMin2, dateMax2, idparking, parkingService.getDays(dateMin2, dateMax2));
+		
+		
 	}
 	
 	@GetMapping(path="/me/parkings/{idparking}/histories/vehicles",
@@ -103,18 +102,18 @@ public class PartnersController {
 			HttpServletRequest request) throws ParseException {
 		Date dateMin2 = parkingService.parseDate(dateMin);
 		Date dateMax2 = parkingService.parseDate(dateMax);
-		return new TextResponseDTO("Parqueaderos con promedio de "+parkingService.averageUsageAllByUser(
-				dateMin2,
+		
+		return parkingService.averageUsageAllByUserResponse(dateMin2,
 				dateMax2,
-				parkingService.getDays(dateMin2, dateMax2), dataAccessFilter.getUserIdToken(request))+" entradas por día");
+				parkingService.getDays(dateMin2, dateMax2), dataAccessFilter.getUserIdToken(request));
+		
 	}
 	
 	@GetMapping(path="/parkings/{idparking}/averagehours",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public TextResponseDTO getAverageHours(@PathVariable Long idparking,HttpServletRequest request) {
 		dataAccessFilter.accessParkingPartnerFilter(request, idparking);
-		TimeHoursDTO time=parkingService.averageHoursById(idparking);
-		return new TextResponseDTO("El parqueadero posee un promedio de "+ time.horas()+" horas "+
-		time.minutos()+" minutos y "+time.segundos()+" segundos de uso por vehículo");
+		
+		return parkingService.averageHoursResponse(idparking);
 	
 	}
 	
@@ -164,7 +163,7 @@ public class PartnersController {
 	//-------------------------------------------USERS URI'S------------------------------------------------------------
 	
 	@PostMapping("/users")
-	  public ResponseEntity<AuthenticationResponse> registerUsuario(
+	  public ResponseEntity<UserDTO> registerUsuario(
 	      @Valid @RequestBody RegisterRequest request
 	  ) {
 	    return ResponseEntity.ok(service.register(request,Role.USUARIO));

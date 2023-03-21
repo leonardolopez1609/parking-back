@@ -2,6 +2,8 @@ package com.nelumbo.parking.back.models.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,7 @@ public class VehicleEntDTO {
 	private Long idparking;
 	private Long idvehicle;
 	private String plate;
-	private Date enteringDate;
+	private @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="America/Bogota")Date enteringDate;
 
 	public VehicleEntDTO(Long idparking,Long idvehicle, String plate, Date enteringDate) {
 		super();

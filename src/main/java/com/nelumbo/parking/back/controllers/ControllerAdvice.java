@@ -29,7 +29,7 @@ public class ControllerAdvice {
 		Map<String, List<ErrorData>> errors = new HashMap<String, List<ErrorData>>();
 		List<ErrorData> errorsList = new ArrayList<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
-			ErrorData errorData = ErrorData.builder().message(error.getDefaultMessage()).build();
+			ErrorData errorData = ErrorData.builder().errorMessage(error.getDefaultMessage()).build();
 			errorsList.add(errorData);
 		});
 		
@@ -55,14 +55,14 @@ public class ControllerAdvice {
 	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<ErrorData> ExceptionHandler(Exception ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 	
 	
 	@ExceptionHandler(value = ServletException.class)
 	public ResponseEntity<ErrorData> servletExceptionHandler(ServletException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 	
@@ -71,13 +71,13 @@ public class ControllerAdvice {
 	
 	@ExceptionHandler(value = ExpiredJwtException.class)
 	public ResponseEntity<ErrorData> requestExceptionHandler(ExpiredJwtException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(value = RequestException.class)
 	public ResponseEntity<ErrorData> requestExceptionHandler(RequestException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 	
@@ -85,7 +85,7 @@ public class ControllerAdvice {
 
 	@ExceptionHandler(value = BusinessException.class)
 	public ResponseEntity<ErrorData> businessExceptionHandler(BusinessException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, ex.getStatus());
 	}
 
@@ -94,7 +94,7 @@ public class ControllerAdvice {
 
 	@ExceptionHandler(value = UnexpectedTypeException.class)
 	public ResponseEntity<ErrorData> unexpectedTypeExceptionHandler(UnexpectedTypeException ex) {
-		ErrorData error = ErrorData.builder().message(ex.getMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.getMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
@@ -109,7 +109,7 @@ public class ControllerAdvice {
 		
 		m = m.substring(n1,n2);
 		
-		ErrorData error = ErrorData.builder().message(m).build();
+		ErrorData error = ErrorData.builder().errorMessage(m).build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 	
@@ -118,7 +118,7 @@ public class ControllerAdvice {
 
 	@ExceptionHandler(value = SerializerException.class)
 	public ResponseEntity<ErrorData> accessDeniedException(SerializerException ex) {
-		ErrorData error = ErrorData.builder().message(ex.fillInStackTrace().getLocalizedMessage()).build();
+		ErrorData error = ErrorData.builder().errorMessage(ex.fillInStackTrace().getLocalizedMessage()).build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 	

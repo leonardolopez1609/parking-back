@@ -2,6 +2,7 @@ package com.nelumbo.parking.back.services.business;
 
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.TimeHoursDTO;
 import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
 import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
@@ -62,6 +63,12 @@ public interface IParkingService {
 	List<Vehicle> vehiclesFirstTimeByUser(Long iduser);
 	
 	List<Vehicle> vehiclesRepeatedlyByUser(Long iduser);
+
+	TextResponseDTO averageHoursResponse(Long idparking);
+
+	TextResponseDTO averageUsageByidResponse(Date min, Date max, Long idparking, int days);
+
+	TextResponseDTO averageUsageAllByUserResponse(Date dateMin2, Date dateMax2, int days, Long userIdToken);
 	
 
 }

@@ -14,6 +14,7 @@ import com.nelumbo.parking.back.exceptions.BusinessException;
 import com.nelumbo.parking.back.exceptions.RequestException;
 import com.nelumbo.parking.back.models.dto.ParkingDTO;
 import com.nelumbo.parking.back.models.dto.ParkingVehicleDTO;
+import com.nelumbo.parking.back.models.dto.TextResponseDTO;
 import com.nelumbo.parking.back.models.dto.TimeHoursDTO;
 import com.nelumbo.parking.back.models.dto.VehicleEntDTO;
 import com.nelumbo.parking.back.models.dto.VehicleRankDTO;
@@ -199,10 +200,23 @@ public class ParkingServiceImpl implements IParkingService {
 		Long average=parkingRepository.averageUsageByid(min, max, idparking,days);
 		
 		if(average<=0) {
-			throw new BusinessException(HttpStatus.OK, "El promedio es menor a 1 vehículo por día");
+			return null;
 		}
 		return parkingRepository.averageUsageByid(min, max, idparking,days);
 	}
+	
+	@Override
+	public TextResponseDTO averageUsageByidResponse(Date min, Date max, Long idparking, int days) {
+		
+		Long average= this.averageUsageByid(min, max, idparking, days);
+		if(average==null) {
+			return new TextResponseDTO("El promedio es menor a 1 vehículo por día");
+		}
+		return new TextResponseDTO("Parqueadero con promedio de "+average+" entradas por día");
+		
+	}
+	
+	
 
 	@Override
 	public Date parseDate(String date) {
@@ -229,13 +243,15 @@ public class ParkingServiceImpl implements IParkingService {
 		return parkingRepository.averageUsageAll(min, max, days);
 	}
 
+	
+	//------------------------------------------
 	@Override
 	public TimeHoursDTO averageHoursById(Long idparking) {
 		this.findById(idparking);
 		
 		Long average =parkingRepository.averageUsageHours(idparking);
 		if(average==null) {
-			throw new BusinessException(HttpStatus.OK, "El parqueadero no posee registros");
+			return null;
 		}
 		 Long hour = (average / 3600);
 		 Long  min = ((average - hour * 3600) / 60);
@@ -275,9 +291,18 @@ public class ParkingServiceImpl implements IParkingService {
 		Long average= parkingRepository.averageUsageAllByUser(dateMin2, dateMax2, days, iduser);
 		
 		if(average<=0) {
-			throw new BusinessException(HttpStatus.OK, "El promedio es menor a 1 vehículo por día");
+			return null;
 		}
 		return average;
+	}
+	
+	@Override
+	public TextResponseDTO averageUsageAllByUserResponse(Date dateMin2, Date dateMax2, int days, Long userIdToken) {
+		Long average= this.averageUsageAllByUser(dateMin2, dateMax2, days, userIdToken);
+		if(average==null) {
+			return new TextResponseDTO("El promedio es menor a 1 vehículo por día");
+		}
+		return new TextResponseDTO("Parqueaderos con promedio de "+average+" entradas por día");
 	}
 
 	
@@ -299,5 +324,21 @@ public class ParkingServiceImpl implements IParkingService {
 	public List<Vehicle> vehiclesRepeatedlyByUser(Long iduser) {
 		return vehicleService.findRepeatedlyByUser(iduser);
 	}
+
+	@Override
+	public TextResponseDTO averageHoursResponse(Long idparking) {
+		TimeHoursDTO time= this.averageHoursById(idparking);
+		TextResponseDTO response;
+		if(time==null){
+			response=new TextResponseDTO("El parqueadero aún no posee registros");
+		}else {
+			response=new TextResponseDTO("El parqueadero posee un promedio de "+ time.horas()+" horas "+
+					time.minutos()+" minutos y "+time.segundos()+" segundos de uso por vehículo");
+		}
+			
+		return response;
+	}
+
+	
 
 }
