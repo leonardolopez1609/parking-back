@@ -39,7 +39,7 @@ public class HistoryServiceImpl implements IHistoryService {
 	@Override
 	public HistoryDTO findDTOById(Long id) {
 	
-		return historyRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El historial con ID: " + id + " no existe en la base de datos!"));
+		return historyRepository.findOneDTOById(id).orElseThrow(()-> new RequestException("El historial con ID: " + id + " no existe en la base de datos"));
 	}
 
 	@Override
@@ -49,6 +49,7 @@ public class HistoryServiceImpl implements IHistoryService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST,
 					"No se puede Registrar Salida, no existe la placa");
 		}
+		System.out.println("---------Vaalidacion: "+enteringService.vehicleIsPresent(plate));
 
 		Entering ent = enteringService.findOneByPlate(plate);
 		

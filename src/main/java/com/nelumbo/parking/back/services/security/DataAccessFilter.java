@@ -104,12 +104,19 @@ public class DataAccessFilter {
 	public void accessParkingUserAndPlate(HttpServletRequest request, @Valid String plate) {
         vehicleService.invalidPlate(plate);		
 		User ut= jwtService.getUserToken(request);
-	    Entering e = enteringService.findOneByPlate(plate);
-	    User partner =ut.getUser();
-	   
-       if(!(e.getParking().getUser().equals(partner))) {
-       	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
-       }
+	    try {
+	    	Entering e = enteringService.findOneByPlate(plate);
+	    	User partner =ut.getUser();
+	 	   
+	        if(!(e.getParking().getUser().equals(partner))) {
+	        	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
+	        }
+	    	
+		} catch (Exception e) {
+			
+		}
+		
+	    
 	}
 
 	public void accessParkingUserAndIdVehicle(HttpServletRequest request, long id) {
