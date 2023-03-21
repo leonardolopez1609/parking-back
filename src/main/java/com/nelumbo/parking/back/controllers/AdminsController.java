@@ -99,7 +99,6 @@ public class AdminsController {
 	
 	@GetMapping(path="/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ParkingDTO getParking(@PathVariable Long idparking,HttpServletRequest request) {		
-		//dataAccessFilter.parkingAccessIdFilter(request,id);
 		return parkingService.findDTOByID(idparking);	
 	}
 	
@@ -115,6 +114,13 @@ public class AdminsController {
 	public Parking createParking(@Valid @RequestBody ParkingDTO parking) {
 		return parkingService.create(parking);
 	}
+	
+	@PutMapping(path="/{idparking}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ParkingDTO updateParking(@Valid @RequestBody ParkingDTO parking, @PathVariable Long idparking) {
+
+		return parkingService.updateDTO(parking, idparking);
+	}
+	
 	
 	@DeleteMapping(path="/parkings/{idparking}",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public TextResponseDTO deleteParking(@PathVariable Long idparking,HttpServletRequest request) {
@@ -143,7 +149,6 @@ public class AdminsController {
 			consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public  Map<String, List<VehicleHistoryDTO>> getVehiclesByRangeDateAndPlate(@PathVariable String dateMin,@PathVariable String dateMax,
 			@PathVariable Long idparking,@PathVariable String plate,HttpServletRequest request) throws ParseException {
-		//dataAccessFilter.parkingAccessIdFilter(request, id);
 		Map<String, List<VehicleHistoryDTO>> response = new HashMap<>();	
 		Date dateMin2 = historyService.parseDate(dateMin);
 		Date dateMax2 = historyService.parseDate(dateMax);
@@ -156,8 +161,6 @@ public class AdminsController {
 	
 	@GetMapping(path="/parkings/{idparking}/vehiclesact",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, List<VehicleEntDTO>> getVehiclesAct(@PathVariable Long idparking,HttpServletRequest request) {
-		
-		//dataAccessFilter.parkingAccessIdFilter(request,id);
 		Map<String, List<VehicleEntDTO>> response = new HashMap<>();
 	
 		response.put("vehicles", parkingService.entVehicleDetails(idparking));
@@ -166,7 +169,6 @@ public class AdminsController {
 	
 	@GetMapping(path="/parkings/{idparking}/vehiclesrank",consumes = MediaType.ALL_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, List<VehicleRankDTO>> getVehiclesRank(@PathVariable Long idparking,HttpServletRequest request) {
-		//dataAccessFilter.parkingAccessIdFilter(request,id);
 		Map<String, List<VehicleRankDTO>> response = new HashMap<>();
 			response.put("vehicles",parkingService.rankVehicles(idparking));
 			

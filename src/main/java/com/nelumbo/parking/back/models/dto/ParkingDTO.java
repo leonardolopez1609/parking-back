@@ -7,20 +7,41 @@ import lombok.Data;
 
 @Data
 public class ParkingDTO {
+	
 	private Long idparking;
 	
 	@NotBlank(message = "El nombre es requerido")
 	@ValueParkingName
 	private String name;
 	private String partner;
-	private int spots;
-
-	public ParkingDTO(Long idparking, String name, String partner, int spots) {
+	private int allSpots;
+	private int spotsTaken;
+	
+	
+	public ParkingDTO(Long idparking,String name, String partner,
+			int allSpots, int spotsTaken) {
 		super();
 		this.idparking = idparking;
 		this.name = name;
 		this.partner = partner;
-		this.spots = spots;
+		this.allSpots = allSpots;
+		this.spotsTaken = spotsTaken;
 	}
+
+
+	public ParkingDTO(String name, int allSpots) {
+		super();
+		this.name = name;
+		this.allSpots = allSpots;
+	}
+
+
+	public ParkingDTO() {
+		super();
+	}
+	
+	
+
+	
 
 }

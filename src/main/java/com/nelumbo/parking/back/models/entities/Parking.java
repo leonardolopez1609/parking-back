@@ -15,46 +15,49 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="parking")
-public class Parking implements Serializable{
-	
+@Table(name = "parking")
+public class Parking implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idparking;
-	
-	@Column(name="name", nullable = false, length = 100, unique=true)
+
+	@Column(name = "name", nullable = false, length = 100, unique = true)
 	@NotNull(message = "El nombre es requerido")
 	@NotBlank(message = "El nombre es requerido")
 	private String name;
-	
+
 	@ManyToOne
-	@JoinColumn(name="iduser")
+	@JoinColumn(name = "iduser")
 	private User user;
-	
-	@Column(name="spots")
+
+	@Column(name = "all_spots")
 	@NotNull(message = "La capacidad es requerida")
-	private int spots;
-	
-	public Parking(String name, int spots) {
+	private int allSpots;
+
+	@Column(name = "spots_takken")
+	@NotNull(message = "La capacidad es requerida")
+	private int spotsTaken;
+
+	public Parking(String name, int allSpots) {
 		super();
 		this.name = name;
-		this.spots = spots;
+		this.allSpots = allSpots;
 	}
 
 	public Parking() {
 		super();
 	}
 
-	public Parking(Long idparking, String name, User user, int spots) {
+	public Parking(Long idparking, String name, User user, int allSpots, int spotsTaken) {
 		super();
 		this.idparking = idparking;
 		this.name = name;
 		this.user = user;
-		this.spots = spots;
+		this.allSpots = allSpots;
+		this.spotsTaken = spotsTaken;
 	}
-	
-	
 
 }

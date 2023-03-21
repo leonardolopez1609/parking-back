@@ -53,8 +53,10 @@ public class HistoryServiceImpl implements IHistoryService {
 		Entering ent = enteringService.findOneByPlate(plate);
 		
 		Parking parking = parkingService.findById(ent.getParking().getIdparking());
-		parking.setSpots(parking.getSpots() + 1);
-		parkingService.update(parking, ent.getParking().getIdparking());
+		//------------------------------------------
+		parking.setSpotsTaken(parking.getSpotsTaken() - 1);
+		//------------------------------------------
+		//parkingService.update(parking, ent.getParking().getIdparking());
 		History his = new History();
 
 		his.setParking(parking);

@@ -35,10 +35,10 @@ public interface IParkingRepository extends JpaRepository<Parking, Long> {
 	@Query(value="select sum(DATEDIFF(second,h.enteringDate,h.departureDate))/count(h.idhistory) as horas_uso from History as h where h.parking.idparking =:idparking")
 	public Long averageUsageHours(Long idparking);
 
-    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.idparking=:id")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.allSpots,p.spotsTaken) from Parking as p where p.idparking=:id")
 	Optional<ParkingDTO> findDTOById(Long id);
     
-    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.spots) from Parking as p where p.user.iduser=:iduser")
+    @Query(value="select new com.nelumbo.parking.back.models.dto.ParkingDTO(p.idparking,p.name,p.user.name,p.allSpots) from Parking as p where p.user.iduser=:iduser")
     public List<ParkingDTO> findAllDTOByUser(Long iduser);
     
     @Query(value="select new com.nelumbo.parking.back.models.dto.VehicleEntDTO(e.parking.idparking,v.idvehicle,v.plate,e.date) from Vehicle as v inner join Entering as e on v.idvehicle=e.vehicle.idvehicle and e.parking.idparking=:id")

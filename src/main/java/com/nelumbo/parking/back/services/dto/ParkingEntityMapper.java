@@ -19,7 +19,7 @@ public class ParkingEntityMapper implements Function<ParkingDTO, Parking> {
 	
 	@Override
 	public Parking apply(ParkingDTO t) {
-		return new Parking(t.getIdparking(), t.getName(), userService.findByName(t.getPartner()), t.getSpots());
+		return new Parking(t.getIdparking(), t.getName(), userService.findByName(t.getPartner()),t.getAllSpots(), t.getSpotsTaken());
 	}
 
 }

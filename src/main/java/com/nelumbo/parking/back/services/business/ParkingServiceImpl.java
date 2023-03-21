@@ -79,8 +79,10 @@ public class ParkingServiceImpl implements IParkingService {
 		
 		ParkingDTO parkingDb = this.findDTOByID(id);
 		
+		//----------------?---------------------
 		parkingDb.setName(newParking.getName());
-		parkingDb.setSpots(newParking.getSpots());
+		//--------------------------------------
+		parkingDb.setSpotsTaken(newParking.getSpotsTaken());
 
 		return this.create(parkingDb);
 	}
@@ -102,10 +104,16 @@ public class ParkingServiceImpl implements IParkingService {
 
 	
 	public Parking create(ParkingDTO parking) {
-		if (parking.getSpots() < 0) {
+		//--------------------------------------------------------------------------------------------------------------
+		if (parking.getAllSpots() < 0) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad del parqueadero debe ser mayor a cero");
 		}
-        
+		
+		if (parking.getAllSpots() < parking.getSpotsTaken()) {
+			throw new BusinessException(HttpStatus.BAD_REQUEST, "La capacidad no puede ser menor a los lugares ocupados");
+		}
+		
+		//--------------------------------------------------------------------------------------------------------------
 		return parkingRepository.save(Optional.of(parking).map(parkingEntityMapper).get());
 	}
 	 
@@ -158,7 +166,7 @@ public class ParkingServiceImpl implements IParkingService {
 		ParkingDTO p = this.findDTOByID(id);
 
 		p.setName(newParking.getName());
-		p.setSpots(newParking.getSpots());
+		p.setAllSpots(newParking.getAllSpots());
 		
 		return Optional.of(this.create(p)).map(parkingDTOMapper).get();
 	}

@@ -19,7 +19,8 @@ public class ParkingDTOMapper implements Function<Parking, ParkingDTO> {
 				t.getIdparking(),
 				t.getName(),
 				t.getUser().getName(),
-				t.getSpots()
+				t.getAllSpots(),
+				t.getSpotsTaken()
 				);
 	}
 

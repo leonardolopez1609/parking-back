@@ -45,16 +45,20 @@ public class EnteringServiceImpl implements IEnteringService {
 		if(parking.getUser()==null){
 			throw new RequestException("Parqueadero no encontrado");
 		}
-		//vehicleService.invalidPlate(plate);
-		if (parking.getSpots() <= 0) {
+		//----------------------------------------------------------------------------------------------------------------
+		if (parking.getSpotsTaken()>= parking.getAllSpots()) {
 			throw new BusinessException(HttpStatus.BAD_REQUEST, "El parqueadero no posee cupos disponibles!");
 		}
+		//----------------------------------------------------------------------------------------------------------------
 		
 		 if(!vehicleService.exists(plate)) {
 			 vehicleService.create( new Vehicle(plate));
 		 }
-		 parking.setSpots(parking.getSpots() - 1);
-			parkingService.update(parking, idParking);
+		
+		 //---------------------------------------------
+		 parking.setSpotsTaken(parking.getSpotsTaken() + 1);
+		 //---------------------------------------------
+			//parkingService.update(parking, idParking);
 			Entering ent = new Entering();
 			ent.setParking(parking);
 		ent.setVehicle(vehicleService.findOneByPlate(plate));

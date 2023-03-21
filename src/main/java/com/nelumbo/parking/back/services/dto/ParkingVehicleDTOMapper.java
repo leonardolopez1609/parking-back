@@ -18,7 +18,7 @@ public class ParkingVehicleDTOMapper implements Function<Parking, ParkingVehicle
 	@Override
 	public ParkingVehicleDTO apply(Parking t) {
 
-		return new ParkingVehicleDTO(t.getIdparking(), t.getName(), t.getUser().getName(), t.getSpots(),
+		return new ParkingVehicleDTO(t.getIdparking(), t.getName(), t.getUser().getName(),
 				parkingService.vehiclesByParkingInd(t.getIdparking()));
 	}
 
