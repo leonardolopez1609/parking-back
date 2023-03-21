@@ -49,7 +49,6 @@ public class HistoryServiceImpl implements IHistoryService {
 			throw new BusinessException(HttpStatus.BAD_REQUEST,
 					"No se puede Registrar Salida, no existe la placa");
 		}
-		System.out.println("---------Vaalidacion: "+enteringService.vehicleIsPresent(plate));
 
 		Entering ent = enteringService.findOneByPlate(plate);
 		

@@ -68,7 +68,7 @@ public class EnteringServiceImpl implements IEnteringService {
 	@Override
 	public Entering findOneByPlate(String plate) {
 		Entering entering = enteringRepository.findOneByVehicle_plate(plate).orElseThrow(() ->  new RequestException(
-				"El registro de entrada con vehículo de placa: " + plate + " no existe en la base de datos"));
+				"No se puede registar salida, no existe la placa"));
 		
 		return entering;
 	}
