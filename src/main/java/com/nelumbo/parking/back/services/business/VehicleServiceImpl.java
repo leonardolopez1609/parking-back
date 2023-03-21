@@ -22,7 +22,7 @@ public class VehicleServiceImpl implements IVehicleService {
 		Optional<Vehicle> vehicle = vehicleRepository.findById(id);
 
 		if (vehicle.isEmpty()) {
-			throw new RequestException("El vehículo con ID: " + id + " no existe en la base de datos!");
+			throw new RequestException("El vehículo con ID: " + id + " no existe en la base de datos");
 		}
 		return vehicle;
 	}

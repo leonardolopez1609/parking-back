@@ -115,7 +115,8 @@ public class DataAccessFilter {
 	}
 
 	public void accessParkingUserAndIdVehicle(HttpServletRequest request, long id) {
-		  Entering e = enteringService.findByIdVehicle(id);
+		vehicleService.findById(id);
+		Entering e = enteringService.findByIdVehicle(id);
 		  User u = jwtService.getUserToken(request).getUser();
 		  if(!(e.getParking().getUser().equals(u))) {
 		       	throw new BusinessException(HttpStatus.FORBIDDEN, "Acceso no autorizado");
